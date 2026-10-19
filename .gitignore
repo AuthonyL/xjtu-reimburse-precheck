@@ -1,0 +1,15 @@
+node_modules/
+out/
+dist/
+release/
+*.log
+.npm-cache/
+test-results/
+.electron-cache/
+.builder-cache/
+.builder-native-cache/
+
+# Private source data and local maintenance records
+private/
+.git/
+.DS_Store

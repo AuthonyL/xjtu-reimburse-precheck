@@ -1,0 +1,866 @@
+{
+  "buyer": {
+    "name": "西安交通大学",
+    "taxId": "12100000435230200R"
+  },
+  "thresholds": {
+    "inventory": {
+      "value": 500,
+      "operator": ">="
+    },
+    "payment": {
+      "value": 1000,
+      "operator": ">="
+    },
+    "verification": {
+      "value": 5000,
+      "operator": ">="
+    },
+    "highUnit": {
+      "value": 1000,
+      "operator": ">="
+    },
+    "highGroup": {
+      "value": 10000,
+      "operator": ">="
+    },
+    "outsourcedContract": {
+      "value": 50000,
+      "operator": ">="
+    }
+  },
+  "exemptTaxCategories": [
+    "快递",
+    "运输服务",
+    "设计服务",
+    "电路设计服务",
+    "信息技术服务",
+    "信息系统服务",
+    "软件服务",
+    "维修",
+    "修理",
+    "检测",
+    "测试",
+    "技术服务",
+    "住宿",
+    "餐饮",
+    "生产生活服务",
+    "研发和技术服务",
+    "现代服务",
+    "劳务",
+    "加工服务"
+  ],
+  "aiKeywords": [
+    "AI 订阅",
+    "AI订阅",
+    "人工智能订阅",
+    "ChatGPT",
+    "OpenAI",
+    "Cursor",
+    "Trae",
+    "Windsurf",
+    "Claude"
+  ],
+  "storeKeywords": ["亚克力", "模具"],
+  "designKeywords": [
+    "设计服务",
+    "电路设计服务",
+    "研发和技术服务",
+    "测试服务",
+    "检测服务",
+    "加工",
+    "技术服务",
+    "加工服务",
+    "加工劳务",
+    "加工费"
+  ],
+  "instrumentKeywords": ["仪器", "仪表", "示波器", "分析仪", "测量仪"],
+  "groupKeywords": {
+    "deferred": ["暂缓"],
+    "bankTransfer": ["公转"],
+    "outsourced": ["外包", "委托", "加工", "测试"],
+    "ai": ["AI"],
+    "labor": ["劳务费"]
+  },
+  "attachmentKeywords": {
+    "payment": ["支付记录", "付款凭证", "支付凭证", "付款记录"],
+    "inventory": ["入库单", "记账单"],
+    "store": ["店铺", "商店证明"],
+    "designList": ["清单", "明细"],
+    "exchangeRate": ["汇率"],
+    "subscription": ["订阅", "Plan", "介绍", "定价", "introduct", "price"],
+    "highValueApproval": ["高值材料审批表"],
+    "systemApproval": ["系统审批表", "系统下载审批表"],
+    "explanation": ["情况说明"],
+    "assetRegistration": ["资产建账", "资产建帐", "固定资产登记"],
+    "contract": ["合同", "contract"],
+    "waybill": ["运单明细", "顺丰行程单", "订单详情", "运单"],
+    "repairList": ["维修清单"],
+    "verification": ["验真", "查验结果"],
+    "schoolForm": ["学校报销单"],
+    "purposeNote": ["用途"],
+    "acceptanceNote": ["验收"],
+    "itinerary": ["行程单", "行程"]
+  },
+  "materialDirectoryKeywords": [
+    "入库单",
+    "记账单",
+    "支付记录",
+    "付款凭证",
+    "汇率",
+    "店铺",
+    "设计清单",
+    "高值材料审批表",
+    "合同",
+    "维修清单",
+    "明细",
+    "用途",
+    "验收"
+  ],
+  "unconfirmedAttachmentTypes": [
+    "payment",
+    "store",
+    "subscription",
+    "exchangeRate",
+    "verification"
+  ],
+  "ignoredExtensions": [
+    ".dll",
+    ".ini",
+    ".exe",
+    ".so",
+    ".dylib",
+    ".sys",
+    ".bat",
+    ".cmd",
+    ".log",
+    ".db",
+    ".tmp"
+  ],
+  "exchangeRateType": "现汇买入价",
+  "expense": {
+    "default": "实验材料费",
+    "ai": "资料费",
+    "outsourced": "委托业务费",
+    "unknown": "待定",
+    "mappings": [
+      {
+        "keywords": ["住宿", "餐饮", "运输服务"],
+        "content": "待定"
+      }
+    ]
+  },
+  "highValueReasons": [
+    "{材料名称}是{实验或项目名称}所需的核心耗材。由于{损耗原因}，平均使用寿命不足一年，需按高值材料办理。",
+    "{材料名称}用于{具体用途}。在{使用条件}下存在{损耗方式}，预计使用期限为{月数}个月，不超过一年。"
+  ],
+  "horizontalOnlyKeywords": [
+    "文具",
+    "教具",
+    "教学用具",
+    "办公用品",
+    "打印",
+    "复印",
+    "印刷",
+    "快递服务",
+    "收派服务",
+    "邮政",
+    "邮寄",
+    "当天达",
+    "客运",
+    "出租",
+    "网约车",
+    "地铁",
+    "公交",
+    "打车",
+    "约车",
+    "出行",
+    "客运服务",
+    "交通运输服务",
+    "印刷品",
+    "同城急送"
+  ],
+  "purposeKeywords": ["办公用品", "文具", "日用杂品", "日用品", "生活用品", "清洁用品", "洗涤剂"],
+  "serviceTaxCategories": [
+    "生产生活服务",
+    "研发和技术服务",
+    "现代服务",
+    "劳务",
+    "设计服务",
+    "测试服务",
+    "检测服务",
+    "技术服务",
+    "加工",
+    "加工服务",
+    "加工劳务",
+    "加工费"
+  ],
+  "legacyInvoiceKeywords": ["发票代码"],
+  "ruleOptions": {
+    "buyer": {
+      "enabled": true,
+      "severity": "error"
+    },
+    "R1": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R11": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R9": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R2": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R7": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R13": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R12": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R4": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R5": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R6": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R3": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "R10": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "F1": {
+      "enabled": true,
+      "severity": "info"
+    },
+    "F2": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "F5": {
+      "enabled": true,
+      "severity": "error"
+    },
+    "F5-documents": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "F6": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "dup": {
+      "enabled": true,
+      "severity": "error"
+    },
+    "rejected": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "expense": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "parse": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "manual": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "ofd": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "unrecognized-pdf": {
+      "enabled": true,
+      "severity": "info"
+    },
+    "L1": {
+      "enabled": true,
+      "severity": "error"
+    },
+    "L2": {
+      "enabled": true,
+      "severity": "error"
+    },
+    "L3": {
+      "enabled": true,
+      "severity": "error"
+    },
+    "L4": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "L5": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "L6": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "T1": {
+      "enabled": true,
+      "severity": "warning"
+    },
+    "T2": {
+      "enabled": true,
+      "severity": "warning"
+    }
+  },
+  "labor": {
+    "statementKeywords": ["情况说明", "发放说明", "说明"],
+    "organizationEndings": ["大学", "学院", "研究所", "研究院", "公司", "中心", "医院"],
+    "internalOrganizationKeywords": ["西安交通大学"],
+    "titles": {
+      "academic": ["院士"],
+      "senior": [
+        "教授",
+        "副教授",
+        "研究员",
+        "副研究员",
+        "正高级工程师",
+        "高级工程师",
+        "教授级高级工程师",
+        "高级实验师",
+        "主任医师",
+        "副主任医师",
+        "编审",
+        "副编审"
+      ],
+      "other": [
+        "讲师",
+        "助理研究员",
+        "工程师",
+        "实验师",
+        "助教",
+        "博士后",
+        "博士生",
+        "硕士生",
+        "教师",
+        "行政管理人员",
+        "职员"
+      ]
+    },
+    "typeKeywords": {
+      "consultation": ["咨询"],
+      "lecture": ["学术讲座", "讲座"],
+      "projectReview": ["项目评审"],
+      "paperReview": ["论文评审"],
+      "defense": ["论文答辩", "答辩"],
+      "invigilation": ["考试监考", "监考"],
+      "examSetting": ["考试命题", "命题"],
+      "examGrading": ["考试阅卷", "阅卷"],
+      "editing": ["编辑审稿", "审稿"],
+      "other": ["其它劳务", "其他劳务"]
+    },
+    "modeKeywords": {
+      "online": ["线上", "通讯", "视频", "远程", "网络"],
+      "offline": ["线下", "现场", "会议", "访谈", "勘查"]
+    },
+    "reclassificationKeywords": ["讲座", "评审", "答辩", "监考"],
+    "consultationFeeKeywords": ["咨询费"],
+    "meetingKeywords": ["会议"],
+    "attachmentKeywords": {
+      "settlement": ["会议决算表", "会议决算"],
+      "notice": ["会议通知"],
+      "attendance": ["签到表", "签到"]
+    },
+    "templates": {
+      "consultation": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}专家咨询服务{数量}{单位词}，每{单位词}咨询费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "lecture": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}学术讲座服务{数量}{单位词}，每{单位词}讲座费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "projectReview": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}项目评审服务{数量}{单位词}，每{单位词}评审费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "paperReview": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}论文评审服务{数量}{单位词}，每{单位词}评审费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "defense": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}论文答辩服务{数量}{单位词}，每{单位词}答辩费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "invigilation": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}考试监考服务{数量}{单位词}，每{单位词}监考费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "examSetting": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}考试命题服务{数量}{单位词}，每{单位词}命题费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "examGrading": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}考试阅卷服务{数量}{单位词}，每{单位词}阅卷费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "editing": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}编辑审稿服务{数量}{单位词}，每{单位词}审稿费{单价}元，共计{合计}元。现予以发放。特此说明。",
+      "other": "{单位}{姓名}{职称}于{日期列表}就{事由}提供{形式}其他劳务服务{数量}{单位词}，每{单位词}劳务费{单价}元，共计{合计}元。现予以发放。特此说明。"
+    },
+    "paymentTableKeywords": ["发放表"],
+    "personnelKeywords": {
+      "teacher": ["教授", "讲师", "助教", "教师"],
+      "administrative": ["行政", "职员"]
+    }
+  },
+  "laborStandards": {
+    "consultation": [
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "senior",
+        "period": "halfDay",
+        "min": 1000,
+        "max": 4500,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "senior",
+        "period": "shortDay",
+        "min": 1000,
+        "max": 4500,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "senior",
+        "period": "longDay",
+        "min": 500,
+        "max": 2250,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "senior",
+        "period": "communication",
+        "min": 200,
+        "max": 2250,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "other",
+        "period": "halfDay",
+        "min": 500,
+        "max": 1600,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "other",
+        "period": "shortDay",
+        "min": 500,
+        "max": 1600,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "other",
+        "period": "longDay",
+        "min": 300,
+        "max": 800,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "horizontal",
+        "scope": "all",
+        "rank": "other",
+        "period": "communication",
+        "min": 100,
+        "max": 800,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "academic",
+        "period": "halfDay",
+        "min": 1350,
+        "max": 2160,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "academic",
+        "period": "shortDay",
+        "min": 2250,
+        "max": 3600,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "academic",
+        "period": "longDay",
+        "min": 1125,
+        "max": 1800,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "academic",
+        "period": "communication",
+        "min": 450,
+        "max": 1800,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "senior",
+        "period": "halfDay",
+        "min": 900,
+        "max": 1440,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "senior",
+        "period": "shortDay",
+        "min": 1500,
+        "max": 2400,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "senior",
+        "period": "longDay",
+        "min": 750,
+        "max": 1200,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "senior",
+        "period": "communication",
+        "min": 300,
+        "max": 1200,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "other",
+        "period": "halfDay",
+        "min": 540,
+        "max": 900,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "other",
+        "period": "shortDay",
+        "min": 900,
+        "max": 1500,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "other",
+        "period": "longDay",
+        "min": 450,
+        "max": 750,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "internal",
+        "rank": "other",
+        "period": "communication",
+        "min": 180,
+        "max": 750,
+        "taxBasis": "after"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "academic",
+        "period": "halfDay",
+        "min": 1487.5,
+        "max": 2500,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "academic",
+        "period": "shortDay",
+        "min": 2612.5,
+        "max": 4285.71,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "academic",
+        "period": "longDay",
+        "min": 1206.25,
+        "max": 2050,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "academic",
+        "period": "communication",
+        "min": 450,
+        "max": 2050,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "senior",
+        "period": "halfDay",
+        "min": 925,
+        "max": 1600,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "senior",
+        "period": "shortDay",
+        "min": 1675,
+        "max": 2800,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "senior",
+        "period": "longDay",
+        "min": 750,
+        "max": 1300,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "senior",
+        "period": "communication",
+        "min": 300,
+        "max": 1300,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "other",
+        "period": "halfDay",
+        "min": 540,
+        "max": 925,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "other",
+        "period": "shortDay",
+        "min": 925,
+        "max": 1675,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "other",
+        "period": "longDay",
+        "min": 450,
+        "max": 750,
+        "taxBasis": "before"
+      },
+      {
+        "fund": "other",
+        "scope": "external",
+        "rank": "other",
+        "period": "communication",
+        "min": 180,
+        "max": 750,
+        "taxBasis": "before"
+      }
+    ],
+    "other": [
+      {
+        "type": "projectReview",
+        "role": "academic",
+        "unit": "半天",
+        "max": 2000,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "projectReview",
+        "role": "senior",
+        "unit": "半天",
+        "max": 1000,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "projectReview",
+        "role": "other",
+        "unit": "半天",
+        "max": 500,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "lecture",
+        "role": "academic",
+        "unit": "小时",
+        "max": 1500,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "lecture",
+        "role": "senior",
+        "unit": "小时",
+        "max": 1000,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "lecture",
+        "role": "other",
+        "unit": "小时",
+        "max": 500,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "paperReview",
+        "role": "bachelor",
+        "unit": "篇",
+        "max": 100,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "paperReview",
+        "role": "master",
+        "unit": "篇",
+        "max": 300,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "paperReview",
+        "role": "doctor",
+        "unit": "篇",
+        "max": 800,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "defense",
+        "role": "bachelor",
+        "unit": "人·生",
+        "max": 100,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "defense",
+        "role": "master",
+        "unit": "人·生",
+        "max": 200,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "defense",
+        "role": "doctor",
+        "unit": "人·生",
+        "max": 500,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "invigilation",
+        "role": "teacher",
+        "unit": "小时",
+        "max": 100,
+        "workTime": "any",
+        "note": "非任课课程"
+      },
+      {
+        "type": "invigilation",
+        "role": "administrative",
+        "unit": "小时",
+        "max": 50,
+        "workTime": "work",
+        "note": "工作时间"
+      },
+      {
+        "type": "invigilation",
+        "role": "administrative",
+        "unit": "小时",
+        "max": 100,
+        "workTime": "holiday",
+        "note": "双休日、节假日"
+      },
+      {
+        "type": "examSetting",
+        "role": "any",
+        "unit": "套",
+        "max": 1500,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "examGrading",
+        "role": "any",
+        "unit": "份",
+        "max": 10,
+        "workTime": "any",
+        "note": "非任课课程"
+      },
+      {
+        "type": "editing",
+        "role": "any",
+        "unit": "篇",
+        "max": 500,
+        "workTime": "any",
+        "note": "期刊中心编辑审稿"
+      },
+      {
+        "type": "other",
+        "role": "any",
+        "unit": "天",
+        "max": 300,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      },
+      {
+        "type": "other",
+        "role": "any",
+        "unit": "小时",
+        "max": 40,
+        "workTime": "any",
+        "note": "按实际服务核对"
+      }
+    ]
+  },
+  "mixedDelegatedSeverity": "warning",
+  "transportKeywords": ["客运", "打车", "网约车", "约车", "地铁"],
+  "deliveryKeywords": ["快递", "收派服务", "同城急送"]
+}

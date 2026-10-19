@@ -1,0 +1,77 @@
+{
+  "name": "reimburse-precheck",
+  "version": "0.1.0",
+  "description": "面向西安交通大学用户的非官方本机报销预检工具，支持发票、材料与劳务费检查",
+  "author": "AuthonyL",
+  "private": true,
+  "type": "module",
+  "main": "out/main/index.js",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "test": "vitest run --testTimeout=15000 --maxWorkers=50%",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "e2e": "npm run build && tsx scripts/e2e.ts",
+    "e2e:packaged": "tsx scripts/e2e.ts --packaged",
+    "verify:packaged": "tsx scripts/verify-packaged.ts",
+    "icon": "tsx scripts/generate-icon.ts",
+    "dist:mac": "npm run build && tsx scripts/dist.ts mac",
+    "dist:win": "npm run build && tsx scripts/dist.ts win",
+    "dist": "npm run build && tsx scripts/dist.ts all",
+    "typecheck": "tsc -p tsconfig.core.json --noEmit && tsc --noEmit && tsc -p tsconfig.renderer.json --noEmit",
+    "format": "prettier --write src tests scripts electron.vite.config.ts tsconfig*.json package.json .github README.md CONTRIBUTING.md docs/*.md",
+    "format:check": "prettier --check src tests scripts electron.vite.config.ts tsconfig*.json package.json .github README.md CONTRIBUTING.md docs/*.md",
+    "import-feedback": "tsx scripts/import-feedback.ts",
+    "compare:packaged-pdf": "tsx scripts/compare-packaged-pdf.ts",
+    "export-lab-rules": "tsx scripts/export-lab-rules.ts",
+    "screenshots": "npm run build && tsx scripts/screenshots.ts"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "^11.1.1"
+    }
+  },
+  "devDependencies": {
+    "@electron/asar": "^4.3.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^24.0.0",
+    "@types/pngjs": "^6.0.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "docx": "^9.12.0",
+    "electron": "^44.9.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^6.0.0",
+    "exceljs": "^4.4.0",
+    "fast-xml-parser": "^5.3.0",
+    "jsdom": "^29.1.1",
+    "jszip": "^3.10.1",
+    "pdfjs-dist": "^6.2.108",
+    "pe-library": "^2.0.1",
+    "playwright": "^1.64.1",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.6.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "resedit": "^3.1.0",
+    "tar": "^7.5.22",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.4",
+    "vitest": "^4.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AuthonyL/xjtu-reimburse-precheck.git"
+  },
+  "homepage": "https://github.com/AuthonyL/xjtu-reimburse-precheck#readme",
+  "bugs": {
+    "url": "https://github.com/AuthonyL/xjtu-reimburse-precheck/issues"
+  }
+}

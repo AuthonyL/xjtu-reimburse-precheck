@@ -1,0 +1,57 @@
+import { useState } from 'react';
+import { nameOf } from './ui.js';
+
+export function Home({
+  recent,
+  choose,
+  open,
+}: {
+  recent: string[];
+  choose: () => void;
+  open: (dir: string) => void;
+}) {
+  const [folder, setFolder] = useState('');
+  return (
+    <main className="home">
+      <div className="eyebrow">批次检查 · 材料核对 · 清单导出</div>
+      <h1>把一批发票，整理成可核对的清单。</h1>
+      <p>选择日期批次或包含多个批次的根目录。也可以把文件夹拖到此窗口。</p>
+      <button className="primary large" onClick={() => choose()}>
+        选择文件夹
+      </button>
+      <form
+        className="path-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          open(folder);
+        }}
+      >
+        <label htmlFor="folder-path">文件夹路径</label>
+        <div className="inline">
+          <input
+            id="folder-path"
+            value={folder}
+            onChange={(e) => setFolder(e.target.value)}
+            placeholder="粘贴完整文件夹路径"
+            required
+          />
+          <button type="submit">打开路径</button>
+        </div>
+      </form>
+      <section className="recent">
+        <h2>最近打开</h2>
+        {recent.length ? (
+          recent.map((dir) => (
+            <button className="recent-item" key={dir} onClick={() => open(dir)}>
+              <strong>{nameOf(dir)}</strong>
+              <span>{dir}</span>
+              <span aria-hidden>→</span>
+            </button>
+          ))
+        ) : (
+          <p className="muted">打开过的文件夹会保存在本机。</p>
+        )}
+      </section>
+    </main>
+  );
+}

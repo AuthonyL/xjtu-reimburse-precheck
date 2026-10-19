@@ -1,0 +1,50 @@
+name: 解析失败或误报
+description: 发票无法解析、材料误判或问题提示不准确
+body:
+  - type: markdown
+    attributes:
+      value: |
+        本项目不是学校官方工具。请勿公开真实发票、个人信息或反馈包原文件。
+        请使用“设置 → 反馈 → 导出反馈包”，先检查脱敏预览，再与维护者约定私密发送方式。
+  - type: input
+    id: os
+    attributes:
+      label: 操作系统与架构
+      placeholder: 例如 Windows 11 x64 / macOS Apple 芯片
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: APP 版本与规则版本
+      description: APP 版本见下载文件，规则版本见设置顶部。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤和实际结果
+      description: 写明操作、规则编号或报错。文件名和截图请先去掉个人信息。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期结果
+    validations:
+      required: true
+  - type: dropdown
+    id: feedback
+    attributes:
+      label: 反馈包
+      options:
+        - 已导出并检查脱敏，等待约定发送方式
+        - 无法导出（请在下方说明）
+        - 暂未导出
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充说明
+      description: 不要把含原件或个人信息的 ZIP 直接上传到公开 Issue。

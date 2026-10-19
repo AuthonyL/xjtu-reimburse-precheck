@@ -1,0 +1,131 @@
+name: Pre-release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build-win:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Check release version and runtime
+        run: |
+          node -e "const p=require('./package.json');console.log({tag:process.env.GITHUB_REF_NAME,version:p.version,node:process.version,platform:process.platform,arch:process.arch});if(process.env.GITHUB_REF_NAME!=='v'+p.version)throw Error('Tag must match package.json version')"
+          npm config get cache
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run dist:win
+      - run: npm run verify:packaged -- release/win-unpacked
+      - run: npm run e2e:packaged -- --executable "release/win-unpacked/报销预检.exe"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: release/ReimbursePrecheck-*-win-x64-setup.exe
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-diagnostics-windows
+          path: |
+            test-results/
+            release/build-results.json
+          retention-days: 14
+          if-no-files-found: warn
+  build-mac:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Check release version and ARM runner
+        run: |
+          node -e "const p=require('./package.json');console.log({tag:process.env.GITHUB_REF_NAME,version:p.version,node:process.version,platform:process.platform,arch:process.arch});if(process.arch!=='arm64')throw Error('macos-latest must be ARM for the native smoke test');if(process.env.GITHUB_REF_NAME!=='v'+p.version)throw Error('Tag must match package.json version')"
+          npm config get cache
+          sw_vers
+          df -h .
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run dist:mac
+      - run: npm run verify:packaged -- "release/mac-arm64/报销预检.app" "release/mac/报销预检.app"
+      - run: npm run e2e:packaged -- --executable "release/mac-arm64/报销预检.app/Contents/MacOS/报销预检"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac-installers
+          path: |
+            release/ReimbursePrecheck-*-mac-arm64.dmg
+            release/ReimbursePrecheck-*-mac-x64.dmg
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-diagnostics-macos
+          path: |
+            test-results/
+            release/build-results.json
+          retention-days: 14
+          if-no-files-found: warn
+  publish:
+    needs: [build-win, build-mac]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-installer
+          path: installers
+      - uses: actions/download-artifact@v4
+        with:
+          name: mac-installers
+          path: installers
+      - name: Generate checksums and release notes
+        working-directory: installers
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          assets=(*.exe *.dmg)
+          test "${#assets[@]}" -eq 3
+          sha256sum "${assets[@]}" > SHA256SUMS.txt
+          cat > RELEASE_NOTES.md <<'NOTES'
+          本项目不是西安交通大学官方工具。规则整理自课题组经验和财务处公开要求，以财务处最新规定为准；工具只做预检，不保证报销通过。
+
+          这是预发布版本，请先用资料副本试用。Windows / Apple 芯片 Mac 已由托管机器运行打包后的界面冒烟测试；Intel Mac 包通过结构和资源检查，仍需 Intel 实机验证。安装过程和系统拦截仍需人工核对。
+
+          下载选择：Apple 芯片 Mac 选 mac-arm64.dmg；Intel Mac 选 mac-x64.dmg；Windows x64 选 win-x64-setup.exe。Mac 可在苹果菜单 → 关于本机查看芯片或处理器。
+
+          首次打开：Mac 将应用拖到“应用程序”，右键 → 打开，或在“系统设置 → 隐私与安全性”点“仍要打开”。提示“已损坏”且已确认来源时，执行 xattr -cr "/Applications/报销预检.app"。Windows SmartScreen 点“更多信息 → 仍要运行”。本项目没有付费签名和 Apple 公证。
+
+          校验和：下载 SHA256SUMS.txt；Mac 用 shasum -a 256 <文件>，Windows PowerShell 用 Get-FileHash <文件> -Algorithm SHA256，与清单逐项比较。Linux 可把清单与安装包放一起执行 sha256sum -c SHA256SUMS.txt。
+
+          使用说明：https://github.com/AuthonyL/xjtu-reimburse-precheck/blob/main/docs/使用说明.md
+          NOTES
+      - name: Publish pre-release
+        working-directory: installers
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          gh release create "$GITHUB_REF_NAME" --verify-tag --prerelease --title "报销预检 $GITHUB_REF_NAME" --notes-file RELEASE_NOTES.md ./*.exe ./*.dmg SHA256SUMS.txt

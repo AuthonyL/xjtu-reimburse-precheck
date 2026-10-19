@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用说明与隐私提示
+    url: https://github.com/AuthonyL/xjtu-reimburse-precheck/blob/main/docs/使用说明.md
+    about: 提问前请先阅读；含原文件或个人信息的反馈包不要公开上传。

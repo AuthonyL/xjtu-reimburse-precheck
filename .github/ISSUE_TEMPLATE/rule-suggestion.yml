@@ -1,0 +1,31 @@
+name: 规则建议
+description: 补充规则来源或修正适用口径
+body:
+  - type: input
+    id: rule
+    attributes:
+      label: 相关规则编号
+      placeholder: 例如 F2，或新增规则
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: 规则原文与来源
+      description: 请提供公开链接、文件名称、发布单位及时间；课题组惯例请明确标注。
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 适用范围
+      description: 说明费用类型、经费或人员范围、生效时间和例外条件。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议行为与合成示例
+      description: 说明应报错误、警告还是材料要求。请勿提供真实票号和个人信息。
+    validations:
+      required: true
