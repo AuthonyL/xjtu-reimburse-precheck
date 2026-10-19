@@ -1,6 +1,6 @@
 import { extractFile, statFile, getRawHeader } from '@electron/asar';
 import { readFile, readdir, stat, writeFile, mkdtemp, rm } from 'node:fs/promises';
-import { basename, join, resolve } from 'node:path';
+import { basename, join, resolve, sep } from 'node:path';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
@@ -9,6 +9,9 @@ import JSZip from 'jszip';
 import { syntheticPdf } from '../tests/pdf-fixture.js';
 import { packageFiles, packageResources, withPackagedCore } from './lib/packaged-runtime.js';
 import { verifyWindowsResources } from './lib/windows-resources.js';
+
+// @electron/asar splits archive paths with path.sep, so Windows needs backslashes.
+const asarEntry = (file: string) => file.split('/').join(sep);
 
 const targets = process.argv.slice(2);
 if (!targets.length)
@@ -35,10 +38,13 @@ async function verify(directory: string): Promise<void> {
     'package.json',
   ])
     assert(files.has(file), '归档缺少 ' + file);
-  const mainNotices = extractFile(archive, 'out/main/third-party-notices.txt').toString('utf8');
-  const rendererNotices = extractFile(archive, 'out/renderer/third-party-notices.txt').toString(
+  const mainNotices = extractFile(archive, asarEntry('out/main/third-party-notices.txt')).toString(
     'utf8',
   );
+  const rendererNotices = extractFile(
+    archive,
+    asarEntry('out/renderer/third-party-notices.txt'),
+  ).toString('utf8');
   assert(mainNotices.includes('exceljs@') && mainNotices.includes('docx@'), 'main缺少依赖许可正文');
   assert(
     rendererNotices.includes('react@') && rendererNotices.includes('react-dom@'),
@@ -69,7 +75,9 @@ async function verify(directory: string): Promise<void> {
     assert.equal(binary.readUInt32LE(offset), 0x4550);
     assert.equal(binary.readUInt16LE(offset + 4), 0x8664, 'Windows必须为x64');
     arch = 'x64';
-    const metadata = JSON.parse(extractFile(archive, 'package.json').toString('utf8')) as {
+    const metadata = JSON.parse(
+      extractFile(archive, asarEntry('package.json')).toString('utf8'),
+    ) as {
       version: string;
     };
     const icon = await readFile(resolve('build/icon.ico'));
@@ -122,7 +130,8 @@ async function verify(directory: string): Promise<void> {
     const file = 'node_modules/pdfjs-dist/' + relative;
     assert(files.has(file), '归档缺少 ' + file);
     assert(
-      'unpacked' in statFile(archive, file) && statFile(archive, file).unpacked,
+      'unpacked' in statFile(archive, asarEntry(file)) &&
+        statFile(archive, asarEntry(file)).unpacked,
       '资源未解包 ' + file,
     );
     assert((await stat(join(resources, 'app.asar.unpacked', file))).size > 0, '资源为空 ' + file);
