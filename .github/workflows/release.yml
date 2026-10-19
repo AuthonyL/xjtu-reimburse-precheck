@@ -1,4 +1,4 @@
-name: Pre-release
+name: Release
 on:
   push:
     tags: ['v*']
@@ -110,7 +110,7 @@ jobs:
           cat > RELEASE_NOTES.md <<'NOTES'
           本项目不是西安交通大学官方工具。规则整理自课题组经验和财务处公开要求，以财务处最新规定为准；工具只做预检，不保证报销通过。
 
-          这是预发布版本，请先用资料副本试用。Windows / Apple 芯片 Mac 已由托管机器运行打包后的界面冒烟测试；Intel Mac 包通过结构和资源检查，仍需 Intel 实机验证。安装过程和系统拦截仍需人工核对。
+          建议先用资料副本试用。Windows / Apple 芯片 Mac 已由托管机器运行打包后的界面冒烟测试；Intel Mac 包通过结构和资源检查，仍需 Intel 实机验证。安装过程和系统拦截仍需人工核对。
 
           下载选择：Apple 芯片 Mac 选 mac-arm64.dmg；Intel Mac 选 mac-x64.dmg；Windows x64 选 win-x64-setup.exe。Mac 可在苹果菜单 → 关于本机查看芯片或处理器。
 
@@ -120,7 +120,7 @@ jobs:
 
           使用说明：https://github.com/AuthonyL/xjtu-reimburse-precheck/blob/main/docs/使用说明.md
           NOTES
-      - name: Publish pre-release
+      - name: Publish release
         working-directory: installers
         shell: bash
         env:
@@ -128,4 +128,6 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          gh release create "$GITHUB_REF_NAME" --verify-tag --prerelease --title "报销预检 $GITHUB_REF_NAME" --notes-file RELEASE_NOTES.md ./*.exe ./*.dmg SHA256SUMS.txt
+          # v1.2.3 is published as the latest release; tags with a suffix such as v1.2.3-beta.1 stay pre-releases.
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then kind=(--prerelease); else kind=(--latest); fi
+          gh release create "$GITHUB_REF_NAME" --verify-tag "${kind[@]}" --title "报销预检 $GITHUB_REF_NAME" --notes-file RELEASE_NOTES.md ./*.exe ./*.dmg SHA256SUMS.txt

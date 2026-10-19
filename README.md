@@ -104,7 +104,7 @@ Mac 打开 dmg 后拖到“应用程序”；Windows 运行安装向导，可选
 
 ## 开发
 
-Node.js 24、npm、Electron、React、TypeScript。运行方式、测试、打包及维护者工具见 [开发说明](docs/开发说明.md)。跨平台检查和界面冒烟测试由 GitHub Actions 执行；推送版本标签会在验证后创建预发布，具体是否通过以对应 Actions 日志为准。
+Node.js 24、npm、Electron、React、TypeScript。运行方式、测试、打包及维护者工具见 [开发说明](docs/开发说明.md)。跨平台检查和界面冒烟测试由 GitHub Actions 执行；推送 `v1.2.3` 这样的版本标签会在验证后发布正式版（Latest），带后缀的标签（如 `v1.2.3-beta.1`）发布为预发布；具体是否通过以对应 Actions 日志为准。
 
 ## 许可证
 
