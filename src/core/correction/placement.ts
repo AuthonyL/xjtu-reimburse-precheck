@@ -1,4 +1,5 @@
 import path, { posix } from 'node:path';
+import { pathWithin } from '../fs-path.js';
 export function safeRelative(value: string, allowRoot = false): string {
   if (allowRoot && value === '') return '';
   if (
@@ -63,10 +64,9 @@ export function existingRelativePath(
   base: string,
   file: string,
   api: path.PlatformPath = path,
+  realpath?: (file: string) => string,
 ): string | null {
-  const rel = api.relative(api.resolve(base), api.resolve(file));
-  if (!rel || api.isAbsolute(rel) || rel === '..' || rel.startsWith('..' + api.sep)) return null;
-  return rel.split(api.sep).join('/');
+  return pathWithin(base, file, { api, realpath }) || null;
 }
 export function sameRelativeFile(
   a: string,

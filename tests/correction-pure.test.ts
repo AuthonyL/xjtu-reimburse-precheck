@@ -90,3 +90,16 @@ it('Windows 目录内文件按大小写不敏感找到实际相对路径，POSIX
   expect(sameRelativeFile('AI/Hash.PNG', 'ai/hash.png', false)).toBe(false);
   expect(sameRelativeFile('AI/hash.png', 'AI/other.png', true)).toBe(false);
 });
+it('补交来源短路径和工作区长路径仍能识别为目录内', async () => {
+  const { existingRelativePath } = await import('../src/core/correction/placement.js');
+  const { win32 } = await import('node:path');
+  const native = (p: string) => p.replace('RUNNER~1', 'runneradmin');
+  expect(
+    existingRelativePath(
+      'C:\\Users\\RUNNER~1\\batch',
+      'C:\\Users\\runneradmin\\batch\\AI\\a.png',
+      win32,
+      native,
+    ),
+  ).toBe('AI/a.png');
+});

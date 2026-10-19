@@ -1,3 +1,4 @@
+import { samePath } from '../../core/fs-path.js';
 import { posix } from 'node:path';
 import type { CorrectionTarget } from '../../core/correction/types.js';
 import { problemKey, relativeProblemFile } from '../../core/correction/problems.js';
@@ -108,7 +109,7 @@ export function correctionTargets(context: CorrectionContext): CorrectionTarget[
     }
     for (const group of report!.groups) {
       const groupFolder = relativeProblemFile(dir, group.group.dir);
-      const cleanFolder = group.group.dir === dir ? '' : groupFolder;
+      const cleanFolder = samePath(group.group.dir, dir) ? '' : groupFolder;
       for (const r of group.requirements.filter((r) => r.status !== 'found')) {
         const strictLocal = r.type === 'itinerary' || r.type === 'waybill';
         const invoice = batch!.invoices.find((i) => i.number === r.invoiceNumbers[0]);

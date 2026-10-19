@@ -1,3 +1,5 @@
+import { canonicalPath, samePath } from '../core/fs-path.js';
+import { isProbeError, probeDirectory, readSelectedDirectory } from '../core/fs-probe.js';
 import { scanRootBatches } from '../core/discovery.js';
 import { compareBatches } from '../core/batch-order.js';
 import { dirname, join } from 'node:path';
@@ -165,6 +167,7 @@ export class WorkspaceService {
     }
   }
   async open(dir: string, selection?: string | null): Promise<WorkspaceView> {
+    if (selection) selection = canonicalPath(selection);
     const previous = {
       location: this.location,
       view: this.view,
@@ -188,8 +191,8 @@ export class WorkspaceService {
       if (
         selected &&
         (this.scans.has(selected) ||
-          result.rejected?.batch.dir === selected ||
-          result.labor?.some((l) => l.report.dir === selected))
+          samePath(result.rejected?.batch.dir, selected) ||
+          result.labor?.some((l) => samePath(l.report.dir, selected)))
       )
         result.selectedBatchDir = selected;
       await this.store.addRecent(this.location.dir);
@@ -205,30 +208,35 @@ export class WorkspaceService {
     }
   }
   async select(dir: string | null): Promise<void> {
+    if (dir) dir = canonicalPath(dir);
     if (!this.location || !this.view) throw new Error('请先选择文件夹');
     if (
       dir !== null &&
-      !this.view.batches.some((b) => b.batch.dir === dir) &&
-      this.view.rejected?.batch.dir !== dir &&
-      !this.view.labor?.some((l) => l.report.dir === dir)
+      !this.view.batches.some((b) => samePath(b.batch.dir, dir)) &&
+      !samePath(this.view.rejected?.batch.dir, dir) &&
+      !this.view.labor?.some((l) => samePath(l.report.dir, dir))
     )
       throw new Error('批次不属于当前打开的工作区');
     await this.store.rememberWorkspace(this.location.dir, dir);
     this.view.selectedBatchDir = dir;
   }
   batch(dir: string): BatchView {
-    if (this.view?.rejected?.batch.dir === dir) throw new Error('无法报销费用为只读参考目录');
-    const batch = this.view?.batches.find((v) => v.batch.dir === dir);
+    if (samePath(this.view?.rejected?.batch.dir, dir))
+      throw new Error('无法报销费用为只读参考目录');
+    const batch = this.view?.batches.find((v) => samePath(v.batch.dir, dir));
     if (!batch) throw new Error('批次不属于当前打开的工作区，请重新打开');
     return batch;
   }
   async refresh(dir?: string, cached = false): Promise<WorkspaceView> {
+    if (dir) dir = canonicalPath(dir);
     if (!this.location) throw new Error('请先选择文件夹');
     const { rules } = await this.store.settings();
     const location = this.location;
+    await readSelectedDirectory(location.dir);
     await assertDirectory(location.dir);
     const root = location.contextRoot;
-    const isLabor = dir !== undefined && this.laborService.views.some((l) => l.report.dir === dir);
+    const isLabor =
+      dir !== undefined && this.laborService.views.some((l) => samePath(l.report.dir, dir));
     let scans: Map<string, Batch>;
     let rejected = this.rejected;
     if (cached) {
@@ -240,7 +248,7 @@ export class WorkspaceService {
         scans.set(dir, await scanBatch(dir, { config: rules }));
       }
     } else {
-      const entries = root ? await readdir(root, { withFileTypes: true }) : [];
+      const entries = root ? ((await probeDirectory(root)) ?? []) : [];
       scans = new Map();
       if (root) {
         for (const batch of await scanRootBatches(root, rules)) scans.set(batch.dir, batch);
@@ -249,10 +257,14 @@ export class WorkspaceService {
         await assertDirectory(directory);
         scans.set(directory, await scanBatch(directory, { config: rules }));
       }
-      rejected =
-        root && entries.some((e) => e.isDirectory() && e.name === '无法报销费用')
-          ? await scanBatch(join(root, '无法报销费用'), { config: rules })
-          : null;
+      rejected = null;
+      if (root && entries.some((e) => e.isDirectory() && e.name === '无法报销费用')) {
+        try {
+          rejected = await scanBatch(join(root, '无法报销费用'), { config: rules });
+        } catch (error) {
+          if (!isProbeError(error)) throw error;
+        }
+      }
       if (!root && location.referenceDir) {
         rejected = scans.get(location.referenceDir)!;
         scans.delete(location.referenceDir);
@@ -293,7 +305,7 @@ export class WorkspaceService {
       return {
         batch,
         report,
-        markedAt: history.find((h) => h.batchDir === batch.dir)?.markedAt ?? null,
+        markedAt: history.find((h) => samePath(h.batchDir, batch.dir))?.markedAt ?? null,
         outputs: await this.outputs(batch.dir),
         manualTasks: manualTasks(batch, rules.exchangeRateType),
         ...(!readOnly ? { replacements: await readReplacementHistory(batch.dir) } : {}),
@@ -315,8 +327,8 @@ export class WorkspaceService {
       selectedBatchDir:
         selection &&
         (scans.has(selection) ||
-          rejected?.dir === selection ||
-          labor.some((l) => l.report.dir === selection))
+          samePath(rejected?.dir, selection) ||
+          labor.some((l) => samePath(l.report.dir, selection)))
           ? selection
           : null,
     };
@@ -341,9 +353,9 @@ export class WorkspaceService {
       ],
     };
     const result = checkBatch(batch, rules, {
-      otherBatches: batches.filter((b) => b.dir !== identityDir),
+      otherBatches: batches.filter((b) => !samePath(b.dir, identityDir)),
       submittedHistory: new Set(
-        history.filter((h) => h.batchDir !== identityDir).flatMap((h) => h.numbers),
+        history.filter((h) => !samePath(h.batchDir, identityDir)).flatMap((h) => h.numbers),
       ),
       ...(readOnly ? {} : context),
     });
@@ -356,10 +368,11 @@ export class WorkspaceService {
     return { batch, report: buildReport(result) };
   }
   private async correctionContext(dir: string): Promise<CorrectionContext> {
+    dir = canonicalPath(dir);
     await this.refresh();
     const view = this.view!;
-    const batch = view.batches.find((b) => b.batch.dir === dir);
-    const labor = view.labor?.find((l) => l.report.dir === dir);
+    const batch = view.batches.find((b) => samePath(b.batch.dir, dir));
+    const labor = view.labor?.find((l) => samePath(l.report.dir, dir));
     if (!batch && !labor) throw new Error('只能检查当前批次或劳务目录，拒票目录不提供放入入口');
     const settings = await this.store.settings();
     const history = await this.store.history();
@@ -514,7 +527,7 @@ export class WorkspaceService {
         )
         .map((e) => join(output, e.name));
     } catch (e) {
-      if ((e as NodeJS.ErrnoException).code === 'ENOENT') return [];
+      if (isProbeError(e)) return [];
       throw e;
     }
   }
@@ -574,7 +587,7 @@ export class WorkspaceService {
         ...view.outputs,
         ...view.batch.unidentified.map((f) => f.path),
       ];
-      if (!allowed.includes(input)) continue;
+      if (!allowed.some((file) => samePath(file, input))) continue;
       const file = await batchFile(view.batch.dir, manualPath(view.batch.dir, input));
       const canonical = await realpath(file);
       manualPath(view.batch.dir, canonical);
@@ -583,7 +596,7 @@ export class WorkspaceService {
     throw new Error('文件不属于当前批次');
   }
   async output(dir: string) {
-    if (!this.laborService.views.some((l) => l.report.dir === dir)) this.batch(dir);
+    if (!this.laborService.views.some((l) => samePath(l.report.dir, dir))) this.batch(dir);
     return outputDirectory(dir);
   }
   async saveLabor(dir: string, file: string, entry: LaborManualEntry): Promise<WorkspaceView> {

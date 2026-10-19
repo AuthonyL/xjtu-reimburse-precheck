@@ -79,7 +79,7 @@ it('非日期批次/附件批次纳入，排除空目录和特殊目录，统一
   ]);
 });
 it('同一天按名称升序，非日期批次从全部子组取最晚开票日', async () => {
-  const root = await fixture();
+  const root = join(await fixture(), 'root');
   for (const folder of ['B组/子组', 'A组']) await mkdir(join(root, folder), { recursive: true });
   await writeFile(join(root, 'B组/子组/a.xml'), xml.replace('2026-01-02', '2026-07-01'));
   await writeFile(

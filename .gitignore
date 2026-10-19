@@ -13,3 +13,6 @@ test-results/
 private/
 .git/
 .DS_Store
+
+# Codex planning notes stay local
+docs/superpowers/

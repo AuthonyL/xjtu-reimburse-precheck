@@ -51,6 +51,16 @@ it('只接受当前真实问题、记录相对路径/末六位号；预览原件
   await expect(service.save(preview.token, join(temp, 'alias', '禁止.zip'))).rejects.toThrow(
     /工作区以外/,
   );
+  const external = join(temp, '外部输出');
+  await mkdir(external);
+  await symlink(
+    external,
+    join(root, '输出链接'),
+    process.platform === 'win32' ? 'junction' : 'dir',
+  );
+  await expect(service.save(preview.token, join(root, '输出链接', '禁止.zip'))).rejects.toThrow(
+    /工作区以外/,
+  );
   const path = join(temp, '反馈.zip');
   expect(await service.save(preview.token, path)).toBe(path);
   expect((await readFile(path)).length).toBeGreaterThan(0);

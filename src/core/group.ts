@@ -1,9 +1,10 @@
-import { dirname, join, relative, sep } from 'node:path';
+import { dirname, join } from 'node:path';
 import type { Group, Invoice } from './types.js';
 import { containsAny, isAiInvoice, isDelegatedGroup, type RuleConfig } from './rules/config.js';
+import { relativePath } from './fs-path.js';
 
 export function groupName(batchDir: string, file: string): string {
-  const parts = relative(batchDir, file).split(sep);
+  const parts = relativePath(batchDir, file).split('/');
   return parts.length > 1 ? parts[0]! : '根目录';
 }
 export function createGroups(

@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { rename, rm, writeFile } from 'node:fs/promises';
+import { rename, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import type { ManualEntry } from '../core/types.js';
 import { validateManual } from '../core/manual.js';
@@ -8,6 +8,7 @@ import { rateFromSelection } from './boc-selection.js';
 import { batchFile, outputDirectory } from './paths.js';
 import { readJson, writeJson, SerialQueue } from './json-store.js';
 import { saveManualEntry } from './manual-store.js';
+import { retryFileOperation, removePath } from './file-operations.js';
 
 interface RateCapture {
   file: string;
@@ -65,9 +66,9 @@ export function saveRateCapture(
     const temporary = join(dir, randomUUID() + '.tmp');
     try {
       await writeFile(temporary, png, { flag: 'wx' });
-      await rename(temporary, file);
+      await retryFileOperation('保存汇率截图', () => rename(temporary, file));
     } finally {
-      await rm(temporary, { force: true });
+      await removePath(temporary);
     }
     await saveManualEntry(batch, { ...entry, exchangeRate: rate, rateBase: 1 });
     const row: RateCapture = {

@@ -1,9 +1,16 @@
 import path from 'node:path';
 import { canBeUnnamedAttachment, identifyAttachment } from '../core/attachments.js';
-import { lstat, readdir, realpath, mkdir } from 'node:fs/promises';
+import { lstat, realpath, mkdir } from 'node:fs/promises';
+import { pathWithin } from '../core/fs-path.js';
 import { loadConfig, type RuleConfig } from '../core/rules/config.js';
 import { candidateBatchDirectories, isBatchDirectoryName } from '../core/discovery.js';
 import { isLaborDirectoryName } from '../core/labor/scan.js';
+import {
+  isProbeError,
+  probeDirectory,
+  readSelectedDirectory,
+  selectedDirectoryError,
+} from '../core/fs-probe.js';
 
 export interface WorkspaceLocation {
   kind: 'root' | 'batch';
@@ -17,15 +24,18 @@ export async function assertDirectory(dir: string) {
   const info = await lstat(dir);
   if (info.isSymbolicLink()) throw new Error('批次目录不允许使用符号链接');
   if (!info.isDirectory()) throw new Error('批次文件夹已不存在');
-  if (path.relative(await realpath(dir), path.resolve(dir)) !== '')
-    throw new Error('批次目录路径已变为符号链接，请重新选择文件夹');
+  // Native aliases (including Windows 8.3 names) are valid; symlink ancestors are not.
+  for (let current = path.dirname(path.resolve(dir)); ; current = path.dirname(current)) {
+    if ((await lstat(current)).isSymbolicLink())
+      throw new Error('批次目录路径已变为符号链接，请重新选择文件夹');
+    if (current === path.dirname(current)) break;
+  }
 }
 
 export function manualPath(base: string, file: string, api = path): string {
-  const rel = api.relative(api.resolve(base), api.resolve(file));
-  if (!rel || api.isAbsolute(rel) || rel.split(api.sep).includes('..'))
-    throw new Error('文件必须位于所选批次内');
-  return rel.split(api.sep).join('/');
+  const rel = pathWithin(base, file, { api });
+  if (!rel) throw new Error('文件必须位于所选批次内');
+  return rel;
 }
 
 export async function detectWorkspace(
@@ -33,8 +43,15 @@ export async function detectWorkspace(
   config: RuleConfig = loadConfig(),
 ): Promise<WorkspaceLocation> {
   if (typeof input !== 'string' || !input.trim()) throw new Error('请选择文件夹');
-  const dir = await realpath(input);
-  if (!(await lstat(dir)).isDirectory()) throw new Error('请选择文件夹，不能选择文件');
+  let dir: string;
+  try {
+    dir = await realpath(input);
+    if (!(await lstat(dir)).isDirectory()) throw new Error('请选择文件夹，不能选择文件');
+    await readSelectedDirectory(dir);
+  } catch (error) {
+    if (isProbeError(error)) throw selectedDirectoryError(input, error);
+    throw error;
+  }
   const isDocument = (e: { name: string; isFile: () => boolean }) =>
     e.isFile() &&
     !e.name.startsWith('.') &&
@@ -47,7 +64,7 @@ export async function detectWorkspace(
     let cached = documents.get(d);
     if (cached) return cached;
     cached = (async () => {
-      const entries = await readdir(d, { withFileTypes: true });
+      const entries = (await probeDirectory(d)) ?? [];
       if (entries.some(isDocument)) return true;
       for (const e of entries)
         if (
@@ -67,7 +84,7 @@ export async function detectWorkspace(
     let cached = roots.get(d);
     if (cached) return cached;
     cached = (async () => {
-      const entries = await readdir(d, { withFileTypes: true });
+      const entries = (await probeDirectory(d)) ?? [];
       if (
         entries.some(
           (e) =>
@@ -89,10 +106,16 @@ export async function detectWorkspace(
   };
   const hasBatches = async (d: string) => !!(await rootKind(d));
   const multipleBatches = async (d: string) => {
+    const entries = (await probeDirectory(d)) ?? [];
+    if (entries.some((e) => e.isFile() && !e.name.startsWith('.'))) return false;
     let count = 0;
-    for (const child of await candidateBatchDirectories(d, config))
-      if ((await hasDocuments(child)) && ++count >= 2) return true;
-    return false;
+    for (const child of await candidateBatchDirectories(d, config)) {
+      const children = await probeDirectory(child);
+      if (!children || !children.length) continue;
+      if (!(await hasDocuments(child))) return false;
+      count++;
+    }
+    return count >= 2;
   };
   let referenceDir: string | undefined;
   for (let current = dir; ; current = path.dirname(current)) {
@@ -127,9 +150,13 @@ export async function detectWorkspace(
   const parent = path.dirname(dir);
   const parentKind = await rootKind(parent);
   const currentKind = await rootKind(dir);
-  const candidate = isBatchDirectoryName(path.basename(dir), config);
+  const candidate =
+    isBatchDirectoryName(path.basename(dir), config) &&
+    (/^\d{8}$/.test(path.basename(dir)) || (await hasDocuments(dir)));
   if (candidate && parentKind === 'strong') return { kind: 'batch', dir, contextRoot: parent };
   if (currentKind === 'strong') return { kind: 'root', dir, contextRoot: dir };
+  if (currentKind === 'weak' && (await multipleBatches(dir)))
+    return { kind: 'root', dir, contextRoot: dir };
   if (candidate && parentKind === 'weak' && (await multipleBatches(parent)))
     return { kind: 'batch', dir, contextRoot: parent };
   if (currentKind === 'weak') return { kind: 'root', dir, contextRoot: dir };
@@ -148,8 +175,8 @@ export async function batchFile(batch: string, relative: string, allowMissing = 
     throw new Error('文件路径必须为批次内相对路径');
   await assertDirectory(batch);
   const target = path.resolve(batch, relative);
-  manualPath(batch, target);
   let current = batch;
+  // Inspect the original spelling before realpath follows any ancestor link.
   for (const part of path.relative(batch, target).split(path.sep)) {
     current = path.join(current, part);
     try {
@@ -158,6 +185,7 @@ export async function batchFile(batch: string, relative: string, allowMissing = 
       if (!allowMissing || (e as NodeJS.ErrnoException).code !== 'ENOENT') throw e;
     }
   }
+  manualPath(batch, target);
   return target;
 }
 

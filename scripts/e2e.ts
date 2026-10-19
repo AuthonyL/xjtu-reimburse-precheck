@@ -338,8 +338,11 @@ try {
   await laborNode.click();
   await page.screenshot({ path: join(resultDir, prefix + '-labor.png') });
   // File correction stays inside synthetic folders, including the archived originals.
-  await tree.locator('[data-batch-id="20260103"]').click();
-  await tree.locator(`[data-node-id="${correctionLabor}"]`).click();
+  const correctionBatchNode = tree.locator('[data-batch-id="20260103"]');
+  await correctionBatchNode.click();
+  await expect(correctionBatchNode).toHaveAttribute('aria-expanded', 'true');
+  const correctionBranch = correctionBatchNode.locator('..').getByRole('group').first();
+  await correctionBranch.getByRole('treeitem', { name: /劳务费/, exact: false }).click();
   const correctionCard = page.getByTestId('labor-entry');
   await expect(correctionCard.locator('.finding.error')).toHaveCount(2);
   await application

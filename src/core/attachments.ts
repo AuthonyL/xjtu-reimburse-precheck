@@ -1,6 +1,7 @@
-import { basename, dirname, relative, sep } from 'node:path';
+import { basename, dirname, sep } from 'node:path';
 import type { Attachment, AttachmentType } from './types.js';
 import { containsAny, loadConfig, type RuleConfig } from './rules/config.js';
+import { relativePath } from './fs-path.js';
 
 export { ATTACHMENT_LABELS as attachmentLabels } from './rules/catalog.js';
 import { ATTACHMENT_LABELS as attachmentLabels } from './rules/catalog.js';
@@ -57,7 +58,7 @@ export function makeAttachment(
 ): Attachment {
   return {
     path: file,
-    relativePath: relative(batchDir, file).split(sep).join('/'),
+    relativePath: relativePath(batchDir, file),
     directory: dirname(file),
     type,
   };

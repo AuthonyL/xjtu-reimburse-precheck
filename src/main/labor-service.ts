@@ -1,3 +1,5 @@
+import { canonicalPath, samePath } from '../core/fs-path.js';
+import { isProbeError } from '../core/fs-probe.js';
 import { join } from 'node:path';
 import { readdir, realpath } from 'node:fs/promises';
 import type { RuleConfig } from '../core/rules/config.js';
@@ -22,9 +24,14 @@ export class LaborService {
   ): Promise<LaborView[]> {
     const scans = cached || changed ? new Map(this.scans) : new Map<string, LaborScan>();
     for (const dir of dirs)
-      if (!cached && (!changed || changed === dir)) {
-        await assertDirectory(dir);
-        scans.set(dir, await scanLaborDirectory(dir, config));
+      if (!cached && (!changed || samePath(changed, dir))) {
+        try {
+          await assertDirectory(dir);
+          scans.set(dir, await scanLaborDirectory(dir, config));
+        } catch (error) {
+          if (!isProbeError(error)) throw error;
+          scans.delete(dir);
+        }
       }
     const views: LaborView[] = [];
     for (const scan of scans.values()) {
@@ -35,7 +42,7 @@ export class LaborService {
           .filter((e) => e.isFile() && /^情况说明-.+\.docx$/.test(e.name))
           .map((e) => join(output, e.name));
       } catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+        if (!isProbeError(error)) throw error;
       }
       views.push({
         report: checkLabor(scan, config),
@@ -48,7 +55,9 @@ export class LaborService {
     return views;
   }
   private statement(dir: string, file: string) {
-    const statement = this.scans.get(dir)?.statements.find((s) => s.relativePath === file);
+    const statement = this.scans
+      .get(canonicalPath(dir))
+      ?.statements.find((s) => s.relativePath === file);
     if (!statement) throw new Error('只能编辑当前劳务目录中已识别的情况说明');
     return statement;
   }
@@ -77,7 +86,7 @@ export class LaborService {
           ...view.report.entries.map((e) => e.path),
           ...view.report.attachments.map((a) => a.path),
           ...view.outputs,
-        ].includes(input)
+        ].some((file) => samePath(file, input))
       )
         continue;
       const safe = await batchFile(view.report.dir, manualPath(view.report.dir, input));

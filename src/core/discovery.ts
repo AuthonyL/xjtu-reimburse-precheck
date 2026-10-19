@@ -1,4 +1,4 @@
-import { readdir } from 'node:fs/promises';
+import { isProbeError, probeDirectory } from './fs-probe.js';
 import { join } from 'node:path';
 import type { Batch } from './types.js';
 import type { RuleConfig } from './rules/config.js';
@@ -16,7 +16,7 @@ export async function candidateBatchDirectories(
   root: string,
   config: RuleConfig,
 ): Promise<string[]> {
-  return (await readdir(root, { withFileTypes: true }))
+  return ((await probeDirectory(root)) ?? [])
     .filter((e) => e.isDirectory() && !e.isSymbolicLink() && isBatchDirectoryName(e.name, config))
     .map((e) => join(root, e.name))
     .sort();
@@ -24,19 +24,23 @@ export async function candidateBatchDirectories(
 export async function scanRootBatches(root: string, config: RuleConfig): Promise<Batch[]> {
   const batches: Batch[] = [];
   for (const dir of await candidateBatchDirectories(root, config)) {
-    const batch = await scanBatch(dir, { config });
-    let content = !!(
-      batch.invoices.length ||
-      batch.attachments.length ||
-      batch.unidentified.some((f) => f.parseFailed || f.isPdf)
-    );
-    if (!content)
-      for (const labor of await findLaborDirectories(dir, config, 'batch'))
-        if ((await listDocuments(labor, config)).length) {
-          content = true;
-          break;
-        }
-    if (content) batches.push(batch);
+    try {
+      const batch = await scanBatch(dir, { config });
+      let content = !!(
+        batch.invoices.length ||
+        batch.attachments.length ||
+        batch.unidentified.some((f) => f.parseFailed || f.isPdf)
+      );
+      if (!content)
+        for (const labor of await findLaborDirectories(dir, config, 'batch'))
+          if ((await listDocuments(labor, config)).length) {
+            content = true;
+            break;
+          }
+      if (content) batches.push(batch);
+    } catch (error) {
+      if (!isProbeError(error)) throw error;
+    }
   }
   return batches.sort(compareBatches);
 }

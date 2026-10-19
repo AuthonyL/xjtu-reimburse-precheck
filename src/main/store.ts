@@ -1,4 +1,5 @@
-import { resolve, join, basename } from 'node:path';
+import { canonicalPath, samePath } from '../core/fs-path.js';
+import { join, basename } from 'node:path';
 import { access } from 'node:fs/promises';
 import { loadConfig, type DeepPartial, type RuleConfig } from '../core/rules/config.js';
 import { readJson, writeJson, SerialQueue } from './json-store.js';
@@ -111,7 +112,10 @@ export class DesktopStore {
     return this.queue.run(async () => {
       await writeJson(
         join(this.dir, 'recent.json'),
-        [resolve(dir), ...(await this.recent()).filter((v) => v !== resolve(dir))].slice(0, 10),
+        [canonicalPath(dir), ...(await this.recent()).filter((v) => !samePath(v, dir))].slice(
+          0,
+          10,
+        ),
       );
     });
   }
@@ -134,9 +138,9 @@ export class DesktopStore {
   }
   mark(dir: string, numbers: string[]) {
     return this.queue.run(async () => {
-      const history = (await this.history()).filter((v) => v.batchDir !== resolve(dir));
+      const history = (await this.history()).filter((v) => !samePath(v.batchDir, dir));
       history.push({
-        batchDir: resolve(dir),
+        batchDir: canonicalPath(dir),
         batchId: basename(dir),
         markedAt: new Date().toISOString(),
         numbers: [...new Set(numbers)],
@@ -148,14 +152,14 @@ export class DesktopStore {
     return this.queue.run(async () =>
       writeJson(
         join(this.dir, 'history.json'),
-        (await this.history()).filter((v) => v.batchDir !== resolve(dir)),
+        (await this.history()).filter((v) => !samePath(v.batchDir, dir)),
       ),
     );
   }
   async submitted(excludeDir: string): Promise<Set<string>> {
     return new Set(
       (await this.history())
-        .filter((v) => v.batchDir !== resolve(excludeDir))
+        .filter((v) => !samePath(v.batchDir, excludeDir))
         .flatMap((v) => v.numbers),
     );
   }

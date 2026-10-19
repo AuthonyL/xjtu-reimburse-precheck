@@ -99,7 +99,9 @@ it('用途说明补交正确命名和找到，自动只有一项时直接匹配�
   await writeFile(source, syntheticTextPdf([['合成科研用途说明', 10, 20]]));
   const preview = checked(await service.previewCorrection({ dir: batch, source }));
   expect(preview.passed).toBe(true);
-  expect(preview.operations.some((op) => op.to.endsWith('PCB/用途说明-文具.pdf'))).toBe(true);
+  expect(preview.operations.some((op) => op.to === join(batch, 'PCB', '用途说明-文具.pdf'))).toBe(
+    true,
+  );
   let view = await service.confirmCorrection(preview.token);
   expect(
     view.batches
@@ -219,7 +221,9 @@ it('解析失败 XML/OFD 不能靠非发票内容消除；修复不误删旁边�
     await writeFile(source, xml.replace('SYNTH-001', 'SYNTH-REPAIRED'));
     preview = checked(await service.previewCorrection({ dir: batch, source, targetId: target.id }));
     expect(preview.passed).toBe(true);
-    expect(preview.operations.some((op) => op.to.endsWith('/_预检/manual.json'))).toBe(false);
+    expect(preview.operations.some((op) => op.to === join(batch, '_预检', 'manual.json'))).toBe(
+      false,
+    );
     await service.cancelCorrection(preview.token);
     await rm(join(batch, `PCB/坏票.${extension}`));
   }
@@ -278,7 +282,7 @@ it.each([
       await service.previewCorrection({ dir: batch, source, targetId: target.id }),
     );
     expect(preview.passed).toBe(true);
-    expect(preview.operations.some((op) => op.to.endsWith('业务/某日/' + output))).toBe(true);
+    expect(preview.operations.some((op) => op.to === join(nested, output))).toBe(true);
     await service.cancelCorrection(preview.token);
   },
 );
@@ -304,7 +308,9 @@ it.each(['AI/hash.png', 'hash.png', '汇率/支付记录.png'])(
     expect(await directoryFingerprint([batch])).toBe(before);
     expect(preview.operations.some((o) => o.kind === 'confirm-attachment')).toBe(true);
     expect(
-      preview.operations.some((o) => o.kind === 'copy' && !o.to.endsWith('/_预检/manual.json')),
+      preview.operations.some(
+        (o) => o.kind === 'copy' && o.to !== join(batch, '_预检', 'manual.json'),
+      ),
     ).toBe(false);
     let view = await service.confirmCorrection(preview.token);
     let b = view.batches.find((b) => b.batch.dir === batch)!;
@@ -332,7 +338,9 @@ it('目录内但不在查找范围的附件仍复制到正确组', async () => {
   );
   expect(preview.passed).toBe(true);
   expect(
-    preview.operations.some((o) => o.kind === 'copy' && /AI[\/]中行汇率截图-AI\.png$/.test(o.to)),
+    preview.operations.some(
+      (o) => o.kind === 'copy' && o.to === join(batch, 'AI', '中行汇率截图-AI.png'),
+    ),
   ).toBe(true);
   await service.cancelCorrection(preview.token);
 });

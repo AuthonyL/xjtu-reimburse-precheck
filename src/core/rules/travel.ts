@@ -1,3 +1,4 @@
+import { samePath } from '../fs-path.js';
 import { basename, dirname, extname } from 'node:path';
 import type { Attachment, Batch, Invoice } from '../types.js';
 export function itineraryAmounts(file: string, text = ''): number[] {
@@ -26,7 +27,7 @@ export function matchItineraries(batch: Batch, invoices: Invoice[]): Map<string,
   const used = new Set<string>();
   const found = new Map<string, Attachment>();
   const local = (invoice: Invoice) =>
-    files.filter((a) => invoice.sources.some((s) => dirname(s.path) === a.directory));
+    files.filter((a) => invoice.sources.some((s) => samePath(dirname(s.path), a.directory)));
   const samePrefix = (i: Invoice, a: Attachment) =>
     i.sources.some(
       (s) => itineraryPrefix(s.path) === itineraryPrefix(a.path) && !!itineraryPrefix(a.path),

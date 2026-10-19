@@ -1,5 +1,4 @@
 import { scanRootBatches } from './discovery.js';
-import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { Batch, CheckContext, RootResult, ScanOptions } from './types.js';
 import { scanBatch } from './scan.js';
@@ -9,6 +8,7 @@ import { buildRejectedInfo, readRejectedReasons } from './rejected.js';
 import { buildReport } from './report.js';
 import { findLaborDirectories, scanLaborDirectory } from './labor/scan.js';
 import { checkLabor } from './labor/engine.js';
+import { probe, readSelectedDirectory } from './fs-probe.js';
 
 export * from './types.js';
 export * from './batch-order.js';
@@ -37,13 +37,13 @@ export async function checkRoot(
   config: RuleConfig = loadConfig(),
   opts: ScanOptions & Omit<CheckContext, 'otherBatches'> = {},
 ): Promise<RootResult> {
-  const entries = await readdir(rootDir, { withFileTypes: true });
+  const entries = await readSelectedDirectory(rootDir);
   const batches = await scanRootBatches(rootDir, config);
   const rejectedNumbers = new Set(opts.rejectedNumbers);
   let rejected: Batch | null = null;
   if (entries.some((e) => e.isDirectory() && e.name === '无法报销费用')) {
-    rejected = await scanBatch(join(rootDir, '无法报销费用'), { config });
-    rejected.invoices.forEach((i) => rejectedNumbers.add(i.number));
+    rejected = await probe(() => scanBatch(join(rootDir, '无法报销费用'), { config }));
+    rejected?.invoices.forEach((i) => rejectedNumbers.add(i.number));
   }
   const rejectedInfo = new Map(opts.rejectedInfo);
   if (rejected)
@@ -68,10 +68,12 @@ export async function checkRoot(
     rejectedNumbers,
     rejected,
     rejectedInfo,
-    labor: await Promise.all(
-      (await findLaborDirectories(rootDir, config)).map(async (dir) =>
-        checkLabor(await scanLaborDirectory(dir, config), config),
-      ),
-    ),
+    labor: (
+      await Promise.all(
+        (await findLaborDirectories(rootDir, config)).map(async (dir) =>
+          probe(async () => checkLabor(await scanLaborDirectory(dir, config), config)),
+        ),
+      )
+    ).filter((report) => report !== null),
   };
 }

@@ -1,5 +1,6 @@
-import { dirname, basename, resolve } from 'node:path';
-import { writeFile, realpath, lstat } from 'node:fs/promises';
+import { samePath, pathWithin } from '../core/fs-path.js';
+import { basename, resolve } from 'node:path';
+import { writeFile, lstat } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { DEFAULT_BOC_URL } from './store.js';
 import { FeedbackStore } from './feedback-store.js';
@@ -48,8 +49,8 @@ export class FeedbackService {
     )
       throw new Error('反馈格式错误');
     const v = this.view();
-    const batch = v.batches.find((b) => b.batch.dir === resolve(input.directory));
-    const labor = v.labor?.find((l) => l.report.dir === resolve(input.directory));
+    const batch = v.batches.find((b) => samePath(b.batch.dir, input.directory));
+    const labor = v.labor?.find((l) => samePath(l.report.dir, input.directory));
     if (!batch && !labor) throw new Error('只能反馈当前批次或劳务目录的问题');
     const findings = batch?.report.findings ?? [
       ...labor!.report.diagnostics,
@@ -135,23 +136,11 @@ export class FeedbackService {
     const root = this.view().dir;
     if (this.preview.workspaceKey !== workspaceIdentity(root))
       throw new Error('工作区已切换，请重新预览反馈包');
-    try {
-      relativeFile(root, path);
-      throw new Error('请将反馈包保存到工作区以外，避免改动原始资料');
-    } catch (e) {
-      if (e instanceof Error && e.message.includes('工作区以外')) throw e;
-    }
-    const actual = resolve(await realpath(dirname(path)), basename(path));
-    const actualRoot = await realpath(root);
-    const isInside = (base: string, file: string) => {
-      try {
-        relativeFile(base, file);
-        return true;
-      } catch {
-        return false;
-      }
-    };
-    if (isInside(actualRoot, actual))
+    // Reject both a path spelled inside the workspace and aliases resolving into it.
+    if (
+      pathWithin(root, path, { realpath: (file) => file }) !== null ||
+      pathWithin(root, path) !== null
+    )
       throw new Error('请将反馈包保存到工作区以外，避免改动原始资料');
     try {
       if ((await lstat(path)).isSymbolicLink()) throw new Error('反馈包保存位置不能为符号链接');

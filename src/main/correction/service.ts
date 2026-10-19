@@ -40,6 +40,8 @@ import { CORRECTION_EXTENSIONS, identifyCorrectionFile } from './identify.js';
 import type { CorrectionContext } from './context.js';
 import { commitCorrection, undoCorrection, type CorrectionWritePlan } from './store.js';
 import { copyDocuments, documentFiles, fileHash } from './files.js';
+import { samePath } from '../../core/fs-path.js';
+import { removePath } from '../file-operations.js';
 
 interface Trial {
   dir: string;
@@ -60,7 +62,7 @@ export class CorrectionService {
     const trial = this.trials.get(token);
     if (trial) {
       this.trials.delete(token);
-      await rm(trial.temp, { recursive: true, force: true });
+      await removePath(trial.temp, true);
     }
   }
   async preview(request: CorrectionRequest): Promise<CorrectionPreview> {
@@ -130,7 +132,7 @@ export class CorrectionService {
       const copy = join(temp, 'copy');
       await copyDocuments(context.dir, copy);
       const existing = await documentFiles(copy);
-      const relativeSource = existingRelativePath(context.dir, await realpath(request.source));
+      const relativeSource = existingRelativePath(context.dir, request.source);
       const sourceInCopy =
         relativeSource && !relativeSource.split('/').includes('_预检')
           ? (existing.find((file) => sameRelativeFile(file, relativeSource)) ?? null)
@@ -155,7 +157,11 @@ export class CorrectionService {
           const replaced =
             candidates.find((s) => posix.extname(s).toLowerCase() === extension) ?? candidates[0]!;
           const sameFolder =
-            sourceInCopy && posix.dirname(sourceInCopy) === posix.dirname(replaced);
+            sourceInCopy &&
+            samePath(
+              join(context.dir, posix.dirname(sourceInCopy)),
+              join(context.dir, posix.dirname(replaced)),
+            );
           if (sameFolder) {
             destination = sourceInCopy!;
             archive = [replaced];
@@ -404,7 +410,7 @@ export class CorrectionService {
         blockers,
       };
     } finally {
-      if (!retained) await rm(temp, { recursive: true, force: true });
+      if (!retained) await removePath(temp, true);
     }
   }
   async confirm(token: string): Promise<string> {

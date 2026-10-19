@@ -1,4 +1,5 @@
-import { basename, dirname, relative, sep } from 'node:path';
+import { pathKey, relativePath, samePath } from '../fs-path.js';
+import { basename, dirname } from 'node:path';
 import type {
   Attachment,
   AttachmentType,
@@ -86,17 +87,21 @@ function findMaterials(
       ? invoices.flatMap((i) =>
           i.sources
             .filter((s) => groupName(batch.dir, s.path) === group.name)
-            .map((s) => dirname(s.path)),
+            .map((s) => pathKey(dirname(s.path))),
         )
-      : [group.dir],
+      : [pathKey(group.dir)],
   );
-  const local = candidates.filter((a) => directories.has(a.directory));
+  const local = candidates.filter((a) => directories.has(pathKey(a.directory)));
   if (type === 'waybill') return { files: local, fallback: false, candidates: [] };
   if (local.length)
-    return { files: local, fallback: local.some((a) => a.directory === batch.dir), candidates: [] };
+    return {
+      files: local,
+      fallback: local.some((a) => samePath(a.directory, batch.dir)),
+      candidates: [],
+    };
   const fallback = candidates.filter((a) => {
-    if (a.directory === batch.dir) return true;
-    const parts = relative(batch.dir, a.path).split(sep);
+    if (samePath(a.directory, batch.dir)) return true;
+    const parts = relativePath(batch.dir, a.path).split('/');
     return (
       parts.length > 1 &&
       containsAny(parts[0]!, config.attachmentKeywords[type]) &&
@@ -104,7 +109,7 @@ function findMaterials(
     );
   });
   const unnamed = config.unconfirmedAttachmentTypes.includes(type)
-    ? batch.attachments.filter((a) => a.type === 'unnamed' && directories.has(a.directory))
+    ? batch.attachments.filter((a) => a.type === 'unnamed' && directories.has(pathKey(a.directory)))
     : [];
   return {
     files: fallback,
@@ -543,7 +548,7 @@ export function checkBatch(
     return checked;
   });
   for (const invoice of batch.invoices) {
-    const dirs = new Set(invoice.sources.map((s) => dirname(s.path)));
+    const dirs = new Set(invoice.sources.map((s) => pathKey(dirname(s.path))));
     const formats = invoice.sources.map((s) => s.format);
     if (dirs.size > 1 || new Set(formats).size < formats.length)
       addFinding('error', 'dup', '同一批次内同号发票在不同目录或同一格式中重复出现，合计仅计一张', [

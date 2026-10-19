@@ -17,6 +17,7 @@ import { extractDocxText } from '../labor/scan.js';
 import { parseLaborText } from '../labor/parse.js';
 import { readRejectedReasons } from '../rejected.js';
 import { DEFAULTS_HASH, configDifferences, hashConfig } from './version.js';
+import { pathWithin, pathKey, samePath } from '../fs-path.js';
 import {
   createRedactionContext,
   redactItems,
@@ -55,12 +56,11 @@ export interface FeedbackBundle {
   samples: { before: string; after: string }[];
   buffer: Buffer;
 }
-export const workspaceIdentity = (root: string): string => hashConfig(resolve(root));
+export const workspaceIdentity = (root: string): string => hashConfig(pathKey(root));
 export function relativeFile(root: string, file: string, flavor: path.PlatformPath = path): string {
-  const result = flavor.relative(flavor.resolve(root), flavor.resolve(file));
-  if (flavor.isAbsolute(result) || result === '..' || result.startsWith('..' + flavor.sep))
-    throw new Error('反馈文件必须在工作区内');
-  return result.split(flavor.sep).join('/') || '.';
+  const result = pathWithin(root, file, { api: flavor });
+  if (result === null) throw new Error('反馈文件必须在工作区内');
+  return result || '.';
 }
 export function invoiceSummary(invoice: Invoice) {
   return {
@@ -299,7 +299,7 @@ export async function buildFeedbackBundle(input: {
         issue.text = issue.items ? textFromItems(issue.items) : redactText(row.text, ctx);
         const labor = workspace.labor
           .flatMap((l) => l.entries)
-          .find((e) => resolve(e.path) === resolve(row.file));
+          .find((e) => samePath(e.path, row.file));
         if (labor) {
           issue.result.labor = parseLaborText(row.text, config);
           if (!row.error) delete issue.result.error;
@@ -313,7 +313,7 @@ export async function buildFeedbackBundle(input: {
         `脱敏后非人名发票字段发生变化，请核对脱敏规则：${redactText(row.relative, ctx)}`,
       );
     const scannedWarnings = invoices
-      .filter((i) => i.sources.some((s) => resolve(s.path) === resolve(row.file)))
+      .filter((i) => i.sources.some((s) => samePath(s.path, row.file)))
       .flatMap((i) => i.warnings);
     const parseMessages = [
       ...workspace.batches.flatMap((b) => b.report.findings),
@@ -322,8 +322,7 @@ export async function buildFeedbackBundle(input: {
     ]
       .filter(
         (f) =>
-          f.ruleId.split('/').includes('parse') &&
-          f.files.some((file) => resolve(file) === resolve(row.file)),
+          f.ruleId.split('/').includes('parse') && f.files.some((file) => samePath(file, row.file)),
       )
       .map((f) => f.message);
     issue.warnings = [

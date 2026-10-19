@@ -1,6 +1,7 @@
-import { lstat, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { retryFileOperation, removePath } from './file-operations.js';
 
 export async function readJson(file: string, fallback: unknown): Promise<unknown> {
   try {
@@ -22,9 +23,9 @@ export async function writeJson(file: string, value: unknown) {
   const temp = `${file}.${randomUUID()}.tmp`;
   try {
     await writeFile(temp, JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
-    await rename(temp, file);
+    await retryFileOperation('保存配置文件', () => rename(temp, file));
   } finally {
-    await rm(temp, { force: true });
+    await removePath(temp);
   }
 }
 

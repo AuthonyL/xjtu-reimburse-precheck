@@ -27,7 +27,8 @@ it('识别根目录、单批次及兄弟批次上下文，忽略 tmp', async () 
     dir: path.join(root, '20260101'),
     contextRoot: root,
   });
-  const standalone = await temporary();
+  const standalone = path.join(await temporary(), '独立批次');
+  await mkdir(standalone);
   expect((await detectWorkspace(standalone)).contextRoot).toBeNull();
 });
 

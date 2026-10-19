@@ -2,7 +2,7 @@ import { deriveBatchDate } from './batch-order.js';
 import { itineraryAmounts } from './rules/travel.js';
 import { ruleAction } from './rules/catalog.js';
 import { readdir, readFile, lstat } from 'node:fs/promises';
-import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, extname, join, resolve } from 'node:path';
 import type { Batch, Finding, Invoice, ScanOptions } from './types.js';
 import { canBeUnnamedAttachment, identifyAttachment, makeAttachment } from './attachments.js';
 import { loadConfig, type RuleConfig } from './rules/config.js';
@@ -13,13 +13,17 @@ import { extractPdfTextItems, invoiceFromTextItems, textFromItems } from './pars
 import { parseForeignText } from './parse/foreign.js';
 import { parseOfd } from './parse/ofd.js';
 import { isLaborDirectoryName } from './labor/scan.js';
+import { probeDirectory } from './fs-probe.js';
+import { relativePath, samePath, pathKey } from './fs-path.js';
 
 export async function listDocuments(dir: string, config: RuleConfig): Promise<string[]> {
   const files: string[] = [];
   async function visit(current: string): Promise<void> {
-    for (const entry of (await readdir(current, { withFileTypes: true })).sort((a, b) =>
-      a.name.localeCompare(b.name, 'en'),
-    )) {
+    const entries =
+      current === dir
+        ? await readdir(current, { withFileTypes: true })
+        : ((await probeDirectory(current)) ?? []);
+    for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name, 'en'))) {
       if (
         entry.isSymbolicLink() ||
         entry.name.startsWith('.') ||
@@ -103,7 +107,7 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
   const unresolvedOfd: { path: string; warning: string }[] = [];
   const add = (invoice: Invoice): void => {
     invoice.sources.forEach((s) => {
-      s.relativePath = relative(dir, s.path).split(sep).join('/');
+      s.relativePath = relativePath(dir, s.path);
     });
     const existing = map.get(invoice.number);
     if (existing) mergeInvoice(existing, invoice);
@@ -126,7 +130,7 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
   };
   for (const path of files) {
     const ext = extname(path).toLowerCase();
-    const type = identifyAttachment(relative(dir, path), config);
+    const type = identifyAttachment(relativePath(dir, path), config);
     if (type === 'schoolForm') {
       batch.attachments.push(makeAttachment(path, dir, type));
       continue;
@@ -176,7 +180,7 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
       else
         batch.unidentified.push({
           path,
-          relativePath: relative(dir, path),
+          relativePath: relativePath(dir, path),
           isPdf: ext === '.pdf',
           parseFailed,
         });
@@ -190,16 +194,17 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
       (i) =>
         basename(path).includes(i.number) ||
         i.sources.some(
-          (s) => dirname(s.path) === dirname(path) && basename(s.path, extname(s.path)) === stem,
+          (s) =>
+            samePath(dirname(s.path), dirname(path)) && basename(s.path, extname(s.path)) === stem,
         ),
     );
     if (matches.length === 1)
-      matches[0]!.sources.push({ path, relativePath: relative(dir, path), format: 'ofd' });
+      matches[0]!.sources.push({ path, relativePath: relativePath(dir, path), format: 'ofd' });
     else {
       issue('warning', 'ofd', warning, path);
       batch.unidentified.push({
         path,
-        relativePath: relative(dir, path),
+        relativePath: relativePath(dir, path),
         isPdf: false,
         parseFailed: true,
       });
@@ -217,43 +222,43 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
   }
   for (const [file, type] of Object.entries(batch.manual.attachments ?? {})) {
     const path = join(dir, file);
-    if (!files.includes(path)) {
+    if (!files.some((f) => samePath(f, path))) {
       issue('warning', 'manual', '附件覆盖对应文件不存在或已被忽略', path);
       continue;
     }
-    if ([...map.values()].some((i) => i.sources.some((s) => s.path === path))) {
+    if ([...map.values()].some((i) => i.sources.some((s) => samePath(s.path, path)))) {
       issue('warning', 'manual', '附件覆盖不能将已解析的发票改为附件', path);
       continue;
     }
-    batch.attachments = batch.attachments.filter((a) => a.path !== path);
+    batch.attachments = batch.attachments.filter((a) => !samePath(a.path, path));
     batch.attachments.push({
       ...makeAttachment(path, dir, type),
       ...(type === 'itinerary'
         ? { amounts: documentAmounts.get(path) ?? itineraryAmounts(path) }
         : {}),
     });
-    batch.unidentified = batch.unidentified.filter((f) => f.path !== path);
+    batch.unidentified = batch.unidentified.filter((f) => !samePath(f.path, path));
   }
   for (const [n, entry] of batch.manual.entries.entries()) {
     const file = entry.sourceFile ? join(dir, entry.sourceFile) : undefined;
     const path =
       file ?? join(dir, entry.group === '根目录' ? '' : (entry.group ?? ''), `manual-${n + 1}`);
     const found = [...map.values()].find(
-      (i) => entry.number === i.number || (file && i.sources.some((s) => s.path === file)),
+      (i) => entry.number === i.number || (file && i.sources.some((s) => samePath(s.path, file))),
     );
     if (found) {
       if (found.kind === 'domestic') {
         issue('warning', 'manual', '手填外币数据不能覆盖国内发票', file ?? dir);
         continue;
       }
-      if (!found.sources.some((s) => s.path === path)) {
-        if (file && !files.includes(file)) {
+      if (!found.sources.some((s) => samePath(s.path, path))) {
+        if (file && !files.some((f) => samePath(f, file))) {
           issue('warning', 'manual', '手填数据对应的来源文件不存在或已被忽略', file);
           continue;
         }
         found.sources.push({
           path,
-          relativePath: relative(dir, path).split(sep).join('/'),
+          relativePath: relativePath(dir, path),
           format: 'manual',
         });
         issue('error', 'dup', '同号手填收据存在多个来源，保留首条金额，请核对重复票据', path);
@@ -263,7 +268,7 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
           found.date !== entry.paymentDate
         )
           found.warnings.push('同号手填收据的金额、币种或支付日期不一致，未覆盖首条数据');
-        if (file) batch.unidentified = batch.unidentified.filter((f) => f.path !== file);
+        if (file) batch.unidentified = batch.unidentified.filter((f) => !samePath(f.path, file));
         continue;
       }
       found.total = entry.amount;
@@ -272,7 +277,7 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
       if (entry.seller) found.seller.name = entry.seller;
       continue;
     }
-    if (file && !files.includes(file)) {
+    if (file && !files.some((f) => samePath(f, file))) {
       issue('warning', 'manual', '手填数据对应的来源文件不存在或已被忽略', file);
       continue;
     }
@@ -291,14 +296,16 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
       lines: [],
       total: entry.amount,
       currency: entry.currency,
-      sources: [{ path, relativePath: relative(dir, path), format: 'manual' }],
+      sources: [{ path, relativePath: relativePath(dir, path), format: 'manual' }],
       warnings: [],
     });
-    if (file) batch.unidentified = batch.unidentified.filter((f) => f.path !== file);
+    if (file) batch.unidentified = batch.unidentified.filter((f) => !samePath(f.path, file));
   }
   batch.invoices = [...map.values()];
-  const invoiceFiles = new Set(batch.invoices.flatMap((i) => i.sources.map((s) => s.path)));
-  batch.attachments = batch.attachments.filter((a) => !invoiceFiles.has(a.path));
+  const invoiceFiles = new Set(
+    batch.invoices.flatMap((i) => i.sources.map((s) => pathKey(s.path))),
+  );
+  batch.attachments = batch.attachments.filter((a) => !invoiceFiles.has(pathKey(a.path)));
   batch.groups = createGroups(
     dir,
     [...files, ...batch.invoices.flatMap((i) => i.sources.map((s) => s.path))],

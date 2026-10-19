@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { lstat, mkdir, readFile, rename, rm, open } from 'node:fs/promises';
+import { lstat, mkdir, readFile, rename, open } from 'node:fs/promises';
 import { dirname, join, basename } from 'node:path';
 import type {
   ReplacementHistory,
@@ -10,6 +10,7 @@ import { safeRelative } from '../../core/correction/placement.js';
 import { assertDirectory, batchFile } from '../paths.js';
 import { readJson, writeJson } from '../json-store.js';
 import { fileHash } from './files.js';
+import { retryFileOperation, removePath } from '../file-operations.js';
 
 const LOG = '_预检/旧版/log.json';
 export interface CorrectionWritePlan {
@@ -128,7 +129,7 @@ async function move(dir: string, from: string, to: string) {
   const dest = await batchFile(dir, to, true);
   if (await exists(dest)) throw new Error('落点已有文件，已停止以免覆盖');
   await mkdir(dirname(dest), { recursive: true });
-  await rename(source, dest);
+  await retryFileOperation('移动文件', () => rename(source, dest));
 }
 export async function commitCorrection(
   dir: string,
@@ -187,7 +188,7 @@ export async function commitCorrection(
     for (const f of copies) {
       const dest = await batchFile(dir, f.to, true);
       await mkdir(dirname(dest), { recursive: true });
-      const handle = await open(dest, 'wx');
+      const handle = await retryFileOperation('创建文件', () => open(dest, 'wx'));
       created.push(f.to);
       try {
         await handle.writeFile(f.bytes);
@@ -214,7 +215,7 @@ export async function commitCorrection(
     });
     return record;
   } catch (error) {
-    for (const f of created.reverse()) await rm(await batchFile(dir, f, true), { force: true });
+    for (const f of created.reverse()) await removePath(await batchFile(dir, f, true));
     for (const f of moved.reverse()) await move(dir, f.path, f.original);
     throw error;
   }

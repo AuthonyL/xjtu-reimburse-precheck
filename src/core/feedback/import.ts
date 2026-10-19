@@ -1,7 +1,8 @@
 import JSZip from 'jszip';
 import { mkdtemp, mkdir, writeFile, rm, lstat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, dirname, posix, win32, resolve, relative, sep } from 'node:path';
+import { join, dirname, posix, win32, resolve } from 'node:path';
+import { pathWithin, samePath } from '../fs-path.js';
 import type { FeedbackMeta, ParseIssue } from './bundle.js';
 import type { FeedbackRecord, ConfigDifference } from '../../shared/feedback.js';
 import { DEFAULTS_HASH } from './version.js';
@@ -255,16 +256,19 @@ export async function importFeedback(
     // Validate every output parent before creating any fixture.
     for (const entry of pending) {
       const parent = dirname(join(resolve(outDir), entry.file));
+      // Inspect the original ancestry before resolving any links in it.
+      const lexical = { realpath: (file: string) => file };
       for (let part = parent; ; part = dirname(part)) {
         try {
           if ((await lstat(part)).isSymbolicLink()) throw new Error('导入输出路径不能为符号链接');
         } catch (e) {
           if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e;
         }
-        if (part === resolve(outDir)) break;
-        if (part === dirname(part) || relative(resolve(outDir), part).startsWith('..' + sep))
+        if (samePath(part, outDir, lexical)) break;
+        if (part === dirname(part) || pathWithin(outDir, part, lexical) === null)
           throw new Error('导入输出路径越界');
       }
+      if (pathWithin(outDir, parent) === null) throw new Error('导入输出路径越界');
     }
     for (const entry of pending)
       ((await createOnly(join(outDir, entry.file), entry.content)) ? created : skipped).push(

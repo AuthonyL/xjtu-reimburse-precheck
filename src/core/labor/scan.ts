@@ -3,7 +3,7 @@ import { parseForeignText } from '../parse/foreign.js';
 import { parseOfd } from '../parse/ofd.js';
 import type { Invoice } from '../types.js';
 import { readdir, readFile, lstat } from 'node:fs/promises';
-import { basename, extname, join, relative, resolve, sep } from 'node:path';
+import { basename, extname, join, resolve } from 'node:path';
 import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
 import type { RuleConfig } from '../rules/config.js';
@@ -11,6 +11,8 @@ import { extractPdfTextItems, invoiceFromTextItems, textFromItems } from '../par
 import { readManual } from '../manual.js';
 import { parseLaborText } from './parse.js';
 import type { LaborScan } from './types.js';
+import { probeDirectory } from '../fs-probe.js';
+import { relativePath } from '../fs-path.js';
 
 export const isLaborDirectoryName = (name: string, config: RuleConfig): boolean =>
   config.groupKeywords.labor.some((k) => k.toLowerCase() === name.toLowerCase());
@@ -21,7 +23,7 @@ export async function findLaborDirectories(
 ): Promise<string[]> {
   const result: string[] = [];
   async function visit(dir: string) {
-    for (const e of await readdir(dir, { withFileTypes: true })) {
+    for (const e of (await probeDirectory(dir)) ?? []) {
       if (
         !e.isDirectory() ||
         e.isSymbolicLink() ||
@@ -31,8 +33,9 @@ export async function findLaborDirectories(
         e.name === '无法报销费用'
       )
         continue;
-      if (isLaborDirectoryName(e.name, config)) result.push(join(dir, e.name));
-      else await visit(join(dir, e.name));
+      if (isLaborDirectoryName(e.name, config)) {
+        if (await probeDirectory(join(dir, e.name))) result.push(join(dir, e.name));
+      } else await visit(join(dir, e.name));
     }
   }
   await visit(root);
@@ -90,9 +93,11 @@ export async function scanLaborDirectory(input: string, config: RuleConfig): Pro
       invoiceNumbers: [],
     });
   async function visit(current: string) {
-    for (const e of (await readdir(current, { withFileTypes: true })).sort((a, b) =>
-      a.name.localeCompare(b.name, 'zh-CN'),
-    )) {
+    const entries =
+      current === dir
+        ? await readdir(current, { withFileTypes: true })
+        : ((await probeDirectory(current)) ?? []);
+    for (const e of entries.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))) {
       if (e.isSymbolicLink() || e.name.startsWith('.') || e.name === '_预检' || e.name === 'tmp')
         continue;
       const file = join(current, e.name);
@@ -101,7 +106,7 @@ export async function scanLaborDirectory(input: string, config: RuleConfig): Pro
         continue;
       }
       if (!e.isFile() || config.ignoredExtensions.includes(extname(file).toLowerCase())) continue;
-      const rel = relative(dir, file).split(sep).join('/');
+      const rel = relativePath(dir, file);
       const ext = extname(file).toLowerCase();
       let text = '';
       let invoice: Invoice | null = null;
