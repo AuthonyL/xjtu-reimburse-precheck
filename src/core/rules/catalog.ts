@@ -1,6 +1,9 @@
 import defaults from './defaults.json' with { type: 'json' };
 import type { AttachmentType, Severity } from '../types.js';
 import type { RuleConfig, RuleId } from './config.js';
+import { buildRules } from './definitions.js';
+import type { Rule, Scope } from './model.js';
+import { declarativeCriteria } from './criteria.js';
 import { LABOR_TYPES } from '../labor/types.js';
 
 export interface ConfigField {
@@ -21,6 +24,8 @@ export interface ConfigField {
 }
 export interface RuleDefinition {
   id: RuleId;
+  kind: Rule['kind'];
+  scope: Scope;
   name: string;
   source: { kind: 'readme' | 'finance' | 'practice' | 'system'; number?: number };
   description: string;
@@ -118,6 +123,7 @@ export const GENERAL_CATALOG: ConfigField[] = [
   },
   { path: 'highValueReasons', label: '情况说明理由库', type: 'table', general: true },
 ];
+const defaultRules = new Map(buildRules(defaults as RuleConfig).map((rule) => [rule.id, rule]));
 const rule = (
   id: RuleId,
   name: string,
@@ -127,6 +133,8 @@ const rule = (
   config: ConfigField[] = [],
 ): RuleDefinition => ({
   id,
+  kind: defaultRules.get(id)!.kind,
+  scope: defaultRules.get(id)!.scope,
   name,
   source,
   description,
@@ -632,12 +640,11 @@ export function criteria(
   const definition = typeof rule === 'string' ? ruleDefinition(rule) : rule;
   if (!definition) return '系统未提供此条目的判定说明，请核对相关文件。';
   const id = definition.id;
+  const currentRule = buildRules(config).find((rule) => rule.id === id)!;
   const level = { error: '错误', warning: '警告', info: '提示' };
   const laborLevel = (normal: Severity) =>
     level[
-      config.ruleOptions.L3.severity === defaults.ruleOptions.L3.severity
-        ? normal
-        : config.ruleOptions.L3.severity
+      currentRule.severity === defaults.ruleOptions.L3.severity ? normal : currentRule.severity
     ];
   const threshold = (key: keyof RuleConfig['thresholds']) => {
     const value = config.thresholds[key];
@@ -649,37 +656,18 @@ export function criteria(
   const range = '税目、品名或文件名';
   const physical = `豁免税目：${list(config.exemptTaxCategories)}；服务类税目：${list(config.serviceTaxCategories)}`;
   const delegated = `组名包含 ${list(config.groupKeywords.outsourced)}，或税目包含 ${list(config.designKeywords)}；AI 组和 AI 订阅除外`;
-  const bodies: Record<RuleId, string> = {
-    R1: `单张人民币实物发票价税合计 ${threshold('inventory')} → 需要入库单 / 记账单（${physical}）`,
-    R11: `整个批次内，同一销方、同一开票日、同币种合计 ${threshold('inventory')} → 其中人民币实物票需要入库单 / 记账单；组内按销方和日期合并（${physical}）`,
-    R2: `整个批次内，同一销方、同一开票日人民币发票合计 ${threshold('payment')} → 需要支付记录；组内按销方和日期合并`,
+  const bodies: Partial<Record<RuleId, string>> = {
     R3: `AI 分组、AI 订阅或外币收据 → ${config.expense.ai}，需付款凭证和订阅说明；金额或支付日读不到时手填（AI 分组：${list(config.groupKeywords.ai)}；明细品名关键字：${list(config.aiKeywords)}）`,
-    R4: `${range}包含：${list(config.storeKeywords)} → 需要店铺截图或证明`,
-    R5: `明细税目包含 ${list(config.designKeywords)} → ${config.expense.outsourced}，需对方盖章的明细清单；没有税目时按税目、品名或文件名兜底；AI 除外`,
-    R6: `组名包含 ${list(config.groupKeywords.outsourced)} → 需要对方盖章的明细清单；仅服务税目命中时由 R5 要求清单`,
-    R7: `单张国内发票价税合计 ${threshold('verification')} → 验真并附验真结果`,
-    R9: `组名含 ${list(config.groupKeywords.bankTransfer)}，且不含委托分组关键字 ${list(config.groupKeywords.outsourced)} → 实物器件需入库（${physical}）`,
     R10: `AI 或外币收据按支付日的中行「${config.exchangeRateType}」折算；截图圈出所用汇率，缺手填汇率时不折算`,
-    R12: `组内有含税单价 ${threshold('highUnit')} 的实物明细，且人民币组合计 ${threshold('highGroup')} → 入库后附系统下载的审批表（${physical}）`,
     R13: `非折扣实物明细含税单价 ${threshold('highUnit')} → 使用期不超过 1 年的材料附高值审批，仪器附资产建账，并附情况说明；仪器关键字：${list(config.instrumentKeywords)}（${physical}）`,
-    F1: `发票文字包含旧版识别文字 ${list(config.legacyInvoiceKeywords)} → 确认发票专用章；数电票不另提示`,
-    F2: `${range}包含：${list(config.horizontalOnlyKeywords)} → ${level[config.ruleOptions.F2.severity]}；不区分批次经费类型`,
     F5: `${delegated}。有明细且全部为非服务类 → ${level[config.ruleOptions.F5.severity]}；服务与材料混合 → ${level[config.mixedDelegatedSeverity]}，材料部分入库或分开开票；服务类税目：${list(config.serviceTaxCategories)}`,
-    'F5-documents': `${delegated}；委托组人民币合计 ${threshold('outsourcedContract')} → 需要合同原件和验收合格说明`,
-    F6: `${range}包含：${list(config.purposeKeywords)} → 需要用途说明`,
     T1: `${range}包含：${list(config.transportKeywords)} → 需同目录行程单；先按去后缀前缀、再按金额一对一匹配，剩余行程单仅待确认`,
-    T2: `${range}包含：${list(config.deliveryKeywords)} → 需同目录运单明细或订单详情`,
     L1: '每份情况说明检查姓名、单位、职称、具体到日的每次日期、线上/线下、数量、单价和合计；次数或天数与具体日期数量不符另行提示',
     L2: '单价 × 数量与合计差额超过 0.01 元 → 金额不符；已手填发放表金额时还需与合计一致',
-    L3: `咨询线上按通讯、线下按半天/≤2天/>2天查两套标准；仅超其他经费上限为${laborLevel('warning')}、两套都超为${laborLevel('error')}，低于适用下限为${laborLevel('info')}；税基按当前标准行采用。其他劳务按类型、人员、单位查上限；当前咨询标准 ${config.laborStandards.consultation.length} 行、其他劳务标准 ${config.laborStandards.other.length} 行`,
+    L3: `咨询线上按通讯、线下按半天/≤2天/>2天查两套标准；仅超其他经费上限为${laborLevel('warning')}、两套都超为${laborLevel('error')}，低于适用下限为${laborLevel('info')}；税基按当前标准行采用。其他劳务按类型、人员、单位查上限；当前咨询标准 ${currentRule.kind === 'laborStandard' ? currentRule.consultation.length : 0} 行、其他劳务标准 ${currentRule.kind === 'laborStandard' ? currentRule.other.length : 0} 行`,
     L4: `类型属于 ${list(config.labor.reclassificationKeywords)}，正文又含 ${list(config.labor.consultationFeeKeywords)} → 应归其他劳务费`,
     L5: `线下且正文含 ${list(config.labor.meetingKeywords)} → 需要会议决算表、会议通知、参会人员签到表`,
     L6: '同一劳务目录中，同姓名且合计相同或日期重叠 → 疑似版本组，只计一笔，优先无错误警告的版本，其次修改时间最新的版本',
-    buyer: `国内发票购买方名称应为「${config.buyer.name}」、税号应为「${config.buyer.taxId}」；名称去空白后比对，税号合法长度为 15/17/18/20 位，读不全时仅比名称`,
-    dup: '同一批次内不同目录或同格式重复、其他批次同号、已提交历史同号 → 重复；PDF/XML/OFD 同号不同格式可合并',
-    rejected:
-      '发票号出现在无法报销费用集合 → 优先显示已记录原因，否则推断本票规则原因，均无时提示未记录',
-    expense: `按当前映射建议支出内容；无明细或不能判断时建议「${config.expense.unknown}」并提示人工确认`,
     parse:
       '解析字段缺失、税号不完整、金额/税额校验不平或文件损坏 → 人工核对原件；明细合计容差为每行 0.01 元',
     manual: '校验手填金额、币种、日期、汇率、来源、附件类型覆盖及劳务补充项；不合法时提示修正',
@@ -695,10 +683,10 @@ export function criteria(
       return Array.isArray(value) ? `${field.label}：${list(value as string[])}` : '';
     })
     .filter(Boolean);
-  if (id === 'L3') {
+  if (currentRule.kind === 'laborStandard') {
     for (const [name, rows] of [
-      ['咨询标准', config.laborStandards.consultation],
-      ['其他劳务标准', config.laborStandards.other],
+      ['咨询标准', currentRule.consultation],
+      ['其他劳务标准', currentRule.other],
     ] as const) {
       const labels = (key: string, value: string) =>
         LABOR_CATALOG.flatMap((field) => field.columns ?? [])
@@ -713,7 +701,7 @@ export function criteria(
     }
   }
   return [
-    bodies[id],
+    declarativeCriteria(currentRule, list) ?? bodies[id],
     ...extra,
     ...(config.ruleOptions[id].enabled ? [] : ['当前已停用，保存后不检查']),
   ].join('；');

@@ -1,3 +1,5 @@
+import { buildRules } from '../rules/definitions.js';
+import { ruleOption, type RuleRegistry } from '../rules/model.js';
 import { withFindingId } from '../domain/finding-id.js';
 import type { LaborEntry, LaborVersionGroup } from './types.js';
 import type { RuleConfig } from '../rules/config.js';
@@ -7,12 +9,13 @@ export function groupLaborVersions(
   entries: LaborEntry[],
   config: RuleConfig,
   baseDir: string,
+  rules: RuleRegistry = new Map(buildRules(config).map((rule) => [rule.id, rule])),
 ): LaborVersionGroup[] {
   entries.forEach((e) => {
     e.counted = true;
     e.otherVersions = [];
   });
-  if (!config.ruleOptions.L6.enabled) return [];
+  if (!ruleOption(rules, 'L6').enabled) return [];
   const roots = entries.map((_, i) => i);
   const root = (i: number): number => (roots[i] === i ? i : (roots[i] = root(roots[i]!)));
   for (let i = 0; i < entries.length; i++)
@@ -56,7 +59,7 @@ export function groupLaborVersions(
       e.findings.push(
         withFindingId(
           {
-            severity: config.ruleOptions.L6.severity,
+            severity: ruleOption(rules, 'L6').severity,
             ruleId: 'L6',
             code: 'versions',
             message: `同一人有 ${group.length} 份情况说明，可能是新旧版本；请保留正确的一份，可用『放入改好的文件』替换。${version.note}`,

@@ -1,3 +1,5 @@
+import { buildRules } from '../rules/definitions.js';
+import type { LaborStandardRule } from '../rules/model.js';
 import type { RuleConfig } from '../rules/config.js';
 import type {
   AppliedLaborStandard,
@@ -41,6 +43,9 @@ export function applicableStandards(
   fields: LaborFields,
   manual: LaborManualEntry,
   config: RuleConfig,
+  standards: Pick<LaborStandardRule, 'consultation' | 'other'> = buildRules(config).find(
+    (rule): rule is LaborStandardRule => rule.kind === 'laborStandard',
+  )!,
 ): { rows: AppliedLaborStandard[]; missing?: string } {
   const rank = manual.nationalExpert ? 'academic' : manual.seniorStaff ? 'senior' : fields.rank;
   const pricingUnit = fields.priceUnit ?? fields.unit;
@@ -60,14 +65,14 @@ export function applicableStandards(
     )
       period = fields.quantity * (fields.unit === '半天' ? 0.5 : 1) <= 2 ? 'shortDay' : 'longDay';
     else return { rows: [], missing: '咨询计费单位不适用：线上按次，线下按半天或天，请核对' };
-    const other = config.laborStandards.consultation.find(
+    const other = standards.consultation.find(
       (s) =>
         s.fund === 'other' &&
         s.scope === fields.affiliation &&
         s.rank === rank &&
         s.period === period,
     );
-    const horizontal = config.laborStandards.consultation.find(
+    const horizontal = standards.consultation.find(
       (s) =>
         s.fund === 'horizontal' &&
         s.scope === 'all' &&
@@ -111,7 +116,7 @@ export function applicableStandards(
     if (role === 'administrative' && !manual.workTime)
       return { rows: [], missing: '请补充监考是工作时间还是双休日、节假日' };
   }
-  const row = config.laborStandards.other.find(
+  const row = standards.other.find(
     (s) =>
       s.type === fields.type &&
       s.role === role &&

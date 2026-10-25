@@ -43,3 +43,13 @@ it('defaults 每个叶子都由可编辑目录引用，包含阈值方向和映�
     expect(rule.defaultSeverity).toBe(defaults.ruleOptions[rule.id].severity);
   }
 });
+
+it('规则目录与执行 registry 的 id、kind、scope 完全一致', async () => {
+  const { buildRules } = await import('../src/core/rules/definitions.js');
+  const { loadConfig } = await import('../src/core/rules/config.js');
+  const metadata = (rules: { id: string; kind: string; scope: string }[]) =>
+    rules
+      .map(({ id, kind, scope }) => ({ id, kind, scope }))
+      .sort((a, b) => a.id.localeCompare(b.id));
+  expect(metadata(RULE_CATALOG)).toEqual(metadata(buildRules(loadConfig())));
+});

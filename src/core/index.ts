@@ -2,7 +2,7 @@ import { scanRootBatches } from './discovery.js';
 import { join } from 'node:path';
 import type { Batch, CheckContext, RootResult, ScanOptions } from './types.js';
 import { scanBatch } from './scan.js';
-import { checkBatch } from './rules/engine.js';
+import { checkBatch } from './rules/engine/index.js';
 import { loadConfig, type RuleConfig } from './rules/config.js';
 import { buildRejectedInfo, readRejectedReasons } from './rejected.js';
 import { buildReport } from './report.js';

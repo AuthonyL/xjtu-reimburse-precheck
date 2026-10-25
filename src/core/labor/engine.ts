@@ -1,6 +1,8 @@
 import { withFindingId } from '../domain/finding-id.js';
 import type { Finding, Severity } from '../types.js';
 import type { RuleConfig } from '../rules/config.js';
+import { buildRules } from '../rules/definitions.js';
+import { ruleOption } from '../rules/model.js';
 import { ruleDefinition } from '../rules/catalog.js';
 import { applyLaborManual } from './parse.js';
 import { applicableStandards } from './standards.js';
@@ -14,6 +16,9 @@ import {
 } from './types.js';
 
 export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
+  const rules = new Map(buildRules(config).map((rule) => [rule.id, rule]));
+  const standardRule = ruleOption(rules, 'L3');
+  if (standardRule.kind !== 'laborStandard') throw new Error('L3 必须登记为劳务标准规则');
   const entries: LaborEntry[] = scan.statements.map((statement) => {
     const body = statement.text.normalize('NFKC').replace(/\s/g, '');
     const manual = scan.manual.labor?.[statement.relativePath] ?? {};
@@ -25,7 +30,7 @@ export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
       message: string,
       action?: string,
     ) => {
-      const option = config.ruleOptions[id];
+      const option = ruleOption(rules, id);
       if (!option.enabled) return;
       const definition = ruleDefinition(id)!;
       findings.push(
@@ -124,8 +129,8 @@ export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
         '发放表金额与情况说明合计不一致',
         '核对学校发放表与情况说明，确保实际发放金额一致。',
       );
-    const result = applicableStandards(fields, manual, config);
-    const standards = config.ruleOptions.L3.enabled ? result.rows : [];
+    const result = applicableStandards(fields, manual, config, standardRule);
+    const standards = standardRule.enabled ? result.rows : [];
     if (result.missing) add('L3', 'warning', result.missing);
     if (fields.type === 'consultation' && standards.some((s) => s.taxBasis === 'after'))
       add('L3', 'info', '其他经费校内人员标准为税后金额，请核对税后发放额');
@@ -163,7 +168,7 @@ export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
       );
     const requirements: LaborEntry['requirements'] = [];
     if (
-      config.ruleOptions.L5.enabled &&
+      ruleOption(rules, 'L5').enabled &&
       fields.mode === 'offline' &&
       config.labor.meetingKeywords.some((k) => body.includes(k))
     ) {
@@ -201,7 +206,7 @@ export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
     );
     return { ...statement, fields, manual, findings, standards, requirements };
   });
-  const versionGroups = groupLaborVersions(entries, config, scan.dir);
+  const versionGroups = groupLaborVersions(entries, config, scan.dir, rules);
   const counted = entries.filter((e) => e.counted);
   return {
     payoutCount: counted.length,

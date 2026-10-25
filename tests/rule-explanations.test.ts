@@ -115,3 +115,20 @@ it('咨询标准税基随当前表格改变', () => {
 it('判定口径不重复当前级别，级别由规则详情独立展示', () => {
   for (const rule of RULE_CATALOG) expect(criteria(rule, config())).not.toContain('当前级别');
 });
+
+it('声明式说明读取 registry 的每个阈值、方向与关键字', async () => {
+  const { buildRules } = await import('../src/core/rules/definitions.js');
+  const c = config();
+  for (const threshold of Object.values(c.thresholds)) {
+    threshold.value += 37;
+    threshold.operator = '>';
+  }
+  for (const rule of buildRules(c)) {
+    const text = criteria(rule.id, c, { fullKeywords: true });
+    if (rule.kind === 'threshold') expect(text).toContain(`> ${rule.threshold.value} 元`);
+    if (rule.kind === 'keyword')
+      for (const keyword of rule.keywords) expect(text).toContain(keyword);
+    if (rule.kind === 'taxCategory')
+      for (const category of rule.categories) expect(text).toContain(category);
+  }
+});
