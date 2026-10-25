@@ -5,7 +5,7 @@ import { useWorkspaceStore } from './workspace.js';
 import { useStatusStore } from './status.js';
 
 export interface Route {
-  page: 'home' | 'overview' | 'claim' | 'labor' | 'rejected' | 'rules';
+  page: 'home' | 'overview' | 'claim' | 'labor' | 'rejected' | 'rules' | 'inbox' | 'invoices';
   dir?: string;
   group?: string;
   ruleId?: string;

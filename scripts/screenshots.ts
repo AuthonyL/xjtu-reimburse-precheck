@@ -45,6 +45,14 @@ try {
     expect(visible).not.toContain(sample.userData);
     await page.screenshot({ path: join(output, name), fullPage: false });
   };
+  const nav = page.getByRole('navigation', { name: '工作区页面' });
+  await nav.getByRole('button', { name: /^收件箱/ }).click();
+  await expect(page.getByRole('article', { name: 'abcdef0123456789.jpg' })).toBeVisible();
+  await screenshot('inbox.png');
+  await nav.getByRole('button', { name: /^发票/ }).click();
+  await expect(page.getByRole('table', { name: '工作区发票', exact: true })).toBeVisible();
+  await screenshot('invoices.png');
+  await tree.locator('[data-batch-id="20260103"]').click();
   await screenshot('results.png');
   const first = page
     .getByTestId('actionable-findings')
@@ -62,7 +70,7 @@ try {
   await expect(page.getByTestId('rule-F2')).toBeVisible();
   await page.getByRole('searchbox', { name: '搜索规则' }).scrollIntoViewIfNeeded();
   await screenshot('settings-rules.png');
-  console.log('已生成 4 张合成数据截图：' + output);
+  console.log('已生成 6 张合成数据截图：' + output);
 } finally {
   try {
     await app?.close();

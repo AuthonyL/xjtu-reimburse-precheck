@@ -1,0 +1,58 @@
+.page {
+  min-width: 0;
+}
+.heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.heading p {
+  color: var(--muted);
+}
+.list {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+.item {
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child {
+  border-bottom: 0;
+}
+.file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+.file > span:first-child {
+  min-width: 0;
+  max-width: 100%;
+}
+.file > span:first-child button {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+.actions select {
+  width: auto;
+  max-width: 100%;
+}
+.empty {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 28px;
+}

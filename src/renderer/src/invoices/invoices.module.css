@@ -1,0 +1,82 @@
+.page {
+  min-width: 0;
+}
+.summary {
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin-bottom: 24px;
+}
+.states {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.states legend {
+  color: var(--muted);
+  font-size: 13px;
+}
+.states label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text);
+}
+.states input {
+  width: auto;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.tableScroll {
+  max-width: 100%;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+.tableScroll table {
+  min-width: 920px;
+}
+.tableScroll th {
+  padding: 10px 12px;
+}
+.tableScroll th button {
+  font-weight: inherit;
+  color: inherit;
+}
+.number {
+  overflow-wrap: anywhere;
+  min-width: 150px;
+  max-width: 230px;
+}
+.amount {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.duplicate {
+  display: inline-block;
+  margin-left: 6px;
+}
+.empty {
+  padding: 20px 0;
+  color: var(--muted);
+}
+.note {
+  color: var(--muted);
+}
+@container (min-width: 1050px) {
+  .filters {
+    grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  }
+}

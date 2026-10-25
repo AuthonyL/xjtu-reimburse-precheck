@@ -4,6 +4,8 @@ import { Results } from './Results.js';
 import { LaborPage } from './LaborPage.js';
 import { RejectedPage } from './RejectedPage.js';
 import { Settings } from './Settings.js';
+import { InboxPage } from './inbox/InboxPage.js';
+import { InvoicesPage } from './invoices/InvoicesPage.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRouteStore } from './store/route.js';
 
@@ -14,6 +16,10 @@ export function Router() {
   const highlight = useRouteStore((state) => state.highlight);
   const current = workspace?.batches.find((view) => view.batch.dir === route.dir);
   switch (route.page) {
+    case 'inbox':
+      return workspace ? <InboxPage /> : <Home />;
+    case 'invoices':
+      return workspace ? <InvoicesPage /> : <Home />;
     case 'rules':
       return boot ? (
         <Settings initial={boot.settings} userData={boot.userData} version={boot.ruleVersion} />

@@ -50,6 +50,7 @@
   font-size: 13px;
 }
 .treeNode[aria-selected='true'],
+.treeNode[aria-current='page'],
 .sidebarFooter button[aria-pressed='true'] {
   background: var(--accent-bg);
   border-color: var(--accent);
@@ -120,4 +121,8 @@
 }
 
 .batchNode {
+}
+.workspaceNav {
+  padding: 10px 5px;
+  border-bottom: 1px solid var(--line);
 }

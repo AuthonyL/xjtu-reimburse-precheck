@@ -10,6 +10,7 @@ import { nameOf } from './ui.js';
 import { WorkspaceTree } from './sidebar/WorkspaceTree.js';
 import { SidebarFooter } from './sidebar/SidebarFooter.js';
 import { SidebarResizer } from './sidebar/SidebarResizer.js';
+import { WorkspaceNav } from './sidebar/WorkspaceNav.js';
 
 export function Sidebar() {
   const workspace = useWorkspaceStore((state) => state.view)!;
@@ -51,6 +52,7 @@ export function Sidebar() {
             </p>
           )}
         </div>
+        <WorkspaceNav />
         <WorkspaceTree nodes={buildWorkspaceTree(workspace)} />
         <SidebarFooter />
       </aside>

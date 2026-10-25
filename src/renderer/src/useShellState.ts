@@ -80,7 +80,7 @@ export function useShellState() {
   }, [workspace, layout.sidebarCollapsed]);
   useEffect(() => {
     if (pane.current) pane.current.scrollTop = 0;
-  }, [selected, settingsOpen]);
+  }, [selected, route.page]);
   useEffect(() => {
     if (workspace) setDisclosures((old) => reconcileDisclosures(old, workspace));
   }, [workspace]);
