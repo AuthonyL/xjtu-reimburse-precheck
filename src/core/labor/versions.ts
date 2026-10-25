@@ -1,8 +1,13 @@
+import { withFindingId } from '../domain/finding-id.js';
 import type { LaborEntry, LaborVersionGroup } from './types.js';
 import type { RuleConfig } from '../rules/config.js';
 import { ruleAction } from '../rules/catalog.js';
 
-export function groupLaborVersions(entries: LaborEntry[], config: RuleConfig): LaborVersionGroup[] {
+export function groupLaborVersions(
+  entries: LaborEntry[],
+  config: RuleConfig,
+  baseDir: string,
+): LaborVersionGroup[] {
   entries.forEach((e) => {
     e.counted = true;
     e.otherVersions = [];
@@ -48,15 +53,20 @@ export function groupLaborVersions(entries: LaborEntry[], config: RuleConfig): L
     for (const e of group) {
       e.counted = e === chosen;
       e.otherVersions = files.filter((f) => f !== e.relativePath);
-      e.findings.push({
-        severity: config.ruleOptions.L6.severity,
-        ruleId: 'L6',
-        code: 'versions',
-        message: `同一人有 ${group.length} 份情况说明，可能是新旧版本；请保留正确的一份，可用『放入改好的文件』替换。${version.note}`,
-        action: ruleAction('L6'),
-        files: group.map((e) => e.path),
-        invoiceNumbers: [],
-      });
+      e.findings.push(
+        withFindingId(
+          {
+            severity: config.ruleOptions.L6.severity,
+            ruleId: 'L6',
+            code: 'versions',
+            message: `同一人有 ${group.length} 份情况说明，可能是新旧版本；请保留正确的一份，可用『放入改好的文件』替换。${version.note}`,
+            action: ruleAction('L6'),
+            files: group.map((e) => e.path),
+            invoiceNumbers: [],
+          },
+          baseDir,
+        ),
+      );
     }
   }
   return result;

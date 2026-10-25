@@ -1,8 +1,23 @@
-import type { Batch, Invoice, InvoiceLine, AttachmentType } from '../src/core/types.js';
+import type { Batch, Finding, Invoice, InvoiceLine, AttachmentType } from '../src/core/types.js';
+import { withFindingId } from '../src/core/domain/finding-id.js';
 import { loadConfig } from '../src/core/rules/config.js';
 
 export const config = () =>
   loadConfig({ buyer: { name: '合成大学', taxId: 'SYNTHBUYER00000001' } });
+export function finding(overrides: Partial<Finding> = {}, baseDir = '/synthetic'): Finding {
+  return withFindingId(
+    {
+      ruleId: 'R1',
+      severity: 'warning',
+      message: '合成问题',
+      action: '补交',
+      invoiceNumbers: [],
+      files: [],
+      ...overrides,
+    },
+    baseDir,
+  );
+}
 export function line(overrides: Partial<InvoiceLine> = {}): InvoiceLine {
   return {
     name: '*电子元件*器件',

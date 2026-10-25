@@ -5,7 +5,7 @@ import { userEvent } from '@testing-library/user-event';
 import { Settings } from '../src/renderer/src/Settings.js';
 import { Results } from '../src/renderer/src/Results.js';
 import { RejectedPage } from '../src/renderer/src/RejectedPage.js';
-import { batch, config } from './helpers.js';
+import { batch, config, finding } from './helpers.js';
 import { buildReport, checkBatch } from '../src/core/index.js';
 import { DEFAULT_BOC_URL, validateSettings } from '../src/main/store.js';
 import type { AppSettings, BatchView } from '../src/shared/api.js';
@@ -55,7 +55,7 @@ it('结果首个 section 为待处理问题，显示 action 并可定位分组',
   const b = batch();
   const report = buildReport(checkBatch(b, config()));
   report.findings = [
-    {
+    finding({
       ruleId: 'F2',
       severity: 'warning',
       message: '合成问题',
@@ -63,7 +63,7 @@ it('结果首个 section 为待处理问题，显示 action 并可定位分组',
       invoiceNumbers: [b.invoices[0]!.number],
       files: [],
       groupId: '根目录',
-    },
+    }),
   ];
   let located = '';
   try {

@@ -4,7 +4,7 @@ import { cleanup, render, screen, within, waitFor } from '@testing-library/react
 import { userEvent } from '@testing-library/user-event';
 import { App } from '../src/renderer/src/App.js';
 import { buildReport, checkBatch } from '../src/core/index.js';
-import { batch } from './helpers.js';
+import { batch, finding } from './helpers.js';
 import { Settings } from '../src/renderer/src/Settings.js';
 import { FindingList } from '../src/renderer/src/FindingItem.js';
 import { RuleHelpProvider } from '../src/renderer/src/RuleHelp.js';
@@ -80,14 +80,14 @@ it('从问题查看规则时显示原文、动态口径和编号含义，并可�
         run={run}
         findings={[
           {
-            finding: {
+            finding: finding({
               ruleId: 'R1/R11',
               severity: 'warning',
               message: '合成入库问题',
               action: '补入库',
               invoiceNumbers: [],
               files: [],
-            },
+            }),
           },
         ]}
       />
@@ -168,7 +168,7 @@ it('App 的问题规则入口切到设置、展开并滚动目标；侧栏不再
   const b = batch();
   const report = buildReport(checkBatch(b, rules));
   report.findings = [
-    {
+    finding({
       ruleId: 'R11',
       severity: 'warning',
       message: '合成同日入库',
@@ -176,7 +176,7 @@ it('App 的问题规则入口切到设置、展开并滚动目标；侧栏不再
       files: [],
       invoiceNumbers: [],
       groupId: '根目录',
-    },
+    }),
   ];
   Object.assign(window, {
     precheck: {

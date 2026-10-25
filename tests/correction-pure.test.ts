@@ -6,16 +6,21 @@ import {
   newFileDestination,
 } from '../src/core/correction/placement.js';
 import type { Finding } from '../src/core/types.js';
-const f = (values: Partial<Finding> = {}): Finding => ({
-  ruleId: 'L1',
-  code: 'date',
-  severity: 'error',
-  message: '合成问题',
-  action: '补全',
-  files: ['/original/说明.pdf'],
-  invoiceNumbers: [],
-  ...values,
-});
+import { finding } from './helpers.js';
+const f = (values: Partial<Finding> = {}): Finding =>
+  finding(
+    {
+      ruleId: 'L1',
+      code: 'date',
+      severity: 'error',
+      message: '合成问题',
+      action: '补全',
+      files: ['/original/说明.pdf'],
+      invoiceNumbers: [],
+      ...values,
+    },
+    '/original',
+  );
 it('问题键忽略绝对根路径、级别和文案，区分同文件同规则不同缺项', () => {
   const before = f();
   const after = f({ files: ['/copy/说明.docx'], message: '新文案', severity: 'warning' });

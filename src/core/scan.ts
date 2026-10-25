@@ -1,3 +1,4 @@
+import { withFindingId } from './domain/finding-id.js';
 import { deriveBatchDate } from './batch-order.js';
 import { itineraryAmounts } from './rules/travel.js';
 import { ruleAction } from './rules/catalog.js';
@@ -119,14 +120,19 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
     message: string,
     path: string,
   ): void => {
-    batch.diagnostics.push({
-      severity,
-      ruleId,
-      message,
-      action: ruleAction(ruleId, undefined, path),
-      files: [path],
-      invoiceNumbers: [],
-    });
+    batch.diagnostics.push(
+      withFindingId(
+        {
+          severity,
+          ruleId,
+          message,
+          action: ruleAction(ruleId, undefined, path),
+          files: [path],
+          invoiceNumbers: [],
+        },
+        dir,
+      ),
+    );
   };
   for (const path of files) {
     const ext = extname(path).toLowerCase();

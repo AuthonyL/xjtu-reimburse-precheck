@@ -16,22 +16,23 @@ import { Sidebar } from '../src/renderer/src/Sidebar.js';
 import { checkLabor } from '../src/core/labor/engine.js';
 import { laborScan } from './labor-fixtures.js';
 import { Results } from '../src/renderer/src/Results.js';
-import { batch, config } from './helpers.js';
+import { batch, config, finding as makeFinding } from './helpers.js';
 
 afterEach(cleanup);
 const run = async (action: () => Promise<unknown>) => {
   await action();
 };
-const finding = (ruleId: string, code: string): Finding => ({
-  ruleId,
-  code,
-  severity: 'warning',
-  message: '问题-' + code,
-  action: '处理-' + code,
-  invoiceNumbers: ['SYNTH-1'],
-  files: ['/synthetic/a.pdf'],
-  groupId: '根目录',
-});
+const finding = (ruleId: string, code: string): Finding =>
+  makeFinding({
+    ruleId,
+    code,
+    severity: 'warning',
+    message: '问题-' + code,
+    action: '处理-' + code,
+    invoiceNumbers: ['SYNTH-1'],
+    files: ['/synthetic/a.pdf'],
+    groupId: '根目录',
+  });
 const view = (): BatchView => {
   const b = batch();
   return {
@@ -126,6 +127,7 @@ it('分组全部默认收起，概述统计三态，全部展开收起可用', a
         ? []
         : [
             {
+              id: 'payment:' + status,
               type: 'payment',
               ruleIds: ['R2'],
               reason: '合成材料',
@@ -168,6 +170,7 @@ it('材料组默认收起，手动展开后刷新仍保留，手动收起不被�
   const b = view();
   b.report.groups[0]!.requirements = [
     {
+      id: 'payment',
       type: 'payment',
       ruleIds: ['R2'],
       reason: '合成',

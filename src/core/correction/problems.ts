@@ -1,39 +1,11 @@
 import type { Finding } from '../types.js';
-export interface ProblemAliases {
-  files?: Record<string, string>;
-  invoiceNumbers?: Record<string, string>;
-}
-const slash = (value: string) => value.replaceAll('\\', '/');
-export function relativeProblemFile(base: string, file: string): string {
-  const b = slash(base).replace(/\/$/, '');
-  const f = slash(file);
-  return f.startsWith(b + '/') ? f.slice(b.length + 1) : f;
-}
-export function problemKey(
-  finding: Finding,
-  baseDir: string,
-  aliases: ProblemAliases = {},
-): string {
-  const ids = [...new Set(finding.ruleId.split('/'))].sort();
-  const numbers = [
-    ...new Set(finding.invoiceNumbers.map((n) => aliases.invoiceNumbers?.[n] ?? n)),
-  ].sort();
-  const files = [
-    ...new Set(
-      finding.files.map((f) => relativeProblemFile(baseDir, f)).map((f) => aliases.files?.[f] ?? f),
-    ),
-  ].sort();
-  return JSON.stringify({
-    rules: ids,
-    anchor: numbers.length
-      ? { numbers }
-      : files.length
-        ? { files }
-        : { group: finding.groupId ?? '根目录' },
-    code: finding.code ?? (finding.requirementType ? 'attachment:' + finding.requirementType : ''),
-    ...(finding.requirementType ? { group: finding.groupId ?? '根目录' } : {}),
-  });
-}
+import { findingId as problemKey, type ProblemAliases } from '../domain/finding-id.js';
+export {
+  findingId as problemKey,
+  relativeProblemFile,
+  type ProblemAliases,
+} from '../domain/finding-id.js';
+
 export function compareProblems(
   before: Finding[],
   after: Finding[],

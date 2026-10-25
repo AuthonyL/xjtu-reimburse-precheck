@@ -1,5 +1,18 @@
-import type { CheckResult, Report, Requirement, RequirementCounts } from './types.js';
+import type {
+  CheckResult,
+  Finding,
+  Report,
+  Requirement,
+  RequirementCounts,
+  Severity,
+} from './types.js';
 import { roundMoney } from './parse/common.js';
+
+export function countSeverities(findings: readonly Finding[]): Record<Severity, number> {
+  const counts = { error: 0, warning: 0, info: 0 };
+  for (const finding of findings) counts[finding.severity]++;
+  return counts;
+}
 
 export function countRequirements(requirements: Requirement[]): RequirementCounts {
   return {
@@ -44,7 +57,7 @@ export function buildReport(result: CheckResult): Report {
               f.groupId === g.group.id &&
               f.ruleId === 'R3' &&
               !f.invoiceNumbers.length &&
-              f.message.includes('请手填金额和支付日期'),
+              f.code === 'manual-amount',
           ),
       )
       .map((g) => g.group.id),

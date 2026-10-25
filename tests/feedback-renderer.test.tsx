@@ -6,7 +6,7 @@ import { FeedbackProvider, FeedbackPanel } from '../src/renderer/src/Feedback.js
 import { FindingList } from '../src/renderer/src/FindingItem.js';
 import { RuleVersion, ruleVersionLabel } from '../src/renderer/src/RuleVersion.js';
 import type { FeedbackRecord, FeedbackInput } from '../src/shared/feedback.js';
-import { config } from './helpers.js';
+import { config, finding } from './helpers.js';
 import { DEFAULT_BOC_URL } from '../src/main/store.js';
 afterEach(cleanup);
 const run = async (action: () => Promise<unknown>) => {
@@ -65,14 +65,14 @@ it('反馈表单必填、保存后摘要显示已反馈，设置可见并删除�
         run={run}
         findings={[
           {
-            finding: {
+            finding: finding({
               ruleId: 'R2',
               severity: 'warning',
               message: '合成问题',
               action: '补材料',
               files: [],
               invoiceNumbers: [],
-            },
+            }),
           },
         ]}
       />

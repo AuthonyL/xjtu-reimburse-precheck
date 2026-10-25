@@ -1,3 +1,4 @@
+import { withFindingId } from '../domain/finding-id.js';
 import { parseInvoiceXml } from '../parse/xml.js';
 import { parseForeignText } from '../parse/foreign.js';
 import { parseOfd } from '../parse/ofd.js';
@@ -84,14 +85,19 @@ export async function scanLaborDirectory(input: string, config: RuleConfig): Pro
   };
   const misplaced = new Map<string, string[]>();
   const issue = (file: string, message: string) =>
-    scan.diagnostics.push({
-      ruleId: 'parse',
-      severity: 'warning',
-      message,
-      action: '打开原件核对；提供有文字层的 PDF 或 Word 情况说明。',
-      files: [file],
-      invoiceNumbers: [],
-    });
+    scan.diagnostics.push(
+      withFindingId(
+        {
+          ruleId: 'parse',
+          severity: 'warning',
+          message,
+          action: '打开原件核对；提供有文字层的 PDF 或 Word 情况说明。',
+          files: [file],
+          invoiceNumbers: [],
+        },
+        dir,
+      ),
+    );
   async function visit(current: string) {
     const entries =
       current === dir
@@ -160,15 +166,20 @@ export async function scanLaborDirectory(input: string, config: RuleConfig): Pro
   }
   await visit(dir);
   if (misplaced.size)
-    scan.diagnostics.push({
-      ruleId: 'parse',
-      code: 'invoices-in-labor',
-      severity: 'warning',
-      message: `劳务费目录里有 ${misplaced.size} 张发票，未按发票检查，建议移到单独的批次文件夹`,
-      action: '将这些发票及相关附件移到劳务目录之外的独立批次，再检查该批次。',
-      invoiceNumbers: [...misplaced.keys()],
-      files: [...misplaced.values()].flat(),
-    });
+    scan.diagnostics.push(
+      withFindingId(
+        {
+          ruleId: 'parse',
+          code: 'invoices-in-labor',
+          severity: 'warning',
+          message: `劳务费目录里有 ${misplaced.size} 张发票，未按发票检查，建议移到单独的批次文件夹`,
+          action: '将这些发票及相关附件移到劳务目录之外的独立批次，再检查该批次。',
+          invoiceNumbers: [...misplaced.keys()],
+          files: [...misplaced.values()].flat(),
+        },
+        dir,
+      ),
+    );
   try {
     scan.manual = await readManual(dir);
   } catch (error) {

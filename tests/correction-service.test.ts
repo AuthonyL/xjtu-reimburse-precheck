@@ -195,7 +195,7 @@ it('无法解析的劳务说明也有修复目标，候选必须仍被正式识�
 
 it('解析失败 XML/OFD 不能靠非发票内容消除；修复不误删旁边没有号码的手填收据', async () => {
   const { temp, batch, service } = await fixture();
-  await mkdir(join(batch, '_预检'));
+  await mkdir(join(batch, '_预检'), { recursive: true });
   const manual = {
     version: 1,
     entries: [{ group: 'AI', amount: 20, currency: 'USD', paymentDate: '2026-01-02' }],
@@ -232,7 +232,7 @@ it('解析失败 XML/OFD 不能靠非发票内容消除；修复不误删旁边�
 
 it('手填虚拟收据可用真实发票替换，manual更新和新增原件一起撤销', async () => {
   const { temp, batch, service } = await fixture();
-  await mkdir(join(batch, '_预检'));
+  await mkdir(join(batch, '_预检'), { recursive: true });
   const manual = {
     version: 1,
     entries: [
@@ -399,7 +399,7 @@ it('确认附件保留已有手填/其他覆盖，撤销还原原索引，目录
   await mkdir(join(batch, 'AI'));
   await writeFile(join(batch, 'AI/sub.png'), 'synthetic');
   await writeFile(join(batch, 'AI/hash.png'), 'synthetic');
-  await mkdir(join(batch, '_预检'));
+  await mkdir(join(batch, '_预检'), { recursive: true });
   const manual =
     JSON.stringify({ version: 1, entries: [], attachments: { 'AI/sub.png': 'subscription' } }) +
     '\n';

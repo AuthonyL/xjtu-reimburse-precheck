@@ -1,3 +1,5 @@
+import { relativeProblemFile, requirementId, withFindingId } from '../domain/finding-id.js';
+import { findManualEntry } from '../manual.js';
 import { pathKey, relativePath, samePath } from '../fs-path.js';
 import { basename, dirname } from 'node:path';
 import type {
@@ -11,7 +13,6 @@ import type {
   Group,
   Invoice,
   InvoiceLine,
-  ManualEntry,
   Requirement,
 } from '../types.js';
 import { attachmentLabels, requirementStatusLabels } from '../attachments.js';
@@ -62,14 +63,6 @@ function expense(invoice: Invoice, group: Group, config: RuleConfig): string {
   return (
     config.expense.mappings.find((m) => containsAny(textOf(invoice), m.keywords))?.content ??
     (invoice.lines.length ? config.expense.default : config.expense.unknown)
-  );
-}
-function manualFor(batch: Batch, invoice: Invoice): ManualEntry | undefined {
-  return batch.manual.entries.find(
-    (e, n) =>
-      e.number === invoice.number ||
-      (e.sourceFile && invoice.sources.some((s) => s.relativePath === e.sourceFile)) ||
-      (!e.sourceFile && !e.number && invoice.number === `manual:${e.group}:${n + 1}`),
   );
 }
 function findMaterials(
@@ -149,23 +142,36 @@ export function checkBatch(
       batch.groups.find((g) => g.id === groupId) ??
       batch.groups.find((g) => invoices.some((i) => g.invoiceNumbers.includes(i.number)));
     const targetFiles = files ?? invoices.flatMap((i) => i.sources.map((s) => s.path));
-    findings.push({
-      severity: confirmed ? 'info' : (options.severity ?? configured),
-      ...(options.code || ids.includes('parse')
-        ? { code: options.code ?? parseWarningCode(message) }
-        : {}),
-      ...(options.requirementType ? { requirementType: options.requirementType } : {}),
-      ruleId: ids.join('/'),
-      action: ruleAction(
-        ids.join('/'),
-        targetGroup?.name ?? '发票所在文件夹',
-        targetFiles.map((f) => basename(f)).join('、') || '相关文件',
+    let code = options.code;
+    if (ids.includes('parse') && code === undefined) {
+      code = parseWarningCode(message);
+      // 解析异常可能包含绝对路径；代码使用相对路径，原消息保持不变。
+      for (const file of [...new Set(targetFiles)].sort((a, b) => b.length - a.length))
+        for (const separator of ['/', '\\'])
+          code = code.replaceAll(file.replace(/[\\/]/g, separator), () =>
+            relativeProblemFile(batch.dir, file),
+          );
+    }
+    findings.push(
+      withFindingId(
+        {
+          severity: confirmed ? 'info' : (options.severity ?? configured),
+          ...(options.code || ids.includes('parse') ? { code } : {}),
+          ...(options.requirementType ? { requirementType: options.requirementType } : {}),
+          ruleId: ids.join('/'),
+          action: ruleAction(
+            ids.join('/'),
+            targetGroup?.name ?? '发票所在文件夹',
+            targetFiles.map((f) => basename(f)).join('、') || '相关文件',
+          ),
+          message,
+          invoiceNumbers: invoices.map((i) => i.number),
+          files: files ?? invoices.flatMap((i) => i.sources.map((s) => s.path)),
+          ...(targetGroup ? { groupId: targetGroup.id } : groupId ? { groupId } : {}),
+        },
+        batch.dir,
       ),
-      message,
-      invoiceNumbers: invoices.map((i) => i.number),
-      files: files ?? invoices.flatMap((i) => i.sources.map((s) => s.path)),
-      ...(targetGroup ? { groupId: targetGroup.id } : groupId ? { groupId } : {}),
-    });
+    );
   };
   for (const diagnostic of batch.diagnostics)
     addFinding(
@@ -255,6 +261,7 @@ export function checkBatch(
           ? `${first.seller.name || first.seller.taxId}，${first.date}，本组${target.length}张，价税合计${roundMoney(target.reduce((sum, i) => sum + i.total, 0)).toFixed(2)}元；`
           : '';
       const requirement: Requirement = {
+        id: '',
         type,
         ruleIds: [ruleId],
         reason: summary + reason,
@@ -455,9 +462,18 @@ export function checkBatch(
           invoice,
         ]);
         if (invoice.currency !== 'CNY') {
-          const manual = manualFor(batch, invoice);
+          const manual = findManualEntry(batch, invoice);
           if (!invoice.date)
-            addFinding('warning', 'R3', '请手填金额和支付日期', [invoice], group.id);
+            addFinding(
+              'warning',
+              'R3',
+              '请手填金额和支付日期',
+              [invoice],
+              group.id,
+              undefined,
+              false,
+              { code: 'manual-amount' },
+            );
           if (!manual?.exchangeRate)
             addFinding(
               'warning',
@@ -505,7 +521,16 @@ export function checkBatch(
       require('payment', 'R3', 'AI订阅需要付款凭证', []);
       require('subscription', 'R3', 'AI订阅需要订阅说明截图', []);
       require('exchangeRate', 'R10', `按支付日提供中行${config.exchangeRateType}截图，并圈出所用汇率`, []);
-      addFinding('warning', 'R3', '仅有截图或无法读取收据，请手填金额和支付日期', [], group.id);
+      addFinding(
+        'warning',
+        'R3',
+        '仅有截图或无法读取收据，请手填金额和支付日期',
+        [],
+        group.id,
+        undefined,
+        false,
+        { code: 'manual-amount' },
+      );
       addFinding('warning', 'R10', '请手填汇率；无手填汇率时折算金额留空', [], group.id);
     }
     const images = [
@@ -524,6 +549,8 @@ export function checkBatch(
         [],
         group.id,
         images.map((f) => f.path),
+        false,
+        { code: 'manual-amount' },
       );
     const contents = [...new Set(checked.invoices.map((i) => i.expenseContent))];
     checked.expenseContent =
@@ -534,7 +561,8 @@ export function checkBatch(
           : group.flags.ai
             ? config.expense.ai
             : config.expense.unknown;
-    for (const r of checked.requirements)
+    for (const r of checked.requirements) {
+      r.id = requirementId(r, group.id);
       addFinding(
         r.status === 'found' ? 'info' : 'warning',
         r.ruleIds.join('/'),
@@ -545,6 +573,7 @@ export function checkBatch(
         r.status === 'found',
         { code: 'attachment:' + r.type, requirementType: r.type },
       );
+    }
     return checked;
   });
   for (const invoice of batch.invoices) {

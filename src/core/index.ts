@@ -11,6 +11,9 @@ import { checkLabor } from './labor/engine.js';
 import { probe, readSelectedDirectory } from './fs-probe.js';
 
 export * from './types.js';
+export * from './domain/claim.js';
+export * from './domain/finding-id.js';
+export * from './claim-store.js';
 export * from './batch-order.js';
 export * from './discovery.js';
 export * from './scan.js';

@@ -1,4 +1,5 @@
 import type { AttachmentType, Report } from '../../core/types.js';
+import { countSeverities } from '../../core/report.js';
 
 import { ATTACHMENT_LABELS } from '../../core/rules/catalog.js';
 export const materialNames = { ...ATTACHMENT_LABELS, payment: '支付记录' };
@@ -27,12 +28,12 @@ export function FileLink({ file, run }: { file: string; run: Run }) {
   );
 }
 export function Counts({ report }: { report: Report }) {
+  const counts = countSeverities(report.findings);
   return (
     <span className="counts">
       {(['error', 'warning', 'info'] as const).map((level) => (
         <span key={level} className={'pill ' + level}>
-          {{ error: '✗ 错误', warning: '! 警告', info: 'i 提示' }[level]}{' '}
-          {report.findings.filter((f) => f.severity === level).length}
+          {{ error: '✗ 错误', warning: '! 警告', info: 'i 提示' }[level]} {counts[level]}
         </span>
       ))}
     </span>

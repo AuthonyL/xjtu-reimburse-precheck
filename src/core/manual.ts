@@ -1,8 +1,17 @@
 import { readFile, lstat } from 'node:fs/promises';
 import { isAbsolute, join, normalize, sep, win32 } from 'node:path';
-import type { ManualData, ManualEntry } from './types.js';
+import type { Batch, Invoice, ManualData, ManualEntry } from './types.js';
 import { isAttachmentType } from './attachments.js';
 import { validateLaborManual } from './labor/validation.js';
+
+export function findManualEntry(batch: Batch, invoice: Invoice): ManualEntry | undefined {
+  return batch.manual.entries.find(
+    (e, n) =>
+      e.number === invoice.number ||
+      (e.sourceFile && invoice.sources.some((s) => s.relativePath === e.sourceFile)) ||
+      (!e.sourceFile && !e.number && invoice.number === `manual:${e.group}:${n + 1}`),
+  );
+}
 
 function relativeFile(value: unknown): string {
   if (

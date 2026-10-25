@@ -9,20 +9,22 @@ import { App } from '../src/renderer/src/App.js';
 import { WorkspaceService } from '../src/main/workspace.js';
 import { DesktopStore } from '../src/main/store.js';
 import { Results } from '../src/renderer/src/Results.js';
-import { batch, config } from './helpers.js';
+import { batch, config, finding } from './helpers.js';
 import { buildReport, checkBatch } from '../src/core/index.js';
 
 it('问题列表默认显示错误和警告，提示按数量折叠并可展开', async () => {
   const b = batch();
   const report = buildReport(checkBatch(b, config()));
-  report.findings = ['error', 'warning', 'info'].map((severity) => ({
-    severity: severity as 'error' | 'warning' | 'info',
-    ruleId: 'synthetic',
-    message: '合成问题-' + severity,
-    action: '合成处理办法',
-    invoiceNumbers: [],
-    files: [],
-  }));
+  report.findings = ['error', 'warning', 'info'].map((severity) =>
+    finding({
+      severity: severity as 'error' | 'warning' | 'info',
+      ruleId: 'synthetic',
+      message: '合成问题-' + severity,
+      action: '合成处理办法',
+      invoiceNumbers: [],
+      files: [],
+    }),
+  );
   try {
     render(
       <Results

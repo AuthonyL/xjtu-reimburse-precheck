@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import JSZip from 'jszip';
 import { buildFeedbackBundle, workspaceIdentity } from '../src/core/feedback/bundle.js';
-import { batch, invoice, config } from './helpers.js';
+import { batch, invoice, config, finding } from './helpers.js';
 import { xml } from './parse-fixtures.js';
 import { checkBatch, buildReport } from '../src/core/index.js';
 import type { FeedbackRecord } from '../src/shared/feedback.js';
@@ -117,14 +117,19 @@ it('诊断保留原扫描合并告警和报告提示，海外收据使用同一�
   const b = batch([inv]);
   b.dir = dir;
   const report = buildReport(checkBatch(b, config()));
-  report.findings.push({
-    ruleId: 'parse',
-    severity: 'warning',
-    message: '合成报告独有解析提示',
-    action: '核对',
-    invoiceNumbers: [inv.number],
-    files: [file],
-  });
+  report.findings.push(
+    finding(
+      {
+        ruleId: 'parse',
+        severity: 'warning',
+        message: '合成报告独有解析提示',
+        action: '核对',
+        invoiceNumbers: [inv.number],
+        files: [file],
+      },
+      dir,
+    ),
+  );
   const bundle = await buildFeedbackBundle({
     workspace: { rootDir: dir, batches: [{ batch: b, report }], labor: [] },
     config: config(),

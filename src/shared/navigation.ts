@@ -1,4 +1,5 @@
 import { compareBatches } from '../core/batch-order.js';
+import { countSeverities } from '../core/report.js';
 import type { BatchView, WorkspaceView, LaborView } from './api.js';
 import type { Requirement } from '../core/types.js';
 
@@ -37,38 +38,41 @@ export interface BatchNode {
 function laborNode(view: LaborView): BatchNode {
   const { report } = view;
   const findings = [...report.diagnostics, ...report.entries.flatMap((e) => e.findings)];
+  const counts = countSeverities(findings);
   return {
     kind: 'labor',
     id: report.dir,
     label: report.name,
     batchDir: report.dir,
-    errors: findings.filter((f) => f.severity === 'error').length,
-    warnings: findings.filter((f) => f.severity === 'warning').length,
+    errors: counts.error,
+    warnings: counts.warning,
     readOnly: false,
     submitted: false,
-    children: report.entries.map((e) => ({
-      id: report.dir + ':' + e.relativePath,
-      label:
-        (e.fields.name ?? e.relativePath.split('/').at(-1)!) +
-        (e.otherVersions?.length ? ' · ' + e.relativePath.split('/').at(-1) + '（另一版本）' : ''),
-      tooltip: e.otherVersions?.length
-        ? `本文件：${e.relativePath}；另一版本：${e.otherVersions.join('、')}`
-        : e.relativePath,
-      batchDir: report.dir,
-      target: e.relativePath,
-      kind: 'statement',
-      errors: e.findings.filter((f) => f.severity === 'error').length,
-      status: e.findings.some((f) => f.severity === 'error')
-        ? 'missing'
-        : e.findings.some((f) => f.severity === 'warning')
-          ? 'unconfirmed'
-          : 'found',
-    })),
+    children: report.entries.map((e) => {
+      const counts = countSeverities(e.findings);
+      return {
+        id: report.dir + ':' + e.relativePath,
+        label:
+          (e.fields.name ?? e.relativePath.split('/').at(-1)!) +
+          (e.otherVersions?.length
+            ? ' · ' + e.relativePath.split('/').at(-1) + '（另一版本）'
+            : ''),
+        tooltip: e.otherVersions?.length
+          ? `本文件：${e.relativePath}；另一版本：${e.otherVersions.join('、')}`
+          : e.relativePath,
+        batchDir: report.dir,
+        target: e.relativePath,
+        kind: 'statement',
+        errors: counts.error,
+        status: counts.error ? 'missing' : counts.warning ? 'unconfirmed' : 'found',
+      };
+    }),
   };
 }
 
 function batchNode(view: BatchView): BatchNode {
   const { batch, report } = view;
+  const counts = countSeverities(report.findings);
   const children: GroupNode[] = report.groups.map((g) => ({
     id: batch.dir + ':' + g.group.name,
     label: g.group.name,
@@ -93,8 +97,8 @@ function batchNode(view: BatchView): BatchNode {
     id: batch.dir,
     label: batch.id,
     batchDir: batch.dir,
-    errors: report.findings.filter((f) => f.severity === 'error').length,
-    warnings: report.findings.filter((f) => f.severity === 'warning').length,
+    errors: counts.error,
+    warnings: counts.warning,
     submitted: batch.submitted,
     readOnly: !!view.readOnly,
     children,

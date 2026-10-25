@@ -1,3 +1,4 @@
+import { withFindingId } from '../domain/finding-id.js';
 import type { Finding, Severity } from '../types.js';
 import type { RuleConfig } from '../rules/config.js';
 import { ruleDefinition } from '../rules/catalog.js';
@@ -27,15 +28,20 @@ export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
       const option = config.ruleOptions[id];
       if (!option.enabled) return;
       const definition = ruleDefinition(id)!;
-      findings.push({
-        code: message,
-        ruleId: id,
-        severity: option.severity === definition.defaultSeverity ? severity : option.severity,
-        message,
-        action: action ?? definition.action.replaceAll('{file}', statement.relativePath),
-        files: [statement.path],
-        invoiceNumbers: [],
-      });
+      findings.push(
+        withFindingId(
+          {
+            code: message,
+            ruleId: id,
+            severity: option.severity === definition.defaultSeverity ? severity : option.severity,
+            message,
+            action: action ?? definition.action.replaceAll('{file}', statement.relativePath),
+            files: [statement.path],
+            invoiceNumbers: [],
+          },
+          scan.dir,
+        ),
+      );
     };
     for (const [key, label] of Object.entries({
       name: '姓名',
@@ -195,7 +201,7 @@ export function checkLabor(scan: LaborScan, config: RuleConfig): LaborReport {
     );
     return { ...statement, fields, manual, findings, standards, requirements };
   });
-  const versionGroups = groupLaborVersions(entries, config);
+  const versionGroups = groupLaborVersions(entries, config, scan.dir);
   const counted = entries.filter((e) => e.counted);
   return {
     payoutCount: counted.length,

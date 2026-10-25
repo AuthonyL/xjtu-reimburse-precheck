@@ -21,6 +21,8 @@ import type {
   Submission,
 } from '../shared/api.js';
 import { DesktopStore } from './store.js';
+import { ensureClaim } from './claim-store.js';
+import { findManualEntry } from '../core/manual.js';
 import {
   batchFile,
   detectWorkspace,
@@ -59,12 +61,7 @@ export function manualTasks(batch: Batch, rateType: string): ManualTask[] {
   for (const group of batch.groups) {
     const invoices = batch.invoices.filter((i) => group.invoiceNumbers.includes(i.number));
     for (const invoice of invoices.filter((i) => i.kind !== 'domestic' || i.currency !== 'CNY')) {
-      const saved = batch.manual.entries.find(
-        (e, n) =>
-          e.number === invoice.number ||
-          invoice.sources.some((s) => s.relativePath === e.sourceFile) ||
-          (!e.sourceFile && !e.number && invoice.number === `manual:${e.group}:${n + 1}`),
-      );
+      const saved = findManualEntry(batch, invoice);
       const source = invoice.sources.find((s) => s.format !== 'manual');
       tasks.push({
         key: invoice.number,
@@ -302,6 +299,7 @@ export class WorkspaceService {
         { rejectedNumbers, rejectedInfo },
         readOnly,
       );
+      if (!readOnly) batch.claim = await ensureClaim(batch.dir);
       return {
         batch,
         report,

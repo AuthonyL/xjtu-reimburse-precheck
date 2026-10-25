@@ -163,7 +163,7 @@ it('恢复遇到损坏的工作区文件时回到首页，保留布局并能打�
   try {
     await new WorkspaceService(store).open(root);
     await store.saveLayout({ sidebarWidth: 360 });
-    await mkdir(join(root, '20260103/_预检'));
+    await mkdir(join(root, '20260103/_预检'), { recursive: true });
     await writeFile(join(root, '20260103/_预检/rates.json'), 'invalid synthetic JSON');
     const service = new WorkspaceService(store);
     const result = await service.restore();

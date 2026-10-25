@@ -1,3 +1,5 @@
+import type { Claim } from './domain/claim.js';
+
 export type Severity = 'error' | 'warning' | 'info';
 export type AttachmentType =
   | 'payment'
@@ -85,6 +87,9 @@ export interface Group {
   flags: { deferred: boolean; bankTransfer: boolean; outsourced: boolean; ai: boolean };
 }
 export interface Finding {
+  id: string;
+  ruleIds: string[];
+  resolution?: 'open' | 'waived';
   code?: string;
   requirementType?: AttachmentType;
   severity: Severity;
@@ -96,6 +101,7 @@ export interface Finding {
   groupId?: string;
 }
 export interface Requirement {
+  id: string;
   type: AttachmentType;
   ruleIds: string[];
   reason: string;
@@ -126,6 +132,7 @@ export interface ManualData {
   labor?: Record<string, import('./labor/types.js').LaborManualEntry>;
 }
 export interface Batch {
+  claim?: Claim;
   batchDate?: string;
   batchDateSource?: 'name' | 'invoice' | 'modified';
   id: string;

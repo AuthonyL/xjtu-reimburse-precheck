@@ -6,19 +6,20 @@ import { CorrectionNoticeProvider } from '../src/renderer/src/CorrectionNotice.j
 import type { CorrectionPreview } from '../src/core/correction/types.js';
 import type { Finding } from '../src/core/types.js';
 import type { WorkspaceView } from '../src/shared/api.js';
-import { batch, config } from './helpers.js';
+import { batch, config, finding as makeFinding } from './helpers.js';
 import { checkBatch, buildReport } from '../src/core/index.js';
 const run = async (action: () => Promise<unknown>) => {
   await action();
 };
-const finding = (message: string, severity: Finding['severity'] = 'warning'): Finding => ({
-  ruleId: 'R2',
-  severity,
-  message,
-  action: '补材料',
-  files: [],
-  invoiceNumbers: [],
-});
+const finding = (message: string, severity: Finding['severity'] = 'warning'): Finding =>
+  makeFinding({
+    ruleId: 'R2',
+    severity,
+    message,
+    action: '补材料',
+    files: [],
+    invoiceNumbers: [],
+  });
 const target = { id: 'target', label: '合成缺失材料', kind: 'attachment' as const, folder: 'AI' };
 const preview = (
   overrides: Partial<Extract<CorrectionPreview, { status: 'checked' }>> = {},
