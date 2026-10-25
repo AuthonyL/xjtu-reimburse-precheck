@@ -1,3 +1,5 @@
+import styles from './styles/findings.module.css';
+import uiStyles from './styles/ui.module.css';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRun } from './store/status.js';
 import { useEffect, useState } from 'react';
@@ -27,17 +29,17 @@ export function RuleVersion({
   useEffect(() => setChoices({}), [version?.upgrade?.toHash]);
   if (!version) return null;
   return (
-    <div className="rule-version">
-      <p className="muted small">{ruleVersionLabel(version)}</p>
+    <div className={styles.ruleVersion}>
+      <p className={uiStyles.muted + ' ' + uiStyles.small}>{ruleVersionLabel(version)}</p>
       {version.upgrade && (
-        <button type="button" className="version-banner" onClick={() => setOpen(true)}>
+        <button type="button" className={styles.versionBanner} onClick={() => setOpen(true)}>
           有新的默认规则 · 查看差异
         </button>
       )}
       {open && version.upgrade && (
         <FeedbackDialog title="有新的默认规则" close={() => setOpen(false)}>
           <p>每项选择采用新默认或保留当前值；未确认前继续使用你的当前配置。</p>
-          <div className="table-wrap">
+          <div className={'table-wrap'}>
             <table>
               <thead>
                 <tr>
@@ -51,7 +53,7 @@ export function RuleVersion({
               <tbody>
                 {version.upgrade.items.map((item) => (
                   <tr key={item.path}>
-                    <td className="path">{item.path}</td>
+                    <td className={uiStyles.path}>{item.path}</td>
                     <td>
                       <pre>{JSON.stringify(item.oldDefault, null, 2)}</pre>
                     </td>
@@ -84,10 +86,10 @@ export function RuleVersion({
               </tbody>
             </table>
           </div>
-          <div className="actions">
+          <div className={uiStyles.actions}>
             <button
               type="button"
-              className="primary"
+              className={uiStyles.primary}
               disabled={version.upgrade.items.some((i) => !choices[i.path])}
               onClick={() =>
                 void run(async () => {

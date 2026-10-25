@@ -39,6 +39,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   renderer: {
+    build: { minify: true },
     plugins: [
       react(),
       bundleNoticesPlugin(),

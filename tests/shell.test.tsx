@@ -40,7 +40,7 @@ it('重复分组定位都在展开后的 DOM 提交后滚动，手动展开不�
   HTMLElement.prototype.scrollIntoView = vi.fn(function (this: HTMLElement) {
     if (this.id === groupAnchor('根目录'))
       expandedWhenScrolled.push(
-        this.querySelector('.group-summary')?.getAttribute('aria-expanded') === 'true',
+        this.querySelector('[class*="_groupSummary_"]')?.getAttribute('aria-expanded') === 'true',
       );
   });
   onTestFinished(() => {

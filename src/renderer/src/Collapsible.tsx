@@ -1,4 +1,7 @@
+import styles from './styles/disclosure.module.css';
+import { Hint } from './ui.js';
 import { useId, type ReactNode } from 'react';
+import { Collapsible as Disclosure } from 'radix-ui';
 import { useDisclosures } from './disclosures.js';
 
 export function Collapsible({
@@ -33,42 +36,58 @@ export function Collapsible({
   const id = useId();
   const Heading = level === 2 ? 'h2' : 'h3';
   return (
-    <section className={'collapsible ' + className} data-testid={testId} aria-label={title}>
-      <Heading className="collapsible-heading">
-        <button
-          type="button"
-          aria-expanded={expanded}
-          aria-controls={id}
-          className="collapsible-toggle"
-          aria-label={
-            typeof summary === 'string'
-              ? `${title} · ${attention ? '! ' : ''}${summary}`
-              : undefined
-          }
-          onClick={() => {
-            if (onOpenChange) onOpenChange(!expanded);
-            else setEntries([disclosureKey], !expanded);
-          }}
-        >
-          <span>{title}</span>
-          {summary != null && (
-            <span
-              className={'collapsible-summary' + (attention ? ' attention' : '')}
-              title={typeof summary === 'string' ? summary : undefined}
+    <Disclosure.Root
+      asChild
+      open={expanded}
+      onOpenChange={(next) => {
+        if (onOpenChange) onOpenChange(next);
+        else setEntries([disclosureKey], next);
+      }}
+    >
+      <section
+        className={styles.collapsible + ' ' + className}
+        data-testid={testId}
+        aria-label={title}
+      >
+        <Heading className={styles.collapsibleHeading}>
+          <Disclosure.Trigger asChild>
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls={id}
+              className={styles.collapsibleToggle}
+              aria-label={
+                typeof summary === 'string'
+                  ? `${title} · ${attention ? '! ' : ''}${summary}`
+                  : undefined
+              }
             >
-              {' '}
-              · {attention ? '! ' : ''}
-              {summary}
-            </span>
-          )}
-          <span aria-hidden="true" className="disclosure-chevron">
-            {expanded ? '▾' : '▸'}
-          </span>
-        </button>
-      </Heading>
-      <div id={id} hidden={!expanded} className="collapsible-content">
-        {children}
-      </div>
-    </section>
+              <span>{title}</span>
+              {summary != null && (
+                <Hint text={typeof summary === 'string' ? summary : undefined}>
+                  <span
+                    className={
+                      styles.collapsibleSummary + (attention ? ' ' + styles.attention : '')
+                    }
+                  >
+                    {' '}
+                    · {attention ? '! ' : ''}
+                    {summary}
+                  </span>
+                </Hint>
+              )}
+              <span aria-hidden="true" className={styles.disclosureChevron}>
+                {expanded ? '▾' : '▸'}
+              </span>
+            </button>
+          </Disclosure.Trigger>
+        </Heading>
+        <Disclosure.Content asChild forceMount>
+          <div id={id} hidden={!expanded} className={styles.collapsibleContent}>
+            {children}
+          </div>
+        </Disclosure.Content>
+      </section>
+    </Disclosure.Root>
   );
 }

@@ -14,7 +14,7 @@ export function Findings({
   return (
     <section
       aria-label="待处理问题"
-      className="actionable-findings"
+      className={'actionable-findings'}
       data-testid="actionable-findings"
     >
       <h2>待处理问题</h2>

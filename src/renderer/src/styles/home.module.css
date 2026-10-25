@@ -1,0 +1,47 @@
+.home {
+  max-width: 1000px;
+  padding-top: 90px;
+}
+.home h1 {
+  max-width: 650px;
+  font-size: 40px;
+}
+.home > p {
+  color: var(--muted);
+  margin: 22px 0;
+}
+.eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+.pathForm {
+  max-width: 740px;
+  margin-top: 30px;
+}
+.pathForm .pathInput {
+  margin-top: 7px;
+}
+.recent {
+  margin-top: 54px;
+}
+.recentItem {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  text-align: left;
+  margin-bottom: 8px;
+  padding: 16px;
+  gap: 22px;
+}
+.recentItem span:nth-child(2) {
+  color: var(--muted);
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1050px) {
+  .home h1 {
+    font-size: 32px;
+  }
+}

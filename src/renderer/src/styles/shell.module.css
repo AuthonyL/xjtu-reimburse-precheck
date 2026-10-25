@@ -1,0 +1,107 @@
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.appBody {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.resultPane {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  container-type: inline-size;
+}
+.appHeader {
+  height: 64px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+}
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.headerWorkspace {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.brand {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: left;
+}
+.brand span {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 2px;
+}
+.workspace {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.message:global(.error) {
+  background: var(--error-bg);
+}
+.message:global(.success) {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+.message {
+  flex-shrink: 0;
+  max-height: 120px;
+  overflow: auto;
+  margin: 8px 20px;
+  padding: 12px 16px;
+  border-radius: 7px;
+  overflow-wrap: anywhere;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.message.notice {
+  background: var(--accent-bg);
+}
+.busy {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 8px;
+  text-align: center;
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.dropOverlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 12px;
+  z-index: 10;
+  border: 3px dashed var(--accent);
+  border-radius: 16px;
+  background: var(--accent-bg);
+  opacity: 0.96;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+}
+
+.dragging {
+}

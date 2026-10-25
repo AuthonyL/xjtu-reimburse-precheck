@@ -54,7 +54,7 @@ it('规则组默认展开、规则收起且所有编号可见，收起时可切�
   await user.click(freshCard.getByRole('button', { name: /^F2 ·/ }));
   await user.type(freshCard.getByLabelText('横向限制关键字'), '合成新词{Enter}');
   expect(freshCard.getByTestId('criteria-F2').textContent).toContain('等');
-  expect(freshCard.getByTestId('criteria-F2').title).toContain('合成新词');
+  expect(freshCard.getByTestId('criteria-F2').dataset.tooltip).toContain('合成新词');
   await user.click(screen.getByRole('button', { name: '保存设置' }));
   expect(saved!.rules.horizontalOnlyKeywords).toContain('合成新词');
 }, 15000);
@@ -90,7 +90,7 @@ it('从问题查看规则时显示原文、动态口径和编号含义，并可�
   const explanation = screen.getByRole('region', { name: '规则说明' });
   expect(explanation.textContent).toContain('R1 = README 第 1 条');
   expect(explanation.textContent).toContain('R11 = README 第 11 条');
-  expect(explanation.querySelectorAll('.rule-explanation')).toHaveLength(2);
+  expect(explanation.querySelectorAll('[class*="_ruleExplanation_"]')).toHaveLength(2);
   expect(within(explanation).getAllByText('当前级别：警告')).toHaveLength(2);
   expect(explanation.textContent?.match(/判定口径：/g)).toHaveLength(2);
   expect(explanation.textContent).toContain('金额超过500要入库单');

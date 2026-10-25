@@ -1,0 +1,164 @@
+.findingTitle {
+  width: 100%;
+  line-height: 1.6;
+  word-break: normal;
+}
+
+.findingSummary,
+.groupSummary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  border-color: transparent;
+  padding: 8px 4px;
+  text-align: left;
+  white-space: nowrap;
+}
+.findingSummary .findingTitle,
+.groupName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.findingLevel,
+.findingRule,
+.findingInvoiceCount,
+.disclosureChevron,
+.groupMaterialCounts {
+  flex-shrink: 0;
+}
+.findingRule {
+  font-weight: 650;
+}
+.findingRuleName,
+.findingLocation,
+.findingInvoiceCount {
+  font-size: 12px;
+  color: var(--muted);
+}
+.findingLocation {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.findingDetails {
+  padding: 8px 4px 4px;
+}
+.findingLevel:global(.error) {
+  color: var(--error);
+}
+.findingLevel:global(.warning) {
+  color: var(--warning);
+}
+.findingLevel:global(.info) {
+  color: var(--accent);
+}
+.issueHeading,
+.ruleFilters,
+.disclosureActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.issueHeading {
+  margin-bottom: 8px;
+}
+.issueHeading h2,
+.issueHeading h3 {
+  margin: 0;
+}
+.ruleFilters button,
+.disclosureActions button {
+  padding: 3px 7px;
+  font-size: 12px;
+}
+.ruleFilters button[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+.disclosureActions {
+  margin-left: auto;
+}
+.groupName {
+  font-weight: 650;
+  font-size: 16px;
+}
+.groupSummary .groupTags {
+  flex-wrap: nowrap;
+  margin: 0;
+}
+.groupExpense,
+.groupTotal {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.groupTotal {
+  margin-left: auto;
+}
+.groupMaterialCounts {
+  font-size: 12px;
+}
+@container (max-width: 700px) {
+  .findingLocation,
+  .findingInvoiceCount,
+  .findingRuleName,
+  .groupExpense {
+    display: none;
+  }
+  .findingSummary,
+  .groupSummary {
+    gap: 6px;
+  }
+  .groupSummary :global(.pill) {
+    padding: 1px 4px;
+    font-size: 11px;
+  }
+  .groupTotal {
+    max-width: 140px;
+  }
+}
+
+.collapsibleHeading {
+  margin-bottom: 12px;
+  /* Collapsed sections render as cards; match the group card title size. */
+  font-size: 16px;
+}
+.collapsibleToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  padding: 18px;
+  text-align: left;
+  font-weight: 650;
+}
+.collapsibleSummary {
+  flex: 1;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.collapsibleToggle .disclosureChevron {
+  margin-left: auto;
+}
+.collapsibleSummary.attention {
+  color: var(--warning);
+  font-weight: 650;
+}
+.collapsibleContent[hidden] {
+  display: none;
+}
+
+.collapsible {
+}

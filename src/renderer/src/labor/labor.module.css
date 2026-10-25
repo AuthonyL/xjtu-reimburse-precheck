@@ -1,0 +1,41 @@
+.laborCard {
+  margin: 22px 0;
+  scroll-margin-top: 28px;
+}
+.laborCard section {
+  margin: 24px 0;
+}
+.fieldOrigin {
+  font-weight: normal;
+  color: var(--muted);
+  margin-left: 8px;
+}
+.compactSummary,
+.standardRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 12px 0;
+}
+.standardRow {
+  border-bottom: 1px solid var(--line);
+  justify-content: space-between;
+}
+.standardRow.above {
+  color: var(--error);
+}
+.standardRow.below,
+.standardRow.unknown {
+  color: var(--warning);
+}
+.laborAttachments > div {
+  margin-bottom: 8px;
+}
+.laborCard textarea,
+.laborCard input,
+.laborCard select {
+  max-width: 100%;
+}
+
+.laborPage {
+}

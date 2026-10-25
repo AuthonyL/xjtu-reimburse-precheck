@@ -106,10 +106,12 @@ it('真实服务串联：不自动选文件、通过直接放入、toast撤销�
     await user.click(within(global).getByRole('button', { name: '取消' }));
     const trigger = screen.getByRole<HTMLButtonElement>('button', { name: '检查单个文件' });
     await waitFor(() => expect(trigger.closest('fieldset')?.disabled).toBe(false));
-    fireEvent.dragOver(rendered.container.querySelector('.app')!, { dataTransfer: { files: [] } });
-    expect(rendered.container.querySelector('.drop-overlay')).toBeTruthy();
+    fireEvent.dragOver(rendered.container.querySelector('[class*="_app_"]')!, {
+      dataTransfer: { files: [] },
+    });
+    expect(rendered.container.querySelector('[class*="_dropOverlay_"]')).toBeTruthy();
     const closed = rendered.container.querySelector<HTMLButtonElement>(
-      '.finding-summary[aria-expanded="false"]',
+      '[class*="_findingSummary_"][aria-expanded="false"]',
     )!;
     expect(closed).toBeTruthy();
     fireEvent.drop(closed, {
@@ -117,7 +119,7 @@ it('真实服务串联：不自动选文件、通过直接放入、toast撤销�
     });
     await screen.findByTestId('correction-toast');
     expect(screen.queryByRole('dialog')).toBeNull();
-    expect(rendered.container.querySelector('.drop-overlay')).toBeNull();
+    expect(rendered.container.querySelector('[class*="_dropOverlay_"]')).toBeNull();
     expect(choose).toHaveBeenCalledTimes(2);
     expect(await readFile(join(labor, '旧说明.docx'))).toBeTruthy();
     expect(await readFile(join(store.dir, 'feedback.json'), 'utf8')).toBe('[]\n');

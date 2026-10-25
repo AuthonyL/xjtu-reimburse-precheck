@@ -1,0 +1,45 @@
+.feedbackMark {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.feedbackDialog {
+  width: min(900px, calc(100vw - 40px));
+}
+.feedbackDialog textarea {
+  width: 100%;
+  margin-top: 6px;
+}
+.feedbackChoice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+}
+.feedbackChoice input {
+  width: auto;
+}
+.feedbackFileList {
+  padding: 0;
+  list-style: none;
+  max-height: 220px;
+  overflow: auto;
+}
+.feedbackFileList li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 5px 0;
+}
+.feedbackRecord,
+.feedbackSample {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.feedbackPanel {
+}

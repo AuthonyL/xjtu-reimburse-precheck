@@ -1,0 +1,75 @@
+.dialogBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(0 0 0 / 45%);
+}
+.fileCheckDialog {
+  width: min(850px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 12px 50px rgb(0 0 0 / 25%);
+}
+.fileCheckDialog h2 {
+  margin-top: 0;
+}
+.fileCheckDialog label,
+.fileCheckDialog select {
+  display: block;
+  width: 100%;
+}
+.fileCheckDialog li {
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.fileCheckDialog .dialogActions {
+  position: sticky;
+  bottom: -24px;
+  padding: 16px 0;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+.fileDropZone {
+  padding: 20px;
+  margin: 16px 0;
+  border: 2px dashed var(--line);
+  border-radius: 8px;
+  text-align: center;
+}
+.writeNotice {
+  padding: 12px;
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-radius: 6px;
+}
+.replacementHistory li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.correctionToast {
+  position: fixed;
+  z-index: 40;
+  top: 64px;
+  right: 20px;
+  max-width: min(680px, calc(100vw - 40px));
+  padding: 12px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 4px 20px #0002;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.correctionToast .noticeActions {
+  margin: 0;
+}

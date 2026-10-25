@@ -188,7 +188,7 @@ it('真实服务保存豁免理由并在撤销后恢复待处理问题', async (
       .getAllByRole('button')
       .find(
         (button) =>
-          button.classList.contains('finding-summary') &&
+          button.matches('[class*="_findingSummary_"]') &&
           button.textContent?.includes(issue.message),
       )!;
     await user.click(summary);

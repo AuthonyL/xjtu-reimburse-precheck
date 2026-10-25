@@ -1,107 +1,21 @@
+import styles from './settings/rules.module.css';
+import uiStyles from './styles/ui.module.css';
+import { Hint } from './ui.js';
 import { useRuleFocus } from './store/route.js';
-import { useEffect, useRef, useState, useId } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { RuleConfig } from '../../core/rules/config.js';
 import {
   RULE_CATALOG,
   RETIRED_RULE_NOTES,
   RULE_NUMBERING,
-  criteria,
-  ruleMeaning,
-  type ConfigField,
   type RuleDefinition,
 } from '../../core/rules/catalog.js';
 import { Collapsible } from './Collapsible.js';
 import { useDisclosures } from './disclosures.js';
-import { ConfigFieldEditor, getConfigValue } from './ConfigField.js';
+import { RuleCard } from './settings/RuleCard.js';
 const sourceGroups = ['readme', 'finance', 'labor', 'practice', 'system'] as const;
 const groupOf = (rule: RuleDefinition) => (rule.id.startsWith('L') ? 'labor' : rule.source.kind);
 const anchor = (id: string) => 'settings-rule-' + encodeURIComponent(id);
-
-function RuleCard({
-  rule,
-  rules,
-  expanded,
-  toggle,
-  edit,
-  restore,
-}: {
-  rule: RuleDefinition;
-  rules: RuleConfig;
-  expanded: boolean;
-  toggle: () => void;
-  edit: (path: string, value: unknown) => void;
-  restore: () => void;
-}) {
-  const id = useId();
-  const option = rules.ruleOptions[rule.id];
-  const editor = (field: ConfigField) => (
-    <ConfigFieldEditor
-      key={field.path}
-      field={field}
-      value={getConfigValue(rules, field.path)}
-      change={(value) => edit(field.path, value)}
-    />
-  );
-  return (
-    <article className="rule-card panel" data-testid={'rule-' + rule.id} id={anchor(rule.id)}>
-      <div className="rule-overview">
-        <button
-          type="button"
-          className="rule-toggle"
-          aria-expanded={expanded}
-          aria-controls={id}
-          onClick={toggle}
-        >
-          <span className="rule-label" title={rule.id + ' · ' + rule.name}>
-            {rule.id} · {rule.name}
-          </span>
-          <span className={'pill ' + option.severity}>
-            {{ error: '错误', warning: '警告', info: '提示' }[option.severity]}
-          </span>
-          <span className="rule-excerpt" title={rule.sourceText}>
-            {rule.sourceText}
-          </span>
-          <span className="disclosure-chevron" aria-hidden="true">
-            {expanded ? '▾' : '▸'}
-          </span>
-        </button>
-        <label className="checkbox-label rule-enabled">
-          <input
-            type="checkbox"
-            aria-label={'启用 ' + rule.id}
-            checked={option.enabled}
-            onChange={(e) => edit(`ruleOptions.${rule.id}.enabled`, e.target.checked)}
-          />
-          启用
-        </label>
-      </div>
-      <div hidden={!expanded} id={id} className="rule-card-content">
-        <p className="muted">{ruleMeaning(rule)}</p>
-        <p className="source-text">原文：{rule.sourceText}</p>
-        <p
-          data-testid={'criteria-' + rule.id}
-          title={criteria(rule, rules, { fullKeywords: true })}
-        >
-          判定口径：{criteria(rule, rules)}
-        </p>
-        <p className="small">
-          怎么处理：
-          {rule.action.replaceAll('{group}', '对应组文件夹').replaceAll('{file}', '相关文件')}
-        </p>
-        <div className="form-grid rule-controls">{editor(rule.config[1]!)}</div>
-        <div className="rule-fields">
-          {rule.config
-            .slice(2)
-            .filter((f) => !f.general && !f.labor)
-            .map(editor)}
-        </div>
-        <button type="button" onClick={restore}>
-          恢复此项默认
-        </button>
-      </div>
-    </article>
-  );
-}
 
 export function RulesOverview({
   rules,
@@ -149,8 +63,8 @@ export function RulesOverview({
     matches(rule.id + ' ' + rule.note + ' ' + rule.sourceText),
   );
   return (
-    <div className="rules-overview">
-      <div className="numbering-guide">
+    <div className={'rules-overview'}>
+      <div className={styles.numberingGuide}>
         {RULE_NUMBERING.map((line) => (
           <p key={line}>{line}</p>
         ))}
@@ -165,7 +79,7 @@ export function RulesOverview({
           onChange={(e) => setSearch(e.target.value)}
         />
       </label>
-      <div className="actions rule-bulk-actions">
+      <div className={uiStyles.actions + ' ' + styles.ruleBulkActions}>
         <button
           type="button"
           onClick={() =>
@@ -226,20 +140,20 @@ export function RulesOverview({
               />
             ))}
             {notes.map((note) => (
-              <div
-                className="retired-rule panel"
-                data-testid={'retired-' + note.id}
-                key={note.id}
-                title={note.sourceText}
-              >
-                R14（README 第 14 条）· {note.note}
-                <span className="rule-excerpt">原文：{note.sourceText}</span>
-              </div>
+              <Hint key={note.id} text={note.sourceText}>
+                <div
+                  className={styles.retiredRule + ' ' + uiStyles.panel}
+                  data-testid={'retired-' + note.id}
+                >
+                  R14（README 第 14 条）· {note.note}
+                  <span className={styles.ruleExcerpt}>原文：{note.sourceText}</span>
+                </div>
+              </Hint>
             ))}
           </Collapsible>
         );
       })}
-      {!filtered.length && !retired.length && <p className="muted">没有匹配的规则。</p>}
+      {!filtered.length && !retired.length && <p className={uiStyles.muted}>没有匹配的规则。</p>}
     </div>
   );
 }

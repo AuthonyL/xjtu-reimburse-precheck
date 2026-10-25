@@ -1,0 +1,59 @@
+.issueLevel {
+  margin-bottom: 16px;
+}
+.findingAction {
+  background: var(--accent-bg);
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+.infoFindings > .panelSurface {
+  margin-top: 12px;
+}
+.inferredReason {
+  color: var(--warning);
+  border-left: 3px solid var(--warning);
+  display: inline-block;
+  padding-left: 8px;
+}
+.rejectedPage td {
+  overflow-wrap: anywhere;
+}
+.findings.panelSurface {
+  padding: 10px 14px;
+}
+.findings :global(.finding) {
+  padding: 4px 0;
+}
+.findingList .infoFindings > button {
+  margin-bottom: 10px;
+}
+.ruleHelp {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 13px;
+}
+.ruleHelp h4 {
+  margin: 0 0 8px;
+}
+.ruleExplanation + .ruleExplanation {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.sourceText,
+.ruleExplanation p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.ruleVersion pre {
+  max-width: 240px;
+  max-height: 180px;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+.versionBanner {
+  background: var(--surface);
+  border-color: var(--warning);
+  padding: 8px 16px;
+}

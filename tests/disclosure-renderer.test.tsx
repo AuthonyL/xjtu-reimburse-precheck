@@ -319,9 +319,9 @@ it('同票多条查重提示可分别展开，删除或重排后保留对应来�
   const user = userEvent.setup();
   const a = screen.getByRole('button', { name: /与其他批次 合成批次A 重复/ });
   await user.click(a);
-  expect(document.querySelectorAll('.finding-details')).toHaveLength(1);
+  expect(document.querySelectorAll('[class*="_findingDetails_"]')).toHaveLength(1);
   await user.click(screen.getByRole('button', { name: /已提交历史/ }));
-  expect(document.querySelectorAll('.finding-details')).toHaveLength(2);
+  expect(document.querySelectorAll('[class*="_findingDetails_"]')).toHaveLength(2);
   result.rerender(
     <Harness
       findings={[
@@ -333,7 +333,7 @@ it('同票多条查重提示可分别展开，删除或重排后保留对应来�
       ]}
     />,
   );
-  expect(document.querySelectorAll('.finding-details')).toHaveLength(2);
+  expect(document.querySelectorAll('[class*="_findingDetails_"]')).toHaveLength(2);
   expect(
     screen.getByRole('button', { name: /与合成批次A重复/ }).getAttribute('aria-expanded'),
   ).toBe('true');

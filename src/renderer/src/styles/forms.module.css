@@ -1,0 +1,27 @@
+.manualForm {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.manualForm .formHeading {
+  margin-bottom: 20px;
+}
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.manualForm .formHelp {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+.reasonForm {
+  margin-top: 12px;
+  min-width: 190px;
+}
+.reasonForm .reasonActions {
+  margin-top: 10px;
+}

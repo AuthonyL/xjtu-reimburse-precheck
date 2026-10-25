@@ -1,12 +1,16 @@
-import { useWorkspaceStore } from './store/workspace.js';
-import { useRun } from './store/status.js';
+import localStyles from './claim.module.css';
+import styles from '../styles/forms.module.css';
+import uiStyles from '../styles/ui.module.css';
+import { Pill, TextButton } from '../ui.js';
+import { useWorkspaceStore } from '../store/workspace.js';
+import { useRun } from '../store/status.js';
 import { useId, useState } from 'react';
-import type { ClaimState } from '../../core/domain/claim.js';
-import { availableTransitions, CLAIM_STATE_LABELS } from '../../core/domain/transitions.js';
-import type { BatchView } from '../../shared/api.js';
+import type { ClaimState } from '../../../core/domain/claim.js';
+import { availableTransitions, CLAIM_STATE_LABELS } from '../../../core/domain/transitions.js';
+import type { Claim } from '../../../core/domain/claim.js';
 
 export function ClaimBadge({ state }: { state: ClaimState }) {
-  return <span className="pill info">{CLAIM_STATE_LABELS[state]}</span>;
+  return <Pill tone="info">{CLAIM_STATE_LABELS[state]}</Pill>;
 }
 
 function ReasonForm({
@@ -27,7 +31,7 @@ function ReasonForm({
   const [saving, setSaving] = useState(false);
   return (
     <form
-      className="manual-form"
+      className={styles.manualForm}
       aria-label={title}
       onSubmit={(event) => {
         event.preventDefault();
@@ -50,8 +54,8 @@ function ReasonForm({
           onChange={(event) => setReason(event.target.value)}
         />
       </label>
-      <div className="actions">
-        <button type="submit" className="primary" disabled={!reason.trim() || saving}>
+      <div className={uiStyles.actions + ' ' + localStyles.toolbarActions}>
+        <button type="submit" className={uiStyles.primary} disabled={!reason.trim() || saving}>
           {save}
         </button>
         <button type="button" disabled={saving} onClick={cancel}>
@@ -62,21 +66,29 @@ function ReasonForm({
   );
 }
 
-export function ClaimStatus({ view }: { view: BatchView }) {
+export function ClaimStatus({
+  claim,
+  dir,
+  readOnly,
+}: {
+  claim: Claim;
+  dir: string;
+  readOnly?: boolean;
+}) {
   const run = useRun();
   const apply = useWorkspaceStore((state) => state.apply);
   const [target, setTarget] = useState<ClaimState | null>(null);
-  const targets = availableTransitions(view.claim.state);
+  const targets = availableTransitions(claim.state);
   const transition = (to: ClaimState, note?: string) =>
     run(async () => {
-      await apply(() => window.precheck.transitionClaim(view.batch.dir, to, note));
+      await apply(() => window.precheck.transitionClaim(dir, to, note));
       setTarget(null);
     }, '报销状态已更新为' + CLAIM_STATE_LABELS[to]);
   return (
     <>
-      <ClaimBadge state={view.claim.state} />
-      {!view.readOnly && (
-        <div className="actions">
+      <ClaimBadge state={claim.state} />
+      {!readOnly && (
+        <div className={uiStyles.actions + ' ' + localStyles.toolbarActions}>
           {targets.map((to) => (
             <button
               key={to}
@@ -164,8 +176,8 @@ export function FindingWaiver({
       }
     />
   ) : (
-    <button type="button" className="text-button" onClick={() => setEditing(true)}>
+    <TextButton type="button" onClick={() => setEditing(true)}>
       豁免…
-    </button>
+    </TextButton>
   );
 }

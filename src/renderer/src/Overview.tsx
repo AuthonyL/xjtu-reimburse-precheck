@@ -1,29 +1,37 @@
+import styles from './styles/ui.module.css';
+import homeStyles from './styles/home.module.css';
+import overviewStyles from './styles/overview.module.css';
+import { Money } from './ui.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRouteStore } from './store/route.js';
 import { compareBatches } from '../../core/batch-order.js';
 import type { WorkspaceView } from '../../shared/api.js';
 import { Counts, money, nameOf } from './ui.js';
-import { ClaimBadge } from './ClaimStatus.js';
+import { ClaimBadge } from './claim/ClaimStatus.js';
 
 export function Overview({ view }: { view: WorkspaceView }) {
   const select = useRouteStore((state) => state.select);
   const refresh = useWorkspaceStore((state) => state.refresh);
   return (
     <main>
-      <div className="page-heading">
+      <div className={styles.pageHeading}>
         <div>
-          <div className="eyebrow">{view.kind === 'root' ? '根目录' : '工作区'}</div>
+          <div className={homeStyles.eyebrow}>{view.kind === 'root' ? '根目录' : '工作区'}</div>
           <h1>{nameOf(view.dir)}</h1>
-          <p className="path">{view.dir}</p>
+          <p className={styles.path}>{view.dir}</p>
         </div>
         <button onClick={refresh}>全部重新检查</button>
       </div>
-      <div className="batch-grid">
+      <div className={overviewStyles.batchGrid}>
         {[...view.batches]
           .sort((a, b) => compareBatches(a.batch, b.batch))
           .map((b) => (
-            <button key={b.batch.dir} className="batch-card" onClick={() => select(b.batch.dir)}>
-              <div className="card-heading">
+            <button
+              key={b.batch.dir}
+              className={overviewStyles.batchCard}
+              onClick={() => select(b.batch.dir)}
+            >
+              <div className={styles.cardHeading}>
                 <h2>{b.batch.id}</h2>
                 <ClaimBadge state={b.claim.state} />
                 <span>{b.report.invoiceCount} 张</span>
@@ -31,29 +39,37 @@ export function Overview({ view }: { view: WorkspaceView }) {
               <Counts report={b.report} />
               <p>{b.batch.submitted ? '✓ 已有学校报销单' : '未找到学校报销单'}</p>
               {b.report.totals.map((t) => (
-                <div className="total-row" key={t.expenseContent}>
+                <div className={overviewStyles.totalRow} key={t.expenseContent}>
                   <span>{t.expenseContent}</span>
-                  <strong>¥ {money(t.amount)}</strong>
+                  <strong>
+                    ¥ <Money value={t.amount} />
+                  </strong>
                 </div>
               ))}
               {!!b.report.unconverted.length && (
-                <p className="muted">另有 {b.report.unconverted.length} 张未折算</p>
+                <p className={styles.muted}>另有 {b.report.unconverted.length} 张未折算</p>
               )}
             </button>
           ))}
         {view.labor?.map((l) => (
-          <button className="batch-card" key={l.report.dir} onClick={() => select(l.report.dir)}>
-            <div className="card-heading">
+          <button
+            className={overviewStyles.batchCard}
+            key={l.report.dir}
+            onClick={() => select(l.report.dir)}
+          >
+            <div className={styles.cardHeading}>
               <h2>{l.report.name}</h2>
               <span>
                 {l.report.payoutCount} 笔（{l.report.entries.length} 份说明）
               </span>
             </div>
-            <p className="path">{l.report.dir}</p>
+            <p className={styles.path}>{l.report.dir}</p>
             <p>
               ✓ 通过 {l.report.passed} 笔 · 问题 {l.report.issueCount} 条
             </p>
-            <strong>¥ {money(l.report.total)}</strong>
+            <strong>
+              ¥ <Money value={l.report.total} />
+            </strong>
           </button>
         ))}
       </div>

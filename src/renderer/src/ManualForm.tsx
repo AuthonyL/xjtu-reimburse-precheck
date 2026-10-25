@@ -1,3 +1,6 @@
+import styles from './styles/forms.module.css';
+import uiStyles from './styles/ui.module.css';
+import { Pill } from './ui.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRun } from './store/status.js';
 import { useId, useState } from 'react';
@@ -29,7 +32,7 @@ export function ManualForm({ task, dir }: { task: ManualTask; dir: string }) {
   });
   return (
     <form
-      className="manual-form"
+      className={styles.manualForm}
       data-testid="manual-form"
       onSubmit={(e) => {
         e.preventDefault();
@@ -39,15 +42,15 @@ export function ManualForm({ task, dir }: { task: ManualTask; dir: string }) {
         );
       }}
     >
-      <div className="card-heading">
+      <div className={uiStyles.cardHeading + ' ' + styles.formHeading}>
         <strong>
           {task.group} · {task.label}
         </strong>
-        <span className={'pill ' + (task.pending ? 'warning' : 'found')}>
+        <Pill tone={task.pending ? 'warning' : 'found'}>
           {task.pending ? '? 待手填' : '✓ 已记录，可修改'}
-        </span>
+        </Pill>
       </div>
-      <div className="form-grid">
+      <div className={styles.formGrid}>
         <label htmlFor={id + 'amount'}>
           金额
           <input
@@ -103,8 +106,8 @@ export function ManualForm({ task, dir }: { task: ManualTask; dir: string }) {
           />
         </label>
       </div>
-      <div className="actions">
-        <button className="primary" type="submit">
+      <div className={uiStyles.actions}>
+        <button className={uiStyles.primary} type="submit">
           保存手填
         </button>
         <button
@@ -117,7 +120,7 @@ export function ManualForm({ task, dir }: { task: ManualTask; dir: string }) {
           打开中行历史牌价
         </button>
       </div>
-      <p className="muted small">
+      <p className={uiStyles.muted + ' ' + uiStyles.small + ' ' + styles.formHelp}>
         按实际支付日填写。中行牌价每 100 外币报价，窗口取值会自动除以 100；手填此处请用每 1
         外币汇率。
       </p>

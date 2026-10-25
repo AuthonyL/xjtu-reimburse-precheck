@@ -137,10 +137,12 @@ try {
   await tree.locator('[data-batch-id="20260102"]').getByLabel('展开批次').click();
   await tree.locator('[data-batch-id="20260103"]').click();
   await expect(page.getByTestId('batch-summary')).toContainText('1 张');
-  await expect(page.locator('.results .group-summary[aria-expanded="true"]')).toHaveCount(0);
+  await expect(
+    page.locator('[class*="_results_"] [class*="_groupSummary_"][aria-expanded="true"]'),
+  ).toHaveCount(0);
   for (const title of ['发票明细', '手填与汇率', '输出文件'])
     await expect(
-      page.locator('.results').getByRole('button', { name: new RegExp('^' + title) }),
+      page.locator('[class*="_results_"]').getByRole('button', { name: new RegExp('^' + title) }),
     ).toHaveAttribute('aria-expanded', 'false');
   await page.screenshot({ path: join(resultDir, prefix + '-default-collapsed.png') });
   await expect(tree.locator('[data-batch-id="20260102"]')).toHaveAttribute(
@@ -157,7 +159,7 @@ try {
   await expect(page.getByTestId('group-PCB')).toBeInViewport({ ratio: 0.3 });
   await expect(page.getByTestId('group-PCB')).toHaveClass(/group-highlight/);
   await expect(page.getByTestId('batch-summary')).toContainText('3 张');
-  await openSection(page.locator('.results'), '发票明细');
+  await openSection(page.locator('[class*="_results_"]'), '发票明细');
   const invoiceTable = page.getByRole('table', { name: '发票明细', exact: true });
   expect(await invoiceTable.locator('tbody tr td:first-child').allTextContents()).toEqual([
     '1',
@@ -168,19 +170,19 @@ try {
     '113.00',
   );
   const pcb = page.getByTestId('group-PCB');
-  await pcb.locator('.group-summary').click();
-  await expect(pcb.locator('.group-summary')).toHaveAttribute('aria-expanded', 'false');
+  await pcb.locator('[class*="_groupSummary_"]').click();
+  await expect(pcb.locator('[class*="_groupSummary_"]')).toHaveAttribute('aria-expanded', 'false');
   const pcbIssue = page
     .getByTestId('actionable-findings')
     .locator('.finding')
-    .filter({ has: page.locator('.finding-location[title="PCB"]') })
+    .filter({ has: page.locator('[class*="_findingLocation_"][data-tooltip="PCB"]') })
     .first();
-  await pcbIssue.locator('.finding-summary').click();
+  await pcbIssue.locator('[class*="_findingSummary_"]').click();
   const help = pcbIssue.getByRole('region', { name: '规则说明' });
   await expect(help).toBeVisible();
-  const helpId = (await pcbIssue.locator('.finding-rule > span:first-child').innerText()).split(
-    '/',
-  )[0]!;
+  const helpId = (
+    await pcbIssue.locator('[class*="_findingRule_"] > span:first-child').innerText()
+  ).split('/')[0]!;
   await expect(help).toContainText(ruleDefinition(helpId)!.sourceText);
   await page.screenshot({ path: join(resultDir, prefix + '-rule-explanation.png') });
   await pcbIssue.getByRole('button', { name: '这条不对', exact: true }).click();
@@ -191,7 +193,7 @@ try {
   await page.screenshot({ path: join(resultDir, prefix + '-feedback-form.png') });
   await feedbackForm.getByRole('button', { name: '保存反馈', exact: true }).click();
   await expect(feedbackForm).not.toBeVisible();
-  await expect(pcbIssue.locator('.finding-summary')).toContainText('已反馈');
+  await expect(pcbIssue.locator('[class*="_findingSummary_"]')).toContainText('已反馈');
 
   await help.getByRole('button', { name: '在设置中查看 / 修改 →', exact: true }).first().click();
   await expect(page.getByRole('tab', { name: '规则', exact: true })).toHaveAttribute(
@@ -205,7 +207,9 @@ try {
   ).toHaveAttribute('aria-expanded', 'true');
   await expect(page.getByTestId('rule-' + helpId)).toBeInViewport({ ratio: 0.3 });
   await page.getByRole('tab', { name: '反馈', exact: true }).click();
-  await expect(page.locator('.feedback-panel')).toContainText('合成反馈：请核对这条材料要求');
+  await expect(page.locator('[class*="_feedbackPanel_"]')).toContainText(
+    '合成反馈：请核对这条材料要求',
+  );
   await page.getByRole('button', { name: '导出反馈包', exact: true }).click();
   const feedbackPreview = page.getByRole('dialog', { name: '导出反馈包预览', exact: true });
   await expect(feedbackPreview.getByRole('checkbox')).not.toBeChecked();
@@ -213,7 +217,7 @@ try {
   await page.screenshot({ path: join(resultDir, prefix + '-feedback-preview.png') });
   await feedbackPreview.getByRole('button', { name: '确认导出', exact: true }).click();
   await expect(feedbackPreview).not.toBeVisible();
-  await expect(page.locator('.feedback-panel')).toContainText('请把这个文件发给维护者');
+  await expect(page.locator('[class*="_feedbackPanel_"]')).toContainText('请把这个文件发给维护者');
   const feedbackZip = await JSZip.loadAsync(await readFile(env.PRECHECK_FEEDBACK_EXPORT!));
   for (const name of ['meta.json', 'feedback.json', 'settings-diff.json', 'rejected-reasons.json'])
     expect(feedbackZip.file(name)).not.toBeNull();
@@ -231,7 +235,7 @@ try {
   await page.screenshot({ path: join(resultDir, prefix + '-rules-overview.png') });
   await tree.locator('[data-batch-id="20260102"]').click();
   await pcbIssue.getByRole('button', { name: '定位到分组 →', exact: true }).click();
-  await expect(pcb.locator('.group-summary')).toHaveAttribute('aria-expanded', 'true');
+  await expect(pcb.locator('[class*="_groupSummary_"]')).toHaveAttribute('aria-expanded', 'true');
   await expect(pcb).toBeInViewport({ ratio: 0.3 });
   await expect(pcb).toContainText('实验材料费');
   const batchIssues = page.getByTestId('actionable-findings');
@@ -241,7 +245,7 @@ try {
   expect(unfiltered).toBeGreaterThan(1);
   await r2Badge.click();
   // The rule filter applies to its own severity section only.
-  const ruleIds = warningIssues.locator('.finding .finding-rule > span:first-child');
+  const ruleIds = warningIssues.locator('.finding [class*="_findingRule_"] > span:first-child');
   await expect
     .poll(async () => {
       const ids = await ruleIds.allTextContents();
@@ -254,7 +258,7 @@ try {
   await expect(pcb.getByTestId('requirement-payment')).toContainText('待确认');
   await pcb.getByRole('button', { name: '是支付记录', exact: true }).click();
   await expect(pcb.getByTestId('requirement-payment')).toContainText('已找到');
-  await openSection(page.locator('.results'), '手填与汇率');
+  await openSection(page.locator('[class*="_results_"]'), '手填与汇率');
   const form = page.getByTestId('manual-form').first();
   await form.getByLabel('金额', { exact: true }).fill('20');
   await form.getByLabel('币种', { exact: true }).fill('USD');
@@ -263,7 +267,7 @@ try {
   await form.getByRole('button', { name: '保存手填', exact: true }).click();
   await expect(page.getByTestId('batch-summary')).toContainText('1,453.00');
   await page.getByRole('button', { name: '导出到批次文件夹', exact: true }).click();
-  await openSection(page.locator('.results'), '输出文件');
+  await openSection(page.locator('[class*="_results_"]'), '输出文件');
   await expect(page.getByTestId('export-list')).toContainText('入库登记清单.xlsx');
   const outputs = await readdir(join(batch, '_预检'));
   for (const file of ['manual.json', '入库登记清单.xlsx', '高值材料明细.xlsx', '汇总.md'])
@@ -273,7 +277,7 @@ try {
   const claimState = async () =>
     JSON.parse(await readFile(join(batch, '_预检/claim.json'), 'utf8'));
   await expect.poll(async () => (await claimState()).state).toBe('submitted');
-  await expect(page.locator('.results-toolbar .pill')).toHaveText('已提交');
+  await expect(page.locator('[class*="_resultsToolbar_"] .pill')).toHaveText('已提交');
   await page.getByRole('button', { name: '标记为已退回', exact: true }).click();
   await page.getByRole('textbox', { name: '状态备注', exact: true }).fill('合成退回备注：需补材料');
   await page.getByRole('button', { name: '保存状态', exact: true }).click();
@@ -283,7 +287,7 @@ try {
   await expect.poll(async () => (await claimState()).state).toBe('draft');
   const keyword = '合成规则测试器件';
   await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
-  await openRule(page.locator('.settings'), 'F2');
+  await openRule(page.locator('[class*="_settings_"]'), 'F2');
   await page.getByTestId('rule-F2').getByLabel('横向限制关键字', { exact: true }).fill(keyword);
   await page.getByTestId('rule-F2').getByLabel('横向限制关键字', { exact: true }).press('Enter');
   await page.getByRole('button', { name: '保存设置', exact: true }).click();
@@ -296,12 +300,12 @@ try {
   await expect(
     page.getByTestId('actionable-findings').locator('.finding').filter({ hasText: 'F2 ·' }),
   ).toHaveCount(1);
-  await expect(page.locator('.results section').first()).toHaveAttribute(
+  await expect(page.locator('[class*="_results_"] section').first()).toHaveAttribute(
     'aria-label',
     '待处理问题',
   );
   await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
-  await openRule(page.locator('.settings'), 'F2');
+  await openRule(page.locator('[class*="_settings_"]'), 'F2');
   await page
     .getByTestId('rule-F2')
     .getByRole('button', { name: '删除 ' + keyword, exact: true })
@@ -361,7 +365,7 @@ try {
   await application
     .browserWindow(page)
     .then((win) => win.evaluate((window) => window.setSize(900, 760)));
-  const summaries = correctionCard.locator('.finding.error .finding-summary');
+  const summaries = correctionCard.locator('.finding.error [class*="_findingSummary_"]');
   await expect(summaries).toHaveCount(2);
   await expect(summaries.nth(0)).toHaveAttribute('aria-expanded', 'false');
   await expect(summaries.nth(1)).toHaveAttribute('aria-expanded', 'false');
@@ -370,13 +374,13 @@ try {
   for (const summary of await summaries.all()) {
     expect(
       await summary.evaluate((element) => {
-        const message = element.querySelector<HTMLElement>('.finding-title')!;
+        const message = element.querySelector<HTMLElement>('[class*="_findingTitle_"]')!;
         const css = getComputedStyle(message);
         return (
           css.whiteSpace === 'nowrap' &&
           css.textOverflow === 'ellipsis' &&
           element.scrollWidth <= element.clientWidth + 1 &&
-          element.querySelector('.disclosure-chevron')!.getBoundingClientRect().width > 0
+          element.querySelector('[class*="_disclosureChevron_"]')!.getBoundingClientRect().width > 0
         );
       }),
     ).toBe(true);
@@ -384,7 +388,7 @@ try {
   await page.screenshot({ path: join(resultDir, prefix + '-issues-collapsed.png') });
   await summaries.nth(0).click();
   await summaries.nth(1).click();
-  await expect(correctionCard.locator('.finding.error .finding-details')).toHaveCount(2);
+  await expect(correctionCard.locator('.finding.error [class*="_findingDetails_"]')).toHaveCount(2);
   await expect(correctionCard.getByText('怎么处理：', { exact: true })).toHaveCount(2);
   await page.screenshot({ path: join(resultDir, prefix + '-issues-two-open.png') });
   const errorLevel = correctionCard.getByRole('region', { name: '错误', exact: true });
@@ -439,18 +443,18 @@ try {
   const collapsedIssue = correctionCard
     .locator('.finding.error')
     .filter({ hasText: '没写线上还是线下' });
-  await expect(collapsedIssue.locator('.finding-summary')).toHaveAttribute(
+  await expect(collapsedIssue.locator('[class*="_findingSummary_"]')).toHaveAttribute(
     'aria-expanded',
     'false',
   );
   const beforePicker = await pickerCalls();
   await page.getByRole('button', { name: '检查单个文件', exact: true }).click();
   let dialog = page.getByRole('dialog');
-  await expect(dialog.locator('.file-drop-zone')).toBeVisible();
+  await expect(dialog.locator('[class*="_fileDropZone_"]')).toBeVisible();
   expect(await pickerCalls()).toBe(beforePicker);
   await page.screenshot({ path: join(resultDir, prefix + '-correction-drop-zone.png') });
   await dialog.getByRole('button', { name: '取消', exact: true }).click();
-  await dropSource(collapsedIssue.locator('.finding-summary'), correctSource);
+  await dropSource(collapsedIssue.locator('[class*="_findingSummary_"]'), correctSource);
   const correctionToast = page.getByTestId('correction-toast');
   await expect(correctionToast).toBeVisible();
   await expect(correctionToast).toContainText('问题已解决');
@@ -464,7 +468,7 @@ try {
   await dialog.getByRole('button', { name: '关闭', exact: true }).click();
   await expect(correctionCard.locator('.finding.error')).toHaveCount(0);
   await expect(correctionCard.getByRole('heading', { level: 2 })).toContainText('✓');
-  await openSection(page.locator('.labor-page'), '输出文件');
+  await openSection(page.locator('[class*="_laborPage_"]'), '输出文件');
   const replacementHistory = page.getByTestId('replacement-history');
   await expect(replacementHistory).toContainText('待改说明.docx');
   const log = JSON.parse(await readFile(join(correctionLabor, '_预检/旧版/log.json'), 'utf8'));
@@ -484,7 +488,7 @@ try {
   await correctionCard
     .locator('.finding.error')
     .filter({ hasText: '日期没写到具体哪一天' })
-    .locator('.finding-summary')
+    .locator('[class*="_findingSummary_"]')
     .click();
   await correctionCard
     .locator('.finding.error')
@@ -492,7 +496,7 @@ try {
     .getByRole('button', { name: '放入改好的文件', exact: true })
     .click();
   dialog = page.getByRole('dialog');
-  await expect(dialog.locator('.file-drop-zone')).toBeVisible();
+  await expect(dialog.locator('[class*="_fileDropZone_"]')).toBeVisible();
   expect(await pickerCalls()).toBe(beforePicker);
   await dialog.getByRole('button', { name: '或从文件夹选择…', exact: true }).click();
   expect(await pickerCalls()).toBe(beforePicker + 1);
@@ -505,7 +509,7 @@ try {
   expect(await readdir(correctionLabor, { recursive: true })).toEqual(beforeFiles);
   expect(await directoryFingerprint([correctionLabor])).toBe(beforeFailed);
   await tree.locator('[data-batch-id="20260103"]').click();
-  await page.getByTestId('group-根目录').locator('.group-summary').click();
+  await page.getByTestId('group-根目录').locator('[class*="_groupSummary_"]').click();
   const purpose = page.getByTestId('requirement-purposeNote');
   await expect(purpose).toContainText('缺失');
   await chooseSource(purposeSource);
@@ -516,7 +520,7 @@ try {
   await expect(correctionToast).toContainText('用途说明-one.pdf');
   await expect(purpose).toContainText('已找到');
   expect(await readdir(newer)).toContain('用途说明-one.pdf');
-  await openSection(page.locator('.results'), '输出文件');
+  await openSection(page.locator('[class*="_results_"]'), '输出文件');
   await page
     .getByTestId('replacement-history')
     .getByRole('button', { name: '撤销最近一次', exact: true })
@@ -530,8 +534,10 @@ try {
   await tree.locator('[data-batch-id="20260102"]').click();
   await page.getByRole('button', { name: '重新检查', exact: true }).click();
   const aiGroup = page.getByTestId('group-AI');
-  if ((await aiGroup.locator('.group-summary').getAttribute('aria-expanded')) === 'false')
-    await aiGroup.locator('.group-summary').click();
+  if (
+    (await aiGroup.locator('[class*="_groupSummary_"]').getAttribute('aria-expanded')) === 'false'
+  )
+    await aiGroup.locator('[class*="_groupSummary_"]').click();
   const rate = aiGroup.getByTestId('requirement-exchangeRate');
   await expect(rate).toContainText('待确认');
   const aiFiles = await readdir(join(batch, 'AI'));
@@ -579,7 +585,7 @@ try {
     'true',
   );
   await expect(restored.getByTestId('batch-summary')).toContainText('1,453.00');
-  await expect(restored.locator('.workspace-name')).toHaveText('合成工作区');
+  await expect(restored.locator('[class*="_workspaceName_"]')).toHaveText('合成工作区');
   const restoredScreenshot = packaged ? 'packaged-restored.png' : 'desktop-restored.png';
   await restored.screenshot({ path: join(resultDir, restoredScreenshot), fullPage: true });
   // The minimum window width must retain a usable, independently scrolling result pane.

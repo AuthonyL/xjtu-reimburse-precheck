@@ -1,0 +1,152 @@
+.primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.primary:hover:not(:disabled) {
+  color: var(--accent);
+}
+.large {
+  padding: 11px 26px;
+  font-size: 16px;
+}
+.inline {
+  display: flex;
+  gap: 8px;
+}
+.inline > button {
+  flex-shrink: 0;
+}
+.pageHeading,
+.sectionHeading,
+.cardHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.pageHeading {
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+.pageHeading .actions {
+  max-width: 670px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.path {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px;
+}
+.counts,
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.counts {
+  margin-bottom: 10px;
+}
+.muted,
+.subtle {
+  color: var(--muted);
+}
+.small {
+  font-size: 12px;
+}
+.alignRight {
+  text-align: right;
+}
+.ruleTag {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 8px;
+}
+.fileLink {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-right: 14px;
+}
+.textButton {
+  display: inline;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--accent);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.textButton:hover:not(:disabled) {
+  text-decoration: underline;
+  background: none;
+}
+.textButton.subtle {
+  color: var(--muted);
+  font-size: 11px;
+}
+:global(.finding) .actions {
+  margin-top: 10px;
+}
+:global(.finding) .ruleTag {
+  margin-left: 0;
+}
+.tableScroll {
+  overflow-x: auto;
+  padding: 0;
+}
+td.number {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  max-width: 200px;
+}
+td.numeric {
+  text-align: right;
+  white-space: nowrap;
+}
+td .fileLink {
+  min-width: 130px;
+}
+:global(.finding) .actions {
+  flex-wrap: wrap;
+}
+@media (prefers-color-scheme: dark) {
+  .primary {
+    color: #112719;
+  }
+}
+@media (max-width: 1050px) {
+  .sectionHeading {
+    align-items: start;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 12px;
+  }
+}
+
+.tooltip {
+  z-index: 110;
+  max-width: min(680px, calc(100vw - 40px));
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 2px 8px #0002;
+  font-size: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}

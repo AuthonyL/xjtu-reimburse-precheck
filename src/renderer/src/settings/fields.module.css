@@ -1,0 +1,65 @@
+.keywordTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.keywordTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: var(--accent-bg);
+  overflow-wrap: anywhere;
+}
+.keywordTag button {
+  padding: 0 4px;
+  background: transparent;
+  border: 0;
+  font-size: 17px;
+}
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.checkboxLabel input {
+  width: auto;
+  margin: 0;
+}
+.choiceField {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+.mappingRow {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding: 16px 0;
+}
+.mappingRow > button {
+  justify-self: start;
+}
+.standardsEditor table {
+  min-width: 900px;
+}
+.standardsEditor input,
+.standardsEditor select {
+  min-width: 100px;
+}
+.standardsEditor td {
+  padding: 6px;
+}
+
+.catalogFields {
+}
+
+.catalogFields {
+  display: grid;
+  gap: 20px;
+}

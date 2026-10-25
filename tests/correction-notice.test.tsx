@@ -133,7 +133,7 @@ it('通过自动提交，无确认框；警告计数排除 info，详情不列�
   expect(detail.textContent).not.toContain('无关旧问题');
   await act(async () => {
     fireEvent.click(within(detail).getByRole('button', { name: '关闭' }));
-    fireEvent.click(within(toast).getByRole('button', { name: '撤销' }));
+    fireEvent.click(within(toast).getByRole('button', { name: '撤销', hidden: true }));
   });
   expect(api.undo).toHaveBeenCalledWith('/batch', '11111111-1111-4111-8111-111111111111');
   expect(screen.queryByTestId('correction-toast')).toBeNull();

@@ -1,0 +1,83 @@
+.ruleSource {
+  margin-bottom: 28px;
+}
+.ruleCard {
+  margin-bottom: 14px;
+}
+.ruleFields {
+  display: grid;
+  gap: 20px;
+}
+.ruleFields {
+  margin-bottom: 16px;
+}
+.ruleControls {
+  align-items: end;
+}
+.ruleCardContent {
+  padding-top: 14px;
+}
+.ruleOverview,
+.ruleToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.ruleToggle {
+  flex: 1;
+  width: 0;
+  border-color: transparent;
+  padding: 4px;
+  text-align: left;
+  white-space: nowrap;
+}
+.ruleLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 650;
+}
+.ruleToggle :global(.pill),
+.ruleEnabled {
+  flex-shrink: 0;
+}
+.ruleExcerpt {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 12px;
+}
+.ruleBulkActions {
+  margin: 14px 0;
+}
+.numberingGuide {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.numberingGuide p {
+  margin-bottom: 4px;
+}
+.retiredRule {
+  color: var(--muted);
+  font-size: 13px;
+}
+.retiredRule .ruleExcerpt {
+  display: block;
+}
+@container (max-width: 700px) {
+  .ruleExcerpt {
+    display: none;
+  }
+  .ruleToggle {
+    white-space: nowrap;
+  }
+}
+
+.ruleCardContent[hidden] {
+  display: none;
+}

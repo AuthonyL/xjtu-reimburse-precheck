@@ -1,0 +1,123 @@
+.sidebar {
+  flex: none;
+  min-width: 220px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+}
+.sidebarHeading {
+  padding: 18px 12px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.workspaceName {
+  display: inline;
+  font-weight: 650;
+  font-size: 16px;
+  margin-bottom: 14px;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.sidebar .sidebarActions {
+  gap: 5px;
+}
+.sidebar .sidebarActions button {
+  padding: 5px 8px;
+  font-size: 12px;
+}
+.sidebarLoading {
+  font-size: 12px;
+  margin: 10px 0 0;
+  color: var(--accent);
+}
+.explorerTree {
+  flex: 1;
+  overflow: auto;
+  padding: 10px 5px;
+}
+.treeNode {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 5px 6px;
+  gap: 5px;
+  text-align: left;
+  font-size: 13px;
+}
+.treeNode[aria-selected='true'],
+.sidebarFooter button[aria-pressed='true'] {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+.treeNode:focus-visible {
+  outline-offset: -2px;
+}
+.treeChevron {
+  width: 18px;
+  flex: none;
+  text-align: center;
+}
+.treeLabel {
+  min-width: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+.treeBadge,
+.treeTag {
+  flex: none;
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 0 3px;
+  border-radius: 3px;
+  background: var(--bg);
+}
+.treeBadge:global(.error) {
+  background: var(--error-bg);
+}
+.treeBadge:global(.warning) {
+  background: var(--warning-bg);
+}
+.treeTag,
+.referenceNode .treeNode {
+  color: var(--muted);
+}
+.groupNode {
+  padding-left: 32px;
+}
+.sidebarFooter {
+  padding: 12px;
+  border-top: 1px solid var(--line);
+}
+.sidebarFooter button {
+  width: 100%;
+  text-align: left;
+}
+.sidebarSeparator {
+  width: 6px;
+  flex: none;
+  background: var(--line);
+  cursor: col-resize;
+  touch-action: none;
+}
+.sidebarSeparator:hover,
+.sidebarSeparator:focus-visible {
+  background: var(--accent);
+}
+.sidebarFooter {
+  display: flex;
+  gap: 6px;
+}
+.sidebarFooter button {
+  width: auto;
+  flex: 1;
+}
+
+.batchNode {
+}

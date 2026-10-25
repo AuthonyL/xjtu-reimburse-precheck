@@ -1,3 +1,8 @@
+import styles from './styles/findings.module.css';
+import uiStyles from './styles/ui.module.css';
+import homeStyles from './styles/home.module.css';
+import formsStyles from './styles/forms.module.css';
+import { Money } from './ui.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRun } from './store/status.js';
 import { useState } from 'react';
@@ -10,19 +15,19 @@ export function RejectedPage({ view }: { view: BatchView }) {
   const [editing, setEditing] = useState<string | null>(null);
   const [reason, setReason] = useState('');
   return (
-    <main className="rejected-page">
-      <div className="page-heading">
+    <main className={styles.rejectedPage}>
+      <div className={uiStyles.pageHeading}>
         <div>
-          <div className="eyebrow">拒票参考</div>
+          <div className={homeStyles.eyebrow}>拒票参考</div>
           <h1>无法报销费用</h1>
-          <p className="path">{view.batch.dir}</p>
+          <p className={uiStyles.path}>{view.batch.dir}</p>
         </div>
       </div>
-      <p className="muted">
+      <p className={uiStyles.muted}>
         可能原因由当前规则推断，不代表财务原结论。仅保存原因到
         _预检/reasons.json，其余内容保持只读。
       </p>
-      <div className="panel table-scroll">
+      <div className={uiStyles.panel + ' ' + uiStyles.tableScroll}>
         <table>
           <thead>
             <tr>
@@ -42,27 +47,27 @@ export function RejectedPage({ view }: { view: BatchView }) {
                     ))}
                   </td>
                   <td>{invoice.lines.map((line) => line.name).join('；') || '未读取到明细'}</td>
-                  <td className="numeric">
-                    {invoice.currency} {money(invoice.total)}
+                  <td className={uiStyles.numeric}>
+                    {invoice.currency} <Money value={invoice.total} />
                   </td>
                   <td>
                     {info?.recorded ? (
-                      <div className="recorded-reason">
+                      <div className={'recorded-reason'}>
                         {info.recorded.reason}
-                        <p className="muted small">
+                        <p className={uiStyles.muted + ' ' + uiStyles.small}>
                           记录于 {info.recorded.recordedAt.slice(0, 10)}
                         </p>
                       </div>
                     ) : info?.inferred.length ? (
-                      <span className="inferred-reason">
+                      <span className={styles.inferredReason}>
                         可能：{info.inferred.map((r) => r.ruleId + ' ' + r.name).join('、')}
                       </span>
                     ) : (
-                      <span className="muted">未记录</span>
+                      <span className={uiStyles.muted}>未记录</span>
                     )}
                     {editing === invoice.number && (
                       <form
-                        className="reason-form"
+                        className={formsStyles.reasonForm}
                         onSubmit={(e) => {
                           e.preventDefault();
                           void run(async () => {
@@ -84,8 +89,8 @@ export function RejectedPage({ view }: { view: BatchView }) {
                             onChange={(e) => setReason(e.target.value)}
                           />
                         </label>
-                        <div className="actions">
-                          <button className="primary" type="submit">
+                        <div className={uiStyles.actions + ' ' + formsStyles.reasonActions}>
+                          <button className={uiStyles.primary} type="submit">
                             保存原因
                           </button>
                           <button type="button" onClick={() => setEditing(null)}>
@@ -112,14 +117,14 @@ export function RejectedPage({ view }: { view: BatchView }) {
         </table>
       </div>
       {!view.batch.invoices.length && (
-        <p className="panel muted">
+        <p className={uiStyles.panel + ' ' + uiStyles.muted}>
           没有可识别发票。未识别文件可在下方打开核对；没有发票号时无法按号码记录原因。
         </p>
       )}
       {!!view.batch.unidentified.length && (
         <section>
           <h2>未识别文件</h2>
-          <div className="panel">
+          <div className={uiStyles.panel}>
             {view.batch.unidentified.map((file) => (
               <FileLink key={file.path} file={file.path} />
             ))}

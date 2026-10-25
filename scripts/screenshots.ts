@@ -30,7 +30,7 @@ try {
   // 隐藏绝对路径行；保持其余 UI 和合成检查结果不变。
   await page.addStyleTag({
     content:
-      '.path { display: none !important; } * { animation: none !important; transition: none !important; }',
+      '[class*="_path_"] { display: none !important; } * { animation: none !important; transition: none !important; }',
   });
   const screenshot = async (name: string) => {
     await page.evaluate(() => document.fonts.ready);
@@ -46,7 +46,10 @@ try {
     await page.screenshot({ path: join(output, name), fullPage: false });
   };
   await screenshot('results.png');
-  const first = page.getByTestId('actionable-findings').locator('.finding-summary').first();
+  const first = page
+    .getByTestId('actionable-findings')
+    .locator('[class*="_findingSummary_"]')
+    .first();
   await first.click();
   await expect(page.getByRole('region', { name: '规则说明' }).first()).toBeVisible();
   await page.getByRole('region', { name: '规则说明' }).first().scrollIntoViewIfNeeded();
