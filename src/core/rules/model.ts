@@ -74,7 +74,7 @@ export interface PartyRule extends RuleBase {
 }
 export interface DuplicateRule extends RuleBase {
   kind: 'duplicate';
-  scopes: ('batch' | 'workspace' | 'history')[];
+  scopes: ('batch' | 'workspace' | 'history' | 'checksum')[];
 }
 export interface LookupRule extends RuleBase {
   kind: 'lookup';

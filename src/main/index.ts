@@ -8,6 +8,9 @@ import type { LaborManualEntry } from '../core/labor/types.js';
 import type { CorrectionRequest } from '../core/correction/types.js';
 import { CORRECTION_EXTENSIONS } from './correction/identify.js';
 import { loadConfig } from '../core/rules/config.js';
+import { exportRulesConfig } from '../core/rules/export.js';
+import type { ClaimState } from '../core/domain/claim.js';
+import type { ClaimMeta } from './claim-store.js';
 import { DesktopStore, DEFAULT_BOC_URL, validateSettings } from './store.js';
 import { WorkspaceService } from './workspace.js';
 import { writeJson } from './json-store.js';
@@ -167,10 +170,22 @@ void app
       clipboard.writeText(text);
     });
     handle(channels.exportBatch, (dir: string) => service.export(dir));
-    handle(channels.markSubmitted, (dir: string, marked: boolean) => {
+    handle(channels.markSubmitted, (dir: string, marked = true) => {
       if (typeof marked !== 'boolean') throw new Error('提交标记必须为布尔值');
       return service.mark(dir, marked);
     });
+    handle(channels.transitionClaim, (dir: string, to: ClaimState, note?: string) =>
+      service.transitionClaim(dir, to, note),
+    );
+    handle(channels.updateClaim, (dir: string, meta: ClaimMeta) => service.updateClaim(dir, meta));
+    handle(channels.waiveFinding, (dir: string, id: string, reason: string) =>
+      service.waiveFinding(dir, id, reason),
+    );
+    handle(channels.unwaiveFinding, (dir: string, id: string) => service.unwaiveFinding(dir, id));
+    handle(channels.inbox, () => service.inbox());
+    handle(channels.ignoreFile, (dir: string, file: string) => service.ignoreFile(dir, file));
+    handle(channels.unignoreFile, (dir: string, file: string) => service.unignoreFile(dir, file));
+    handle(channels.registry, () => service.registry());
     const open = async (file: string) => {
       const error = await shell.openPath(file);
       if (error) throw new Error(error);
@@ -213,7 +228,7 @@ void app
         filters: [{ name: '规则 JSON', extensions: ['json'] }],
       });
       if (result.canceled || !result.filePath) return null;
-      await writeJson(result.filePath, settings);
+      await writeJson(result.filePath, { ...settings, rules: exportRulesConfig(settings.rules) });
       return result.filePath;
     });
     handle(channels.openBoc, (request: BocRequest) => boc.open(request));

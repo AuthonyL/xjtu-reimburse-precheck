@@ -1,3 +1,4 @@
+import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { useState } from 'react';
@@ -40,6 +41,8 @@ it.each([
         report: buildReport(checkBatch(batch)),
         outputs: [],
         manualTasks: [],
+        claim: defaultClaim('synthetic-view', '2026-01-01'),
+        waived: 0,
         markedAt: null,
       },
     ],

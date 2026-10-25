@@ -66,7 +66,7 @@ export function declarativeCriteria(rule: Rule, list: KeywordList): string | und
     case 'party':
       return `国内发票购买方名称应为「${rule.expected.name}」、税号应为「${rule.expected.taxId}」；名称去空白后比对，税号合法长度为 15/17/18/20 位，读不全时仅比名称`;
     case 'duplicate':
-      return `${rule.scopes.map((s) => ({ batch: '同一批次内不同目录或同格式重复', workspace: '其他批次同号', history: '已提交历史同号' })[s]).join('、')} → 重复；PDF/XML/OFD 同号不同格式可合并`;
+      return `${rule.scopes.map((s) => ({ batch: '同一批次内不同目录或同格式重复', workspace: '其他批次同号', history: '已提交历史同号', checksum: '文件内容相同但发票号不同' })[s]).join('、')} → 重复；PDF/XML/OFD 同号不同格式可合并`;
     case 'lookup':
       return '发票号出现在无法报销费用集合 → 优先显示已记录原因，否则推断本票规则原因，均无时提示未记录';
     default:

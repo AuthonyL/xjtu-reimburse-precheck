@@ -268,6 +268,19 @@ try {
   const outputs = await readdir(join(batch, '_预检'));
   for (const file of ['manual.json', '入库登记清单.xlsx', '高值材料明细.xlsx', '汇总.md'])
     expect(outputs).toContain(file);
+  await page.getByRole('button', { name: '标记为待提交', exact: true }).click();
+  await page.getByRole('button', { name: '标记为已提交', exact: true }).click();
+  const claimState = async () =>
+    JSON.parse(await readFile(join(batch, '_预检/claim.json'), 'utf8'));
+  await expect.poll(async () => (await claimState()).state).toBe('submitted');
+  await expect(page.locator('.results-toolbar .pill')).toHaveText('已提交');
+  await page.getByRole('button', { name: '标记为已退回', exact: true }).click();
+  await page.getByRole('textbox', { name: '状态备注', exact: true }).fill('合成退回备注：需补材料');
+  await page.getByRole('button', { name: '保存状态', exact: true }).click();
+  await expect.poll(async () => (await claimState()).state).toBe('returned');
+  expect((await claimState()).transitions.at(-1).note).toBe('合成退回备注：需补材料');
+  await page.getByRole('button', { name: '标记为草稿', exact: true }).click();
+  await expect.poll(async () => (await claimState()).state).toBe('draft');
   const keyword = '合成规则测试器件';
   await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
   await openRule(page.locator('.settings'), 'F2');
@@ -586,7 +599,7 @@ try {
     path: join(resultDir, packaged ? 'packaged-900px.png' : 'desktop-900px.png'),
   });
   console.log(
-    `PASS Electron${packaged ? ' 打包产物' : ''}：反馈表单/已反馈/导出预览/默认无原文件、默认收起/连续序号/规则说明/设置定位/无侧栏规则按钮、双批次倒序/手风琴侧栏、问题收起/多展开/规则筛选/收起拖入、分组定位自动展开、XML/PDF解析、确认附件、外币手填、导出、F2关键字增删、拒票原因、劳务树/L1/L2/L6/Word导出、单文件直接放入/toast/失败过滤/补交/归档/撤销/目录内确认不复制/反馈隔离、结果顺序、重启恢复、900px布局`,
+    `PASS Electron${packaged ? ' 打包产物' : ''}：反馈表单/已反馈/导出预览/默认无原文件、默认收起/连续序号/规则说明/设置定位/无侧栏规则按钮、双批次倒序/手风琴侧栏、问题收起/多展开/规则筛选/收起拖入、分组定位自动展开、XML/PDF解析、确认附件、外币手填、导出、报销状态/退回备注持久化、F2关键字增删、拒票原因、劳务树/L1/L2/L6/Word导出、单文件直接放入/toast/失败过滤/补交/归档/撤销/目录内确认不复制/反馈隔离、结果顺序、重启恢复、900px布局`,
   );
   console.log('截图：' + join(resultDir, screenshot) + '、' + join(resultDir, restoredScreenshot));
 } catch (error) {

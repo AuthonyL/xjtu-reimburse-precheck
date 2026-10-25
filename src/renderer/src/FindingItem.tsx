@@ -6,6 +6,7 @@ import { useFindingFeedback } from './Feedback.js';
 import { RuleHelp, ruleTitle } from './RuleHelp.js';
 import { CorrectionAction, CorrectionDrop } from './SingleFileCheck.js';
 import { findingDisclosureKey, useDisclosures } from './disclosures.js';
+import { FindingWaiver, type WaiverActions } from './ClaimStatus.js';
 
 export interface FindingContext {
   finding: Finding;
@@ -13,6 +14,7 @@ export interface FindingContext {
   group?: string;
   reason?: string;
   canCorrect?: boolean;
+  waiverReason?: string;
 }
 const levels = { error: '✗ 错误', warning: '! 警告', info: 'i 提示' };
 const ruleNames = (finding: Finding, field: 'name' | 'description') =>
@@ -33,21 +35,30 @@ export function FindingItem({
   toggle,
   run,
   locate,
+  waiverReason,
+  waive,
+  unwaive,
 }: FindingContext & {
   scope?: string;
   expanded: boolean;
   toggle: () => void;
   run: Run;
   locate?: (group: string) => void;
-}) {
+} & WaiverActions) {
   const detailsId = useId();
   const feedback = useFindingFeedback(finding, scope);
+  const waived = finding.resolution === 'waived';
+  const severity = waived ? 'info' : finding.severity;
   const location =
     group ??
     finding.groupId ??
     (file ? nameOf(file) : finding.files[0] ? nameOf(finding.files[0]) : '');
   return (
-    <CorrectionDrop className={'finding ' + finding.severity} finding={finding} file={file}>
+    <CorrectionDrop
+      className={'finding ' + severity}
+      finding={waived ? { ...finding, severity } : finding}
+      file={file}
+    >
       <button
         type="button"
         className="finding-summary"
@@ -56,11 +67,11 @@ export function FindingItem({
         onClick={toggle}
       >
         <span
-          className={'finding-level ' + finding.severity}
-          title={levels[finding.severity]}
-          aria-label={levels[finding.severity]}
+          className={'finding-level ' + severity}
+          title={levels[severity]}
+          aria-label={levels[severity]}
         >
-          {levels[finding.severity].split(' ')[0]}
+          {levels[severity].split(' ')[0]}
         </span>
         <span className="finding-rule" title={ruleTitle(finding.ruleId)}>
           <span>{finding.ruleId}</span>
@@ -108,7 +119,7 @@ export function FindingItem({
                 这条不对
               </button>
             )}
-            {canCorrect && finding.severity !== 'info' && (
+            {canCorrect && !waived && finding.severity !== 'info' && (
               <CorrectionAction finding={finding} file={file} />
             )}
             {locate && group && (
@@ -121,6 +132,14 @@ export function FindingItem({
               </button>
             )}
           </div>
+          <FindingWaiver
+            findingId={finding.id}
+            waived={waived}
+            reason={waiverReason}
+            waive={waive}
+            unwaive={unwaive}
+            run={run}
+          />
         </div>
       )}
     </CorrectionDrop>
@@ -132,27 +151,51 @@ export function FindingList({
   findings,
   run,
   locate,
+  waive,
+  unwaive,
 }: {
   scope: string;
   findings: FindingContext[];
   run: Run;
   locate?: (group: string) => void;
-}) {
+} & WaiverActions) {
   const [expanded, setExpanded] = useDisclosures(scope, 'findings');
   const [filter, setFilter] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [showWaived, setShowWaived] = useState(false);
+  const active = findings.filter(({ finding }) => finding.resolution !== 'waived');
+  const waived = findings.filter(({ finding }) => finding.resolution === 'waived');
   useEffect(() => {
     if (
       filter &&
       !findings.some(
-        ({ finding }) => finding.ruleId === filter && (showInfo || finding.severity !== 'info'),
+        ({ finding }) =>
+          finding.resolution !== 'waived' &&
+          finding.ruleId === filter &&
+          (showInfo || finding.severity !== 'info'),
       )
     )
       setFilter(null);
   }, [findings, filter, showInfo]);
-  const infoCount = findings.filter(({ finding }) => finding.severity === 'info').length;
+  const infoCount = active.filter(({ finding }) => finding.severity === 'info').length;
+  const item = (row: FindingContext) => {
+    const key = findingDisclosureKey(row.finding, scope);
+    return (
+      <FindingItem
+        key={key}
+        scope={scope}
+        {...row}
+        expanded={!!expanded[key]}
+        toggle={() => setExpanded([key], !expanded[key])}
+        run={run}
+        locate={locate}
+        waive={waive}
+        unwaive={unwaive}
+      />
+    );
+  };
   const section = (severity: Severity) => {
-    const rows = findings.filter(({ finding }) => finding.severity === severity);
+    const rows = active.filter(({ finding }) => finding.severity === severity);
     const visible = rows.filter(({ finding }) => !filter || finding.ruleId === filter);
     const counts = new Map<string, number>();
     rows.forEach(({ finding }) =>
@@ -198,20 +241,7 @@ export function FindingList({
         </div>
         <div className="panel findings">
           {visible.length ? (
-            visible.map((row) => {
-              const key = findingDisclosureKey(row.finding, scope);
-              return (
-                <FindingItem
-                  key={key}
-                  scope={scope}
-                  {...row}
-                  expanded={!!expanded[key]}
-                  toggle={() => setExpanded([key], !expanded[key])}
-                  run={run}
-                  locate={locate}
-                />
-              );
-            })
+            visible.map(item)
           ) : (
             <p className="muted">{rows.length ? '此级别没有符合筛选的问题' : '暂无' + label}</p>
           )}
@@ -231,7 +261,7 @@ export function FindingList({
               if (
                 showInfo &&
                 filter &&
-                !findings.some(
+                !active.some(
                   ({ finding }) => finding.severity !== 'info' && finding.ruleId === filter,
                 )
               )
@@ -242,6 +272,14 @@ export function FindingList({
             {showInfo ? '收起提示' : `显示 ${infoCount} 条提示`}
           </button>
           {showInfo && section('info')}
+        </div>
+      )}
+      {waived.length > 0 && (
+        <div className="info-findings">
+          <button aria-expanded={showWaived} onClick={() => setShowWaived(!showWaived)}>
+            已豁免 {waived.length} 条
+          </button>
+          {showWaived && <div className="panel findings">{waived.map(item)}</div>}
         </div>
       )}
     </div>

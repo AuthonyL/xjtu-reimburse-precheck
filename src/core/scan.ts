@@ -1,4 +1,5 @@
 import { withFindingId } from './domain/finding-id.js';
+import { createHash } from 'node:crypto';
 import { deriveBatchDate } from './batch-order.js';
 import { itineraryAmounts } from './rules/travel.js';
 import { ruleAction } from './rules/catalog.js';
@@ -308,6 +309,28 @@ export async function scanBatch(inputDir: string, opts: ScanOptions = {}): Promi
     if (file) batch.unidentified = batch.unidentified.filter((f) => !samePath(f.path, file));
   }
   batch.invoices = [...map.values()];
+  const sourceHashes = new Map<string, string>();
+  for (const source of batch.invoices.flatMap((invoice) => invoice.sources)) {
+    if (!files.some((file) => samePath(file, source.path))) continue;
+    const key = pathKey(source.path);
+    let hash = sourceHashes.get(key);
+    if (!hash) {
+      hash = createHash('sha256')
+        .update(await readFile(source.path))
+        .digest('hex');
+      sourceHashes.set(key, hash);
+    }
+    source.sha256 = hash;
+  }
+  const resolvedFiles = new Set([
+    ...(batch.manual.ignored ?? []).map((file) => pathKey(join(dir, file))),
+    ...Object.keys(batch.manual.attachments ?? {}).map((file) => pathKey(join(dir, file))),
+  ]);
+  batch.diagnostics = batch.diagnostics.filter(
+    (finding) =>
+      finding.ruleId !== 'unrecognized-pdf' ||
+      !finding.files.every((file) => resolvedFiles.has(pathKey(file))),
+  );
   const invoiceFiles = new Set(
     batch.invoices.flatMap((i) => i.sources.map((s) => pathKey(s.path))),
   );

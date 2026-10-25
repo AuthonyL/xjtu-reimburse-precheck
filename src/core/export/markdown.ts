@@ -79,10 +79,18 @@ export function renderMarkdown(report: Report): string {
       `- ${escape(g.group.name)}：${g.invoices.length} 张，已知人民币 ${g.totalCny.toFixed(2)} 元，不计入合计。`,
     );
   lines.push('', '## 检查提示', '');
-  for (const f of report.findings)
+  for (const f of report.findings.filter((f) => f.resolution !== 'waived'))
     lines.push(
       `- [${f.severity}] ${f.ruleId} ${escape(f.message)}；怎么处理：${escape(f.action)}${f.invoiceNumbers.length ? `（${f.invoiceNumbers.map(escape).join('、')}）` : ''}`,
     );
+  const waived = report.findings.filter((f) => f.resolution === 'waived');
+  if (waived.length) {
+    lines.push('', '## 已豁免问题', '');
+    for (const finding of waived)
+      lines.push(
+        `- ${escape(finding.ruleIds.join('/'))} ${escape(finding.message)}；理由：${escape(report.waivers?.find((w) => w.findingId === finding.id)?.reason ?? '未记录理由')}`,
+      );
+  }
   return lines.join('\n') + '\n';
 }
 export async function exportMarkdown(report: Report, targetDir: string): Promise<string> {

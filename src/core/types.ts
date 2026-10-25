@@ -41,6 +41,7 @@ export interface SourceFile {
   path: string;
   relativePath: string;
   format: 'pdf' | 'xml' | 'ofd' | 'manual';
+  sha256?: string;
 }
 export interface InvoiceTrip {
   traveler: string;
@@ -78,6 +79,14 @@ export interface UnidentifiedFile {
   relativePath: string;
   isPdf: boolean;
   parseFailed: boolean;
+}
+export interface InboxItem {
+  path: string;
+  relativePath: string;
+  batchDir: string;
+  group: string;
+  kind: 'unidentified' | 'unnamed' | 'parseFailed';
+  suggestions: AttachmentType[];
 }
 export interface Group {
   id: string;
@@ -127,6 +136,7 @@ export interface ManualEntry {
 export interface ManualData {
   version: 1;
   entries: ManualEntry[];
+  ignored?: string[];
   attachments?: Record<string, AttachmentType>;
   laborAttachments?: Record<string, import('./labor/types.js').LaborRequirement['type']>;
   labor?: Record<string, import('./labor/types.js').LaborManualEntry>;
@@ -195,6 +205,7 @@ export interface GroupReport extends CheckedGroup {
   requirementCounts: RequirementCounts;
 }
 export interface Report {
+  waivers?: import('./domain/claim.js').Waiver[];
   batchId: string;
   groups: GroupReport[];
   findings: Finding[];

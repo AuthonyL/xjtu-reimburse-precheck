@@ -8,6 +8,11 @@ import type {
 } from './feedback.js';
 import type { AttachmentType, Batch, ManualEntry, Report, RejectedInfo } from '../core/types.js';
 import type { RuleConfig } from '../core/rules/config.js';
+import type { Claim, ClaimState } from '../core/domain/claim.js';
+import type { Registry } from '../core/domain/registry.js';
+import type { InboxItem } from '../core/types.js';
+
+export type ClaimMeta = Pick<Claim, 'claimant' | 'project' | 'fund'>;
 import type { LaborManualEntry, LaborReport } from '../core/labor/types.js';
 import type {
   ReplacementHistory,
@@ -21,12 +26,15 @@ export interface AppSettings {
   bocUrl: string;
 }
 export interface Submission {
+  claimId?: string;
   batchDir: string;
   batchId: string;
   markedAt: string;
   numbers: string[];
 }
 export interface BatchView {
+  claim: Claim;
+  waived: number;
   replacements?: ReplacementHistory;
   batch: Batch;
   report: Report;
@@ -126,7 +134,15 @@ export interface DesktopApi {
   openFile(file: string): Promise<void>;
   revealFile(file: string): Promise<void>;
   openOutput(batchDir: string): Promise<void>;
-  markSubmitted(batchDir: string, marked: boolean): Promise<WorkspaceView>;
+  markSubmitted(batchDir: string, marked?: boolean): Promise<WorkspaceView>;
+  transitionClaim(batchDir: string, to: ClaimState, note?: string): Promise<WorkspaceView>;
+  updateClaim(batchDir: string, meta: ClaimMeta): Promise<WorkspaceView>;
+  waiveFinding(batchDir: string, findingId: string, reason: string): Promise<WorkspaceView>;
+  unwaiveFinding(batchDir: string, findingId: string): Promise<WorkspaceView>;
+  inbox(): Promise<InboxItem[]>;
+  ignoreFile(batchDir: string, relativePath: string): Promise<WorkspaceView>;
+  unignoreFile(batchDir: string, relativePath: string): Promise<WorkspaceView>;
+  registry(): Promise<Registry>;
   getSettings(): Promise<AppSettings>;
   saveSettings(settings: AppSettings): Promise<AppSettings>;
   resetSettings(): Promise<AppSettings>;
@@ -168,6 +184,14 @@ export const channels = {
   revealFile: 'app:reveal-file',
   openOutput: 'app:open-output',
   markSubmitted: 'app:mark-submitted',
+  transitionClaim: 'app:transition-claim',
+  updateClaim: 'app:update-claim',
+  waiveFinding: 'app:waive-finding',
+  unwaiveFinding: 'app:unwaive-finding',
+  inbox: 'app:inbox',
+  ignoreFile: 'app:ignore-file',
+  unignoreFile: 'app:unignore-file',
+  registry: 'app:registry',
   getSettings: 'app:get-settings',
   saveSettings: 'app:save-settings',
   resetSettings: 'app:reset-settings',

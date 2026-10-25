@@ -2,7 +2,7 @@
 import { expect, it } from 'vitest';
 import { render, screen, within, waitFor, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { mkdtemp, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { App } from '../src/renderer/src/App.js';
@@ -11,6 +11,7 @@ import { DesktopStore } from '../src/main/store.js';
 import { Results } from '../src/renderer/src/Results.js';
 import { batch, config, finding } from './helpers.js';
 import { buildReport, checkBatch } from '../src/core/index.js';
+import { defaultClaim } from '../src/core/domain/claim.js';
 
 it('问题列表默认显示错误和警告，提示按数量折叠并可展开', async () => {
   const b = batch();
@@ -28,7 +29,15 @@ it('问题列表默认显示错误和警告，提示按数量折叠并可展开'
   try {
     render(
       <Results
-        view={{ batch: b, report, markedAt: null, outputs: [], manualTasks: [] }}
+        view={{
+          batch: b,
+          report,
+          claim: defaultClaim(b.id, '2026-10-25T00:00:00.000Z'),
+          waived: 0,
+          markedAt: null,
+          outputs: [],
+          manualTasks: [],
+        }}
         run={async (action) => {
           await action();
         }}
@@ -48,8 +57,8 @@ it('问题列表默认显示错误和警告，提示按数量折叠并可展开'
   }
 });
 
-it('中文界面真实服务串联：打开、确认候选、手填外币、导出、提交和撤销', async () => {
-  const temp = await mkdtemp(join(tmpdir(), 'precheck-renderer-'));
+it('中文界面真实服务串联：打开、确认候选、手填外币、导出和报销状态持久化', async () => {
+  const temp = await realpath(await mkdtemp(join(tmpdir(), 'precheck-renderer-')));
   const dir = join(temp, '20260102');
   try {
     await mkdir(join(dir, 'AI'), { recursive: true });
@@ -68,7 +77,9 @@ it('中文界面真实服务串联：打开、确认候选、手填外币、导�
         confirmAttachment: service.confirm.bind(service),
         saveManual: service.manual.bind(service),
         exportBatch: service.export.bind(service),
-        markSubmitted: service.mark.bind(service),
+        transitionClaim: service.transitionClaim.bind(service),
+        waiveFinding: service.waiveFinding.bind(service),
+        unwaiveFinding: service.unwaiveFinding.bind(service),
         recheck: () => service.refresh(),
         selectBatch: service.select.bind(service),
         saveLayout: store.saveLayout.bind(store),
@@ -105,12 +116,18 @@ it('中文界面真实服务串联：打开、确认候选、手填外币、导�
     expect(await readdir(join(dir, '_预检'))).toEqual(
       expect.arrayContaining(['manual.json', '入库登记清单.xlsx', '高值材料明细.xlsx', '汇总.md']),
     );
-    await user.click(screen.getByRole('button', { name: '标记本批已提交' }));
-    await screen.findByRole('button', { name: '撤销提交标记' });
+    await user.click(screen.getByRole('button', { name: '标记为待提交' }));
+    await screen.findByText('待提交');
+    await user.click(screen.getByRole('button', { name: '标记为已提交' }));
+    await screen.findByText('已提交');
+    expect(JSON.parse(await readFile(join(dir, '_预检/claim.json'), 'utf8')).state).toBe(
+      'submitted',
+    );
     expect(await store.history()).toHaveLength(1);
-    await user.click(screen.getByRole('button', { name: '撤销提交标记' }));
-    await screen.findByRole('button', { name: '标记本批已提交' });
+    await user.click(screen.getByRole('button', { name: '标记为草稿' }));
+    await screen.findByText('草稿');
     expect(await store.history()).toHaveLength(0);
+    expect(JSON.parse(await readFile(join(dir, '_预检/claim.json'), 'utf8')).state).toBe('draft');
   } finally {
     cleanup();
     await rm(temp, { recursive: true, force: true });
@@ -118,7 +135,7 @@ it('中文界面真实服务串联：打开、确认候选、手填外币、导�
 });
 
 it('启动恢复树与批次；分组定位高亮、键盘折叠、侧栏快捷键和右侧设置可用', async () => {
-  const temp = await mkdtemp(join(tmpdir(), 'precheck-layout-'));
+  const temp = await realpath(await mkdtemp(join(tmpdir(), 'precheck-layout-')));
   try {
     const root = join(temp, 'synthetic-root');
     for (const date of ['20260102', '20260103']) {

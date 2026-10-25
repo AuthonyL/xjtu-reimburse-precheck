@@ -486,6 +486,7 @@ export const RULE_CATALOG: RuleDefinition[] = [
     system,
     '检查批次内、跨批次和已提交历史的同号发票。',
     '核对提交历史和原件，移出重复票据，避免重复报销。',
+    [{ path: 'dupChecksum', label: '按文件内容检查不同号码的重复票据', type: 'boolean' }],
   ),
   rule(
     'rejected',

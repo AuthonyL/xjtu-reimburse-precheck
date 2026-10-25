@@ -152,6 +152,7 @@ it('Claim 状态及豁免不参与本阶段判定', () => {
     version: 1,
     id: 'claim-synthetic',
     state: 'reimbursed',
+    createdAt: '2026-01-01',
     transitions: [],
     waivers: before.findings.map((f) => ({
       findingId: f.id,

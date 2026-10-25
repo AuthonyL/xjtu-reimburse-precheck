@@ -5,6 +5,28 @@ import { batchFile, outputDirectory } from './paths.js';
 import { SerialQueue, writeJson } from './json-store.js';
 
 const queue = new SerialQueue();
+export function ignoreFile(batch: string, file: string) {
+  return queue.run(async () => {
+    const canonical = validateManual({ ignored: [file] }).ignored![0]!;
+    await batchFile(batch, canonical);
+    const data = await readManual(batch);
+    data.ignored = [...new Set([...(data.ignored ?? []), canonical])];
+    const validated = validateManual(data);
+    await writeJson(join(await outputDirectory(batch), 'manual.json'), validated);
+    return validated;
+  });
+}
+export function unignoreFile(batch: string, file: string) {
+  return queue.run(async () => {
+    const canonical = validateManual({ ignored: [file] }).ignored![0]!;
+    await batchFile(batch, canonical, true);
+    const data = await readManual(batch);
+    data.ignored = (data.ignored ?? []).filter((path) => path !== canonical);
+    const validated = validateManual(data);
+    await writeJson(join(await outputDirectory(batch), 'manual.json'), validated);
+    return validated;
+  });
+}
 export function saveAttachment(batch: string, file: string, type: AttachmentType) {
   return queue.run(async () => {
     await batchFile(batch, file);

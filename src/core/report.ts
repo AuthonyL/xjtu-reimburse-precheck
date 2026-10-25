@@ -10,7 +10,7 @@ import { roundMoney } from './parse/common.js';
 
 export function countSeverities(findings: readonly Finding[]): Record<Severity, number> {
   const counts = { error: 0, warning: 0, info: 0 };
-  for (const finding of findings) counts[finding.severity]++;
+  for (const finding of findings) if (finding.resolution !== 'waived') counts[finding.severity]++;
   return counts;
 }
 
@@ -24,11 +24,24 @@ export function countRequirements(requirements: Requirement[]): RequirementCount
 }
 
 export function buildReport(result: CheckResult): Report {
+  const activeRequirements = (requirements: Requirement[], groupId: string) =>
+    requirements.filter(
+      (r) =>
+        !result.findings.some(
+          (f) =>
+            f.resolution === 'waived' &&
+            f.groupId === groupId &&
+            f.requirementType === r.type &&
+            f.ruleIds.some((id) => r.ruleIds.includes(id)) &&
+            f.invoiceNumbers.length === r.invoiceNumbers.length &&
+            f.invoiceNumbers.every((n) => r.invoiceNumbers.includes(n)),
+        ),
+    );
   const groups = result.groups.map((g) => ({
     ...g,
     totalCny: roundMoney(g.invoices.reduce((s, i) => s + (i.cnyAmount ?? 0), 0)),
     unconverted: g.invoices.filter((i) => i.cnyAmount === null),
-    requirementCounts: countRequirements(g.requirements),
+    requirementCounts: countRequirements(activeRequirements(g.requirements, g.group.id)),
   }));
   const active = groups.filter((g) => !g.group.flags.deferred);
   const totals = new Map<string, number>();
@@ -56,12 +69,23 @@ export function buildReport(result: CheckResult): Report {
             (f) =>
               f.groupId === g.group.id &&
               f.ruleId === 'R3' &&
+              f.resolution !== 'waived' &&
               !f.invoiceNumbers.length &&
               f.code === 'manual-amount',
           ),
       )
       .map((g) => g.group.id),
     deferredGroups: groups.filter((g) => g.group.flags.deferred),
-    requirementCounts: countRequirements(groups.flatMap((g) => g.requirements)),
+    requirementCounts: countRequirements(
+      groups.flatMap((g) => activeRequirements(g.requirements, g.group.id)),
+    ),
+    ...(result.findings.some((f) => f.resolution === 'waived')
+      ? {
+          waivers:
+            result.batch.claim?.waivers.filter((w) =>
+              result.findings.some((f) => f.id === w.findingId && f.resolution === 'waived'),
+            ) ?? [],
+        }
+      : {}),
   };
 }

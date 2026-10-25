@@ -21,7 +21,20 @@ import type {
   Submission,
 } from '../shared/api.js';
 import { DesktopStore } from './store.js';
-import { ensureClaim } from './claim-store.js';
+import {
+  ensureClaim,
+  migrateClaimSubmission,
+  transitionClaim,
+  updateClaimMeta,
+  setWaiver,
+  removeWaiver,
+} from './claim-store.js';
+import type { ClaimMeta } from './claim-store.js';
+import { defaultClaim, type ClaimState } from '../core/domain/claim.js';
+import { RegistryStore } from './registry.js';
+import { submittedNumbers } from '../core/domain/registry.js';
+import type { Registry } from '../core/domain/registry.js';
+import { buildInbox } from '../core/inbox.js';
 import { findManualEntry } from '../core/manual.js';
 import {
   batchFile,
@@ -31,7 +44,7 @@ import {
   assertDirectory,
   type WorkspaceLocation,
 } from './paths.js';
-import { saveAttachment, saveManualEntry } from './manual-store.js';
+import { saveAttachment, saveManualEntry, ignoreFile, unignoreFile } from './manual-store.js';
 import { SerialQueue } from './json-store.js';
 import { readRateCaptures } from './rate-capture.js';
 import {
@@ -133,7 +146,11 @@ export class WorkspaceService {
   private laborService = new LaborService();
   readonly queue = new SerialQueue();
   private corrections = new CorrectionService((dir) => this.correctionContext(dir));
-  constructor(readonly store: DesktopStore) {}
+  private registryStore: RegistryStore;
+  private registryView: Registry = { version: 1, entries: [] };
+  constructor(readonly store: DesktopStore) {
+    this.registryStore = new RegistryStore(store.dir);
+  }
 
   currentWorkspace(): WorkspaceView | null {
     return this.view;
@@ -283,8 +300,19 @@ export class WorkspaceService {
       dir,
       cached || (dir !== undefined && !isLabor),
     );
-    const history = await this.store.history();
+    let history = await this.store.history();
     const batches = [...scans.values()].sort(compareBatches);
+    for (const batch of batches) {
+      batch.claim = await ensureClaim(batch.dir);
+      const previous = history.find((h) => samePath(h.batchDir, batch.dir) && !h.claimId);
+      if (previous) {
+        if (batch.claim.state === 'draft')
+          batch.claim = await migrateClaimSubmission(batch.dir, previous.markedAt);
+        await this.store.bindHistoryClaim(batch.dir, batch.claim.id);
+      }
+    }
+    history = await this.store.history();
+    this.registryView = await this.registryStore.rebuild(batches);
     const rejectedNumbers = new Set(rejected?.invoices.map((i) => i.number));
     const rejectedInfo = rejected
       ? buildRejectedInfo(rejected, rules, await readRejectedReasons(rejected.dir))
@@ -299,11 +327,13 @@ export class WorkspaceService {
         { rejectedNumbers, rejectedInfo },
         readOnly,
       );
-      if (!readOnly) batch.claim = await ensureClaim(batch.dir);
+      const claim = batch.claim ?? defaultClaim('read-only-reference', new Date().toISOString());
       return {
+        claim,
+        waived: report.findings.filter((f) => f.resolution === 'waived').length,
         batch,
         report,
-        markedAt: history.find((h) => samePath(h.batchDir, batch.dir))?.markedAt ?? null,
+        markedAt: [...claim.transitions].reverse().find((t) => t.to === 'submitted')?.at ?? null,
         outputs: await this.outputs(batch.dir),
         manualTasks: manualTasks(batch, rules.exchangeRateType),
         ...(!readOnly ? { replacements: await readReplacementHistory(batch.dir) } : {}),
@@ -345,6 +375,9 @@ export class WorkspaceService {
   ) {
     const batch = {
       ...scanned,
+      ...(batches.find((b) => samePath(b.dir, identityDir))?.claim
+        ? { claim: batches.find((b) => samePath(b.dir, identityDir))!.claim }
+        : {}),
       attachments: [
         ...scanned.attachments,
         ...(await this.rateFiles(scanned, rules.exchangeRateType)),
@@ -352,11 +385,21 @@ export class WorkspaceService {
     };
     const result = checkBatch(batch, rules, {
       otherBatches: batches.filter((b) => !samePath(b.dir, identityDir)),
-      submittedHistory: new Set(
-        history.filter((h) => !samePath(h.batchDir, identityDir)).flatMap((h) => h.numbers),
-      ),
+      submittedHistory: new Set([
+        ...submittedNumbers(this.registryView, batch.claim?.id ?? ''),
+        ...history
+          .filter(
+            (h) =>
+              !samePath(h.batchDir, identityDir) && (!batch.claim || h.claimId !== batch.claim.id),
+          )
+          .flatMap((h) => h.numbers),
+      ]),
       ...(readOnly ? {} : context),
     });
+    const waived = new Set(batch.claim?.waivers.map((w) => w.findingId));
+    result.findings = result.findings.map((finding) =>
+      waived.has(finding.id) ? { ...finding, resolution: 'waived' } : finding,
+    );
     for (const group of result.groups)
       for (const requirement of group.requirements)
         requirement.foundFiles = [
@@ -531,7 +574,7 @@ export class WorkspaceService {
   }
   async confirm(dir: string, file: string, type: AttachmentType) {
     const batch = this.batch(dir).batch;
-    if (!batch.attachments.some((a) => a.relativePath === file))
+    if (![...batch.attachments, ...batch.unidentified].some((a) => a.relativePath === file))
       throw new Error('只能确认当前批次已扫描的附件');
     await saveAttachment(dir, file, type);
     return this.refresh(dir);
@@ -562,15 +605,63 @@ export class WorkspaceService {
     await exportMarkdown(batch.report, target);
     return this.refresh(dir);
   }
-  async mark(dir: string, marked: boolean) {
+  async transitionClaim(dir: string, to: ClaimState, note?: string) {
     const { batch } = this.batch(dir);
-    if (marked)
+    const claim = await transitionClaim(batch.dir, to, note);
+    if (to === 'submitted')
       await this.store.mark(
-        dir,
+        batch.dir,
         batch.invoices.map((i) => i.number),
+        claim.id,
+        claim.transitions.at(-1)!.at,
       );
-    else await this.store.unmark(dir);
-    return this.refresh(dir);
+    else if (to !== 'reimbursed') await this.store.unmark(batch.dir, claim.id);
+    return this.refresh(undefined, true);
+  }
+  async mark(dir: string, marked = true) {
+    return this.transitionClaim(dir, marked ? 'submitted' : 'draft');
+  }
+  async updateClaim(dir: string, meta: ClaimMeta) {
+    const { batch } = this.batch(dir);
+    await updateClaimMeta(batch.dir, meta);
+    return this.refresh(undefined, true);
+  }
+  async waiveFinding(dir: string, findingId: string, reason: string) {
+    const view = this.batch(dir);
+    if (!view.report.findings.some((f) => f.id === findingId))
+      throw new Error('问题不属于当前批次');
+    await setWaiver(view.batch.dir, findingId, reason);
+    return this.refresh(undefined, true);
+  }
+  async unwaiveFinding(dir: string, findingId: string) {
+    const view = this.batch(dir);
+    await removeWaiver(view.batch.dir, findingId);
+    return this.refresh(undefined, true);
+  }
+  async inbox() {
+    return buildInbox(
+      this.view?.batches.map((b) => b.batch) ?? [],
+      (await this.store.settings()).rules,
+    );
+  }
+  async ignoreFile(dir: string, relativePath: string) {
+    const { batch } = this.batch(dir);
+    if (
+      ![...batch.unidentified, ...batch.attachments.filter((a) => a.type === 'unnamed')].some(
+        (f) => f.relativePath === relativePath,
+      )
+    )
+      throw new Error('只能忽略当前批次的未识别文件');
+    await ignoreFile(batch.dir, relativePath);
+    return this.refresh(batch.dir);
+  }
+  async unignoreFile(dir: string, relativePath: string) {
+    const { batch } = this.batch(dir);
+    await unignoreFile(batch.dir, relativePath);
+    return this.refresh(batch.dir);
+  }
+  registry() {
+    return this.registryStore.read();
   }
   async allowedFile(input: string) {
     const laborFile = await this.laborService.allowedFile(input);

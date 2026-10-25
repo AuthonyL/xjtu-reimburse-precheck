@@ -129,6 +129,7 @@ export class DesktopStore {
           typeof v.batchDir !== 'string' ||
           typeof v.batchId !== 'string' ||
           typeof v.markedAt !== 'string' ||
+          (v.claimId !== undefined && typeof v.claimId !== 'string') ||
           !Array.isArray(v.numbers) ||
           v.numbers.some((n) => typeof n !== 'string'),
       )
@@ -136,23 +137,38 @@ export class DesktopStore {
       throw new Error('提交历史文件格式错误');
     return raw as Submission[];
   }
-  mark(dir: string, numbers: string[]) {
+  mark(dir: string, numbers: string[], claimId?: string, markedAt = new Date().toISOString()) {
     return this.queue.run(async () => {
-      const history = (await this.history()).filter((v) => !samePath(v.batchDir, dir));
+      const history = (await this.history()).filter(
+        (v) => !samePath(v.batchDir, dir) && (!claimId || v.claimId !== claimId),
+      );
       history.push({
         batchDir: canonicalPath(dir),
         batchId: basename(dir),
-        markedAt: new Date().toISOString(),
+        markedAt,
+        ...(claimId ? { claimId } : {}),
         numbers: [...new Set(numbers)],
       });
       await writeJson(join(this.dir, 'history.json'), history);
     });
   }
-  unmark(dir: string) {
+  unmark(dir: string, claimId?: string) {
     return this.queue.run(async () =>
       writeJson(
         join(this.dir, 'history.json'),
-        (await this.history()).filter((v) => !samePath(v.batchDir, dir)),
+        (await this.history()).filter(
+          (v) => !samePath(v.batchDir, dir) && (!claimId || v.claimId !== claimId),
+        ),
+      ),
+    );
+  }
+  bindHistoryClaim(dir: string, claimId: string) {
+    return this.queue.run(async () =>
+      writeJson(
+        join(this.dir, 'history.json'),
+        (await this.history()).map((entry) =>
+          samePath(entry.batchDir, dir) ? { ...entry, claimId } : entry,
+        ),
       ),
     );
   }

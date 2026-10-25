@@ -1,6 +1,7 @@
 import { compareBatches } from '../../core/batch-order.js';
 import type { WorkspaceView } from '../../shared/api.js';
 import { Counts, money, nameOf } from './ui.js';
+import { ClaimBadge } from './ClaimStatus.js';
 
 export function Overview({
   view,
@@ -28,13 +29,11 @@ export function Overview({
             <button key={b.batch.dir} className="batch-card" onClick={() => select(b.batch.dir)}>
               <div className="card-heading">
                 <h2>{b.batch.id}</h2>
+                <ClaimBadge state={b.claim.state} />
                 <span>{b.report.invoiceCount} 张</span>
               </div>
               <Counts report={b.report} />
-              <p>
-                {b.batch.submitted ? '✓ 已有学校报销单' : '未找到学校报销单'}
-                {b.markedAt ? ' · ✓ APP 已标记提交' : ''}
-              </p>
+              <p>{b.batch.submitted ? '✓ 已有学校报销单' : '未找到学校报销单'}</p>
               {b.report.totals.map((t) => (
                 <div className="total-row" key={t.expenseContent}>
                   <span>{t.expenseContent}</span>

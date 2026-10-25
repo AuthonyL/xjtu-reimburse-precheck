@@ -19,8 +19,10 @@ function relativeFile(value: unknown): string {
     !value.trim() ||
     isAbsolute(value) ||
     win32.isAbsolute(value) ||
-    normalize(value).split(sep).includes('..') ||
-    value.includes('\\')
+    value.split('/').includes('..') ||
+    value.includes('\\') ||
+    value.includes('\0') ||
+    normalize(value) === '.'
   )
     throw new Error('文件路径必须为批次内相对路径（用 / 分隔）');
   return normalize(value).split(sep).join('/');
@@ -35,6 +37,12 @@ export function validateManual(value: unknown): ManualData {
   if (data.version !== 1 || !Array.isArray(data.entries))
     throw new Error('手填数据需要 version: 1 和 entries 数组');
   if (data.labor !== undefined) data.labor = validateLaborManual(data.labor);
+  if (data.ignored !== undefined) {
+    if (!Array.isArray(data.ignored)) throw new Error('ignored 必须为批次内相对路径数组');
+    const ignored = data.ignored.map(relativeFile);
+    if (new Set(ignored).size !== ignored.length) throw new Error('ignored 包含重复的规范路径');
+    data.ignored = ignored;
+  }
   if (data.attachments !== undefined) {
     if (
       !data.attachments ||

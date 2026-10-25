@@ -14,7 +14,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { defaultClaim, validateClaim } from '../src/core/domain/claim.js';
 import { CLAIM_FILE, readClaimFile } from '../src/core/claim-store.js';
-import { ensureClaim } from '../src/main/claim-store.js';
+import {
+  ensureClaim,
+  transitionClaim,
+  updateClaimMeta,
+  setWaiver,
+  removeWaiver,
+} from '../src/main/claim-store.js';
 import { WorkspaceService } from '../src/main/workspace.js';
 import { DesktopStore } from '../src/main/store.js';
 
@@ -24,9 +30,9 @@ it('首次生成完整报销单，并发及再次读取保持相同身份', asyn
     const claims = await Promise.all(Array.from({ length: 4 }, () => ensureClaim(dir)));
     const saved = JSON.parse(await readFile(join(dir, CLAIM_FILE), 'utf8'));
     expect(saved).toEqual(claims[0]);
-    expect(saved).toEqual(defaultClaim(saved.id, saved.transitions[0].at));
+    expect(saved).toEqual(defaultClaim(saved.id, saved.createdAt));
     expect(saved.id).toMatch(/^[\da-f-]{36}$/);
-    expect(Number.isNaN(Date.parse(saved.transitions[0].at))).toBe(false);
+    expect(Number.isNaN(Date.parse(saved.createdAt))).toBe(false);
     expect(new Set(claims.map((c) => c.id)).size).toBe(1);
     expect(await ensureClaim(dir)).toEqual(saved);
     const updated = {
@@ -37,6 +43,37 @@ it('首次生成完整报销单，并发及再次读取保持相同身份', asyn
     };
     await writeFile(join(dir, CLAIM_FILE), JSON.stringify(updated));
     expect(await ensureClaim(dir)).toEqual(updated);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+it('并发状态、元数据与豁免写入读取最新版本，拒绝空理由和非法元数据', async () => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'precheck-claim-edits-')));
+  try {
+    const original = await ensureClaim(dir);
+    await Promise.all([
+      transitionClaim(dir, 'ready'),
+      updateClaimMeta(dir, { claimant: '合成申请人', project: '合成项目', fund: 'vertical' }),
+      setWaiver(dir, 'finding-a', '材料已线下核对'),
+      setWaiver(dir, 'finding-b', '合成理由'),
+    ]);
+    const saved = await ensureClaim(dir);
+    expect(saved).toMatchObject({
+      id: original.id,
+      state: 'ready',
+      claimant: '合成申请人',
+      fund: 'vertical',
+    });
+    expect(saved.waivers.map((w) => w.findingId)).toEqual(['finding-a', 'finding-b']);
+    await setWaiver(dir, 'finding-a', '替换理由');
+    expect((await ensureClaim(dir)).waivers).toHaveLength(2);
+    await removeWaiver(dir, 'finding-a');
+    expect((await ensureClaim(dir)).waivers.map((w) => w.findingId)).toEqual(['finding-b']);
+    await expect(setWaiver(dir, 'finding-c', '  ')).rejects.toThrow('理由');
+    await expect(updateClaimMeta(dir, { fund: 'bad' as 'other' })).rejects.toThrow('经费');
+    await expect(transitionClaim(dir, 'reimbursed')).rejects.toThrow('迁移');
+    expect((await ensureClaim(dir)).state).toBe('ready');
   } finally {
     await rm(dir, { recursive: true, force: true });
   }

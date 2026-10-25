@@ -131,6 +131,7 @@ it('局部刷新重新计算相关批次查重徽标；学校报销单和提交�
           (f) => f.ruleId === 'dup' && f.message.includes('已在 20260103 报销'),
         ),
     ).toBe(true);
+    await service.transitionClaim(newer, 'ready');
     updated = await service.mark(newer, true);
     expect(
       updated.batches

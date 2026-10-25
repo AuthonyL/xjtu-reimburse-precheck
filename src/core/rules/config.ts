@@ -10,6 +10,7 @@ export interface Threshold {
   operator: '>=' | '>';
 }
 export interface RuleConfig {
+  dupChecksum: boolean;
   transportKeywords: string[];
   deliveryKeywords: string[];
   mixedDelegatedSeverity: Severity;

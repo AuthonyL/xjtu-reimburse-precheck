@@ -221,7 +221,9 @@ export function buildRules(config: RuleConfig): Rule[] {
     {
       ...base('dup', 'workspace', 'workspace'),
       kind: 'duplicate',
-      scopes: ['batch', 'workspace', 'history'],
+      scopes: config.dupChecksum
+        ? ['batch', 'workspace', 'history', 'checksum']
+        : ['batch', 'workspace', 'history'],
     },
     { ...base('rejected', 'workspace', 'workspace'), kind: 'lookup', set: 'rejected' },
     ...(['manual', 'ofd', 'unrecognized-pdf'] as const).map((id): Rule => ({

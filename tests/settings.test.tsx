@@ -1,3 +1,4 @@
+import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { expect, it } from 'vitest';
 import { render, screen, within, cleanup, waitFor } from '@testing-library/react';
@@ -69,7 +70,15 @@ it('结果首个 section 为待处理问题，显示 action 并可定位分组',
   try {
     const result = render(
       <Results
-        view={{ batch: b, report, manualTasks: [], markedAt: null, outputs: [] }}
+        view={{
+          batch: b,
+          report,
+          manualTasks: [],
+          claim: defaultClaim('synthetic-view', '2026-01-01'),
+          waived: 0,
+          markedAt: null,
+          outputs: [],
+        }}
         run={async (action) => {
           await action();
         }}
@@ -98,6 +107,8 @@ it('拒票页显示推断样式、允许编辑已记录原因并通过受限 API
   const view: BatchView = {
     batch: b,
     report: buildReport(checkBatch(b, config())),
+    claim: defaultClaim('synthetic-view', '2026-01-01'),
+    waived: 0,
     markedAt: null,
     outputs: [],
     manualTasks: [],

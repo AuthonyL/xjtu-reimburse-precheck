@@ -17,6 +17,7 @@ import { checkLabor } from '../src/core/labor/engine.js';
 import { laborScan } from './labor-fixtures.js';
 import { Results } from '../src/renderer/src/Results.js';
 import { batch, config, finding as makeFinding } from './helpers.js';
+import { defaultClaim } from '../src/core/domain/claim.js';
 
 afterEach(cleanup);
 const run = async (action: () => Promise<unknown>) => {
@@ -38,6 +39,8 @@ const view = (): BatchView => {
   return {
     batch: b,
     report: buildReport(checkBatch(b, config())),
+    claim: defaultClaim(b.id, '2026-10-25T00:00:00.000Z'),
+    waived: 0,
     markedAt: null,
     manualTasks: [],
     outputs: [],

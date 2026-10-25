@@ -14,6 +14,7 @@ export interface Waiver {
 export interface Claim {
   version: 1;
   id: string;
+  createdAt: string;
   state: ClaimState;
   transitions: ClaimTransition[];
   claimant?: string;
@@ -26,9 +27,9 @@ export function defaultClaim(id: string, now: string): Claim {
   return {
     version: 1,
     id,
+    createdAt: now,
     state: 'draft',
-    // 创建记录用 draft 到自身的流转保存时间，不执行状态变更。
-    transitions: [{ from: 'draft', to: 'draft', at: now }],
+    transitions: [],
     waivers: [],
   };
 }
@@ -65,6 +66,8 @@ export function validateClaim(value: unknown): Claim {
       throw new Error('报销单流转记录需要合法状态、时间及可选文字备注');
     return { from: v.from, to: v.to, at: v.at, ...(v.note !== undefined ? { note: v.note } : {}) };
   });
+  const createdAt = value.createdAt ?? transitions[0]?.at;
+  if (!text(createdAt)) throw new Error('报销单创建时间必须为非空字符串');
   if (value.claimant !== undefined && typeof value.claimant !== 'string')
     throw new Error('报销单申请人必须为字符串');
   if (value.project !== undefined && typeof value.project !== 'string')
@@ -83,6 +86,7 @@ export function validateClaim(value: unknown): Claim {
   return {
     version: 1,
     id: value.id,
+    createdAt,
     state: value.state,
     transitions,
     waivers,

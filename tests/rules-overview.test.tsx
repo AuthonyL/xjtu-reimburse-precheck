@@ -1,3 +1,4 @@
+import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { cleanup, render, screen, within, waitFor } from '@testing-library/react';
@@ -190,7 +191,17 @@ it('App 的问题规则入口切到设置、展开并滚动目标；侧栏不再
             dir: b.dir,
             openedDir: b.dir,
             selectedBatchDir: b.dir,
-            batches: [{ batch: b, report, markedAt: null, outputs: [], manualTasks: [] }],
+            batches: [
+              {
+                batch: b,
+                report,
+                claim: defaultClaim('synthetic-view', '2026-01-01'),
+                waived: 0,
+                markedAt: null,
+                outputs: [],
+                manualTasks: [],
+              },
+            ],
             rejected: null,
           },
           message: null,

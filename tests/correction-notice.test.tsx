@@ -1,3 +1,4 @@
+import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
@@ -50,6 +51,8 @@ const view = (): WorkspaceView => {
         report: buildReport(checkBatch(b, config())),
         manualTasks: [],
         outputs: [],
+        claim: defaultClaim('synthetic-view', '2026-01-01'),
+        waived: 0,
         markedAt: null,
         replacements: {
           version: 1,

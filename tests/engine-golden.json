@@ -1,0 +1,3930 @@
+[
+  {
+    "name": "CNY-domestic-普通-inventory--0.01",
+    "hash": "0c78a1802ccdcfbe5e5eed1c58dacaf18017038757860f5c46ac9cbad016a316"
+  },
+  {
+    "name": "CNY-domestic-普通-inventory-0",
+    "hash": "29b039983069ef741e1e606b974c427bec75248df3d13d7a8cfccb30f97592d2"
+  },
+  {
+    "name": "CNY-domestic-普通-inventory-0.01",
+    "hash": "2def51fc02ca8abc4b085eed6a231d4e7b9f93344db6f2ac616c6519f4fda5b2"
+  },
+  {
+    "name": "CNY-domestic-普通-payment--0.01",
+    "hash": "fc9702fc9417f680faf96f809d4580b30ceaf0ec9271a5866759fd986197f4b3"
+  },
+  {
+    "name": "CNY-domestic-普通-payment-0",
+    "hash": "22a7015f4fca94f18bf5319095489eb584a9c63d331c70d780f0bb3ee3b6515c"
+  },
+  {
+    "name": "CNY-domestic-普通-payment-0.01",
+    "hash": "6adfe26d06efda3273273844bff2394fa1f83c03566f849baa874f4d5623e12d"
+  },
+  {
+    "name": "CNY-domestic-普通-verification--0.01",
+    "hash": "203792b9ac1187862402129733fd1ba02d6dedb085b6486af5fde536a24be56c"
+  },
+  {
+    "name": "CNY-domestic-普通-verification-0",
+    "hash": "2e7262a93148d91035d2a21b48df794cf746ac3656a2821b6de194331663b4dc"
+  },
+  {
+    "name": "CNY-domestic-普通-verification-0.01",
+    "hash": "418b5f58576d7f5b30aa225588e103e0c28f96d3dfaf10270354f313ce5c47c3"
+  },
+  {
+    "name": "CNY-domestic-普通-highUnit--0.01",
+    "hash": "fa64ae29c5b763e8cde78f95779d30731ef387ffeb6f2432cf7bd20c3880f40a"
+  },
+  {
+    "name": "CNY-domestic-普通-highUnit-0",
+    "hash": "68bf4c244e2dee5db242a6a2452567530fd5e24def32c3ca0adc774855054b11"
+  },
+  {
+    "name": "CNY-domestic-普通-highUnit-0.01",
+    "hash": "92da05566de702ebc1f847ef7a56b8e977731c4abc4ff5467e41439d5a8e69d8"
+  },
+  {
+    "name": "CNY-domestic-普通-highGroup--0.01",
+    "hash": "97dc2d03a4b0a66d2eaa8baa8f80c480aa2599115fbc9fc4a6f0e48e6c4cb29b"
+  },
+  {
+    "name": "CNY-domestic-普通-highGroup-0",
+    "hash": "497b41fa5798ba59ec32c5cebae38ff098a190e61a11485581bef6074e2c7e9a"
+  },
+  {
+    "name": "CNY-domestic-普通-highGroup-0.01",
+    "hash": "be4c1e7cb11da244ca46c2d3941f07178009491658883e02ae2c316831956dec"
+  },
+  {
+    "name": "CNY-domestic-普通-outsourcedContract--0.01",
+    "hash": "7f89d3e5c49ba4d4192768af9e9f2930154d51eaacdae6ba15abc0ce052af3ea"
+  },
+  {
+    "name": "CNY-domestic-普通-outsourcedContract-0",
+    "hash": "2e95a28fb2bb20a0b22dffb61889a8218712561f07fcf34e3067fb36744b4a67"
+  },
+  {
+    "name": "CNY-domestic-普通-outsourcedContract-0.01",
+    "hash": "bac718b424dc32ee752f98a30da24f690f570d0f4130f7d430485dc9248d8b20"
+  },
+  {
+    "name": "CNY-domestic-暂缓-inventory--0.01",
+    "hash": "80a0a145c733a0e42605f7ec6b5043cc8b39e96a4a8ec73c17215beb9f193e2c"
+  },
+  {
+    "name": "CNY-domestic-暂缓-inventory-0",
+    "hash": "a1fe5e74dfd8ac8f7871c59f750dfd3249e410ad608278299b4bb7539296d37d"
+  },
+  {
+    "name": "CNY-domestic-暂缓-inventory-0.01",
+    "hash": "ef4518f7dffaab8164ddf09b0ad015a49e2f372ed9adae10b54e5287fdddecb4"
+  },
+  {
+    "name": "CNY-domestic-暂缓-payment--0.01",
+    "hash": "75bd45f06447a37f8e02ed01f00ac2c921c91b1d1266c9faa1fbab0b948bc531"
+  },
+  {
+    "name": "CNY-domestic-暂缓-payment-0",
+    "hash": "e1fd57b467596106d5eb6c9aa7ef53749fe9237c1cacba57fdf8759ad566dd09"
+  },
+  {
+    "name": "CNY-domestic-暂缓-payment-0.01",
+    "hash": "cd9993949300fb71eda426429467d3c2e006deca4b4cb5b52d7e3dd979801604"
+  },
+  {
+    "name": "CNY-domestic-暂缓-verification--0.01",
+    "hash": "696dee422470f74606dde8dbb81e98cf144499197689be9d13865782f0d037e1"
+  },
+  {
+    "name": "CNY-domestic-暂缓-verification-0",
+    "hash": "ecf9dea1c90ab10f337165a909e33e46e2cd8d6abdb7d018e65e4250c251adb3"
+  },
+  {
+    "name": "CNY-domestic-暂缓-verification-0.01",
+    "hash": "09c02739ae725253b300bb8de7443d1edea71932e2627f6be413e886c488d768"
+  },
+  {
+    "name": "CNY-domestic-暂缓-highUnit--0.01",
+    "hash": "c7a438159f5a0964af83c88df57355fcf5953997d8171ba591c3bb0aa49a0b0b"
+  },
+  {
+    "name": "CNY-domestic-暂缓-highUnit-0",
+    "hash": "e290ea2eebf11c0005befb89db3f4b376f5133d20fe23f5f5536271679174de2"
+  },
+  {
+    "name": "CNY-domestic-暂缓-highUnit-0.01",
+    "hash": "89db4fb6d698d1be0c4b8f212b34b67ec87d9a5bc9688e5ada8d413b1fe7f576"
+  },
+  {
+    "name": "CNY-domestic-暂缓-highGroup--0.01",
+    "hash": "0e3e840c9f9c4d616c0c91c39b820e95526b42a0826950739dcfdb86f3beb78a"
+  },
+  {
+    "name": "CNY-domestic-暂缓-highGroup-0",
+    "hash": "0349ec6592a7a9dfa9408e83c7795510687\u00314055917191bd1dc7f4e922964c65"
+  },
+  {
+    "name": "CNY-domestic-暂缓-highGroup-0.01",
+    "hash": "ac8d95e7a1fc87590874df8515f91ae0d9f74c2518bc97fce3cb0aa6b7fefe7a"
+  },
+  {
+    "name": "CNY-domestic-暂缓-outsourcedContract--0.01",
+    "hash": "a121788d3df45344bc667f22e89c01f4730cb7a983cc1b43f265fb44934d56dd"
+  },
+  {
+    "name": "CNY-domestic-暂缓-outsourcedContract-0",
+    "hash": "2d745efbaf1ecfb6efc181ed0b587d7000b853be2e4507bf30a0f39f50ef6943"
+  },
+  {
+    "name": "CNY-domestic-暂缓-outsourcedContract-0.01",
+    "hash": "24b95305f98a944f9217be38e1ef0d2115c3d8d299b863f106663e1ecc7c4e67"
+  },
+  {
+    "name": "CNY-domestic-公转-inventory--0.01",
+    "hash": "b6dacbffaa6c0b879abb2be2d83c84b2efa4aa5003979a2ab9b4eb1a21a3a554"
+  },
+  {
+    "name": "CNY-domestic-公转-inventory-0",
+    "hash": "b7048a91252c5f17ad3d75f25b688ca2f2fb82b32fee99fbc758242da9652ac5"
+  },
+  {
+    "name": "CNY-domestic-公转-inventory-0.01",
+    "hash": "b293e0a5766f469538a1caba9c407a0a3d11cf45aea057ad122a85efe07ab3bc"
+  },
+  {
+    "name": "CNY-domestic-公转-payment--0.01",
+    "hash": "771f994786f226f1beee66f0e4eea24ab4732bfc216764367ddf4c39f5322a91"
+  },
+  {
+    "name": "CNY-domestic-公转-payment-0",
+    "hash": "a385fbd249e5ebb273ec1c279a6f356f9fde578f26040b77b920320888d98051"
+  },
+  {
+    "name": "CNY-domestic-公转-payment-0.01",
+    "hash": "97540984af960a6306408681f531a337f0b6446987d369c597224d433ba092b3"
+  },
+  {
+    "name": "CNY-domestic-公转-verification--0.01",
+    "hash": "f97974264fad6d404eb5e39d151b838db408284e69103c546ff5afeafa9ea727"
+  },
+  {
+    "name": "CNY-domestic-公转-verification-0",
+    "hash": "8e592048dea504b79b2df5a11720948dc77030fa5eb21253d1f50b01b353af65"
+  },
+  {
+    "name": "CNY-domestic-公转-verification-0.01",
+    "hash": "486a9badf26969b2e8ca5efbd5ac31b4da5964c7534c7176a830d51d57e8039a"
+  },
+  {
+    "name": "CNY-domestic-公转-highUnit--0.01",
+    "hash": "4b5289f96c5933e373625ef53f3ddbdc69ad1bdfbecedaccb827c49fbbd7b980"
+  },
+  {
+    "name": "CNY-domestic-公转-highUnit-0",
+    "hash": "ef877c04119c3f3d537bce9f1bdbc72111efb91199ff2342ba43632bf9120d11"
+  },
+  {
+    "name": "CNY-domestic-公转-highUnit-0.01",
+    "hash": "661ee6929c901e7a05e9d369a9308ddd8ece0b90f60be6eec67b67f4b93802c0"
+  },
+  {
+    "name": "CNY-domestic-公转-highGroup--0.01",
+    "hash": "4b2011f11c84a0031463ee8484506f35217ec8f42c92657af87eb5c1223c2823"
+  },
+  {
+    "name": "CNY-domestic-公转-highGroup-0",
+    "hash": "08808bf20a96db759af042f78d45735e74badb56dc5cde06a439ffb09cac78c0"
+  },
+  {
+    "name": "CNY-domestic-公转-highGroup-0.01",
+    "hash": "c3d1838f4e16ddf1b721324313c8dc61184f7e5d569b1e3a44bf626095ea4d44"
+  },
+  {
+    "name": "CNY-domestic-公转-outsourcedContract--0.01",
+    "hash": "1ed67ea131b40c74f828998e8b611e03cb9199a490259e9e2f5b221b3e5d88bc"
+  },
+  {
+    "name": "CNY-domestic-公转-outsourcedContract-0",
+    "hash": "8485d26a87996de9ae8e4584e6b19b622ede9c7503db3f0cbfcf50257ac5aacb"
+  },
+  {
+    "name": "CNY-domestic-公转-outsourcedContract-0.01",
+    "hash": "25fc5dcecc521c04d41d0071c7731dcbdceeeae066a12ec70e16f5d11ff54469"
+  },
+  {
+    "name": "CNY-domestic-外包-inventory--0.01",
+    "hash": "599c9a63db0d6122eb0574581df52d2b844330600c7c3e803a5f5bb8787a318f"
+  },
+  {
+    "name": "CNY-domestic-外包-inventory-0",
+    "hash": "260139be87058c3816d72ef7b1cbad7fde15730117b55ae489db00c10b02f2ff"
+  },
+  {
+    "name": "CNY-domestic-外包-inventory-0.01",
+    "hash": "03df8d213329d78e543ea47a072f3a1e90a05f2e7c2bd9116c22097ce0550ccd"
+  },
+  {
+    "name": "CNY-domestic-外包-payment--0.01",
+    "hash": "0b58baae503f5f2255ce2c02d2d27f51d6e10fe35e7529cb997998db873482ef"
+  },
+  {
+    "name": "CNY-domestic-外包-payment-0",
+    "hash": "a99cbabc17d0b8c4ff5d937f899312abb5c8346d7e1f8fb9be2a7a50ec87834c"
+  },
+  {
+    "name": "CNY-domestic-外包-payment-0.01",
+    "hash": "5e8f51c855cad88ed9a082f4e9d92d4af12fed7e759e7ad67b19787d964c96d0"
+  },
+  {
+    "name": "CNY-domestic-外包-verification--0.01",
+    "hash": "1ddd427df0a450db98c4dac2a89c6ab871a473e16a289772610e72d28f41729b"
+  },
+  {
+    "name": "CNY-domestic-外包-verification-0",
+    "hash": "ed563eea25b5f48101f9004fca1663c7484251d0aa927a78457cd7cd33502b53"
+  },
+  {
+    "name": "CNY-domestic-外包-verification-0.01",
+    "hash": "411b411c00afefcacba0bbab41133a2cff87360873adc5de62f86d642f61ae7d"
+  },
+  {
+    "name": "CNY-domestic-外包-highUnit--0.01",
+    "hash": "063e72d433d0bbb93c64b022963c1b81c4a556a5e925ede35dc2a0fbf6affc2c"
+  },
+  {
+    "name": "CNY-domestic-外包-highUnit-0",
+    "hash": "969472fe859678f53ad3bca7cdcd97ef69376160eb210106884963955ab21afc"
+  },
+  {
+    "name": "CNY-domestic-外包-highUnit-0.01",
+    "hash": "4a7dcbb53d7688cd736b01c9da9897962463c7ec3eb0641383c1b0205b07cfd7"
+  },
+  {
+    "name": "CNY-domestic-外包-highGroup--0.01",
+    "hash": "2ad52bbbf5db503d36b2c94b4723581c91d7e1970dce545be758d7c14c2d4e03"
+  },
+  {
+    "name": "CNY-domestic-外包-highGroup-0",
+    "hash": "0b199c2318284518ddf3f95f937262dcbce7510dd8722b24d35aba870998acc4"
+  },
+  {
+    "name": "CNY-domestic-外包-highGroup-0.01",
+    "hash": "2a9ba16a2288f227c77f7cc4d2a0d0e224409f6f7c84c6cc59e966463fbab71b"
+  },
+  {
+    "name": "CNY-domestic-外包-outsourcedContract--0.01",
+    "hash": "dba2e5c34a5e6f8d5d224b66de961f7944397a097501fbc21e41c5018643177b"
+  },
+  {
+    "name": "CNY-domestic-外包-outsourcedContract-0",
+    "hash": "3c480aa6d3e270d6e7f8c058d6ebf6484b04131df9cda79398b763878edce7c0"
+  },
+  {
+    "name": "CNY-domestic-外包-outsourcedContract-0.01",
+    "hash": "17ef6a5b9cc27b4ca13f467e44d0dd1fc9e59ac49af070c5abdfaa433769ff08"
+  },
+  {
+    "name": "CNY-domestic-AI-inventory--0.01",
+    "hash": "62bfa7f8d88d49315ec59eba912754b9d4aa14f41230b2ae33c6cfdb2578dae5"
+  },
+  {
+    "name": "CNY-domestic-AI-inventory-0",
+    "hash": "9b5eba739055bc729a8da2e3947f8cad343d5c8df65bfa2ca498c205422a265c"
+  },
+  {
+    "name": "CNY-domestic-AI-inventory-0.01",
+    "hash": "ee003d36351092f27a3aab0a2c99f61abc8964ad917ac8f5fbcf8d51437c9bdd"
+  },
+  {
+    "name": "CNY-domestic-AI-payment--0.01",
+    "hash": "ec0c8af2fab2db12cf6e5c91b24dce4c44fec013b61e10ff2b1611fa0eef7b86"
+  },
+  {
+    "name": "CNY-domestic-AI-payment-0",
+    "hash": "8f05051fce07084ebb09210db6421e8b8bfa2f6d86555d6da8f2ad61ebcdb8eb"
+  },
+  {
+    "name": "CNY-domestic-AI-payment-0.01",
+    "hash": "00d90915dc4cbf3646ecbb9a444cf1900fc545be8d0515e51836839c247dab80"
+  },
+  {
+    "name": "CNY-domestic-AI-verification--0.01",
+    "hash": "2b5af99b5eda7fac92a5db4fd544d048aa2465ed628f11bcc0c60eeeb635e9ee"
+  },
+  {
+    "name": "CNY-domestic-AI-verification-0",
+    "hash": "5247649bdf65a68885a9990992f5b8152d3977096f2da0a0c378033a0e7cc08c"
+  },
+  {
+    "name": "CNY-domestic-AI-verification-0.01",
+    "hash": "0bbcf7d408794c2476af60c967ff3fed1c6e4a62da93afc25f41d39eb616d14e"
+  },
+  {
+    "name": "CNY-domestic-AI-highUnit--0.01",
+    "hash": "584f9fcf508a0d1fba5e963427af2e1f85174fcbd89b678deb24f77520808c5c"
+  },
+  {
+    "name": "CNY-domestic-AI-highUnit-0",
+    "hash": "5d8ecbacd2ef048a1c1d4a93c982014a2bbb3fe73e2565aa42f8a995352490ba"
+  },
+  {
+    "name": "CNY-domestic-AI-highUnit-0.01",
+    "hash": "44061cd73e6df5500e4ad42831b51ccff9cb6c0baeaaa9d4158ae21e3ba9ef82"
+  },
+  {
+    "name": "CNY-domestic-AI-highGroup--0.01",
+    "hash": "d71a552de6c72d158469357dc9247e8d0bea2ab01900151558d782e051d4c5b6"
+  },
+  {
+    "name": "CNY-domestic-AI-highGroup-0",
+    "hash": "c0e1e1d170c2e768aecc35ac2c36bfc8a014cf20b0d1065f91e79aec55dde24d"
+  },
+  {
+    "name": "CNY-domestic-AI-highGroup-0.01",
+    "hash": "248d6ace3cc927605f2e305981901209d2c97d91f19ad75f6e6f1220ef60f546"
+  },
+  {
+    "name": "CNY-domestic-AI-outsourcedContract--0.01",
+    "hash": "8b9b4c2ca70da12980f31e78c736d06e857571c77d0a70128b4a5948cf5bffbb"
+  },
+  {
+    "name": "CNY-domestic-AI-outsourcedContract-0",
+    "hash": "0ecb1c1368118402fc66fcd217314a8d815e1eec061f9c4b41332de4bd88493f"
+  },
+  {
+    "name": "CNY-domestic-AI-outsourcedContract-0.01",
+    "hash": "260ed771b5a1b519fec84d9c1be9179e104ccea57e73a619c9c7caac5a453d00"
+  },
+  {
+    "name": "CNY-foreign-普通-inventory--0.01",
+    "hash": "b13c0b4516505adf87a7c3aea140555629dca50474d93fddb77bc1f7928c1056"
+  },
+  {
+    "name": "CNY-foreign-普通-inventory-0",
+    "hash": "9e92ebe6a4d8ba58c160f65b7cdcd01ad10d0cb4778b23c1229c9622e8bf5cc5"
+  },
+  {
+    "name": "CNY-foreign-普通-inventory-0.01",
+    "hash": "d2bc76b1bff72a04914c2dd232e551abcb267e6df58b3dc7086f31201846b339"
+  },
+  {
+    "name": "CNY-foreign-普通-payment--0.01",
+    "hash": "05c9eedc69a49f6017a38d06c8fc77bc7f78a06bb40b2202c3f129543c105bb3"
+  },
+  {
+    "name": "CNY-foreign-普通-payment-0",
+    "hash": "f9bd334bdc838bf7e5b46f260bbd7ccf8bb82f00a9780e2adab6b81f3d3f67da"
+  },
+  {
+    "name": "CNY-foreign-普通-payment-0.01",
+    "hash": "3101a5b8713c000c383e9ba27c44f352f70998200b4230d02965a5985d66803e"
+  },
+  {
+    "name": "CNY-foreign-普通-verification--0.01",
+    "hash": "029eb6188e29182f886a7f60dc45da22d4a621fdea1457cb5acc085a4dd03f11"
+  },
+  {
+    "name": "CNY-foreign-普通-verification-0",
+    "hash": "010d093fd90dfe03f2ab68f0a61252aaa27683b0c19ce7877a287b7262f08f17"
+  },
+  {
+    "name": "CNY-foreign-普通-verification-0.01",
+    "hash": "fc8cbffc7835c344d92b231d4f7ae919ce729cfd8f3f9a25fb9f72bf8c4c6e40"
+  },
+  {
+    "name": "CNY-foreign-普通-highUnit--0.01",
+    "hash": "150b9709774eaa59d46e1c07fe386ed6b9b861b629b9eb2a90b362abd6a69b77"
+  },
+  {
+    "name": "CNY-foreign-普通-highUnit-0",
+    "hash": "ab692e023567aca320424ea02c959ea15e4f04ed0d16241043002f4a87d6dc52"
+  },
+  {
+    "name": "CNY-foreign-普通-highUnit-0.01",
+    "hash": "5eae2852755bb0c7da6a32f90c01ed4c14213ac474c5334c52b509c1951aab74"
+  },
+  {
+    "name": "CNY-foreign-普通-highGroup--0.01",
+    "hash": "69b8315e67b836c5da0f70dfdc80983fcb76097441f974376be8d1d2a7c12e31"
+  },
+  {
+    "name": "CNY-foreign-普通-highGroup-0",
+    "hash": "f9ad058754529674a6aca627a2f0771a1ec54a95f29124d8b9a39f225c26df4e"
+  },
+  {
+    "name": "CNY-foreign-普通-highGroup-0.01",
+    "hash": "22ad5f9bccac0c0b9e90335f9badba5e5fd7b94d6f4e3dc742ffad8c2ab4d64c"
+  },
+  {
+    "name": "CNY-foreign-普通-outsourcedContract--0.01",
+    "hash": "d170db65143ec63d3a4e624ad0f9e90fafe3c924e3f830f1241b838115dc2f82"
+  },
+  {
+    "name": "CNY-foreign-普通-outsourcedContract-0",
+    "hash": "ed17540a53b7a87c21470a354b08681a74fbded0297e70236d44c50f4b9b1b36"
+  },
+  {
+    "name": "CNY-foreign-普通-outsourcedContract-0.01",
+    "hash": "6baacab46b996b8bce3ed0e92e06cd9cec77fa2b75a37ec0224b9ee55550542b"
+  },
+  {
+    "name": "CNY-foreign-暂缓-inventory--0.01",
+    "hash": "b681b839344aee23cc250357fbf7ec37758f8cc5ae71c8f212885ec8432a4c7b"
+  },
+  {
+    "name": "CNY-foreign-暂缓-inventory-0",
+    "hash": "56d3a893068269533ecdf50ad9824b199f62f93585f31b1232c5010b9219d9d0"
+  },
+  {
+    "name": "CNY-foreign-暂缓-inventory-0.01",
+    "hash": "1ca2317832ef0d58c528421060fdf54d539bc5bdc057403dd76c540779937a05"
+  },
+  {
+    "name": "CNY-foreign-暂缓-payment--0.01",
+    "hash": "4a37d0833a467c881ce2e58854a99ddf7c5307209f73188196ff46f5351460f4"
+  },
+  {
+    "name": "CNY-foreign-暂缓-payment-0",
+    "hash": "ff615cc3ccf27fe06b2dd558420087985970731a1be0d113e7842677448d1e90"
+  },
+  {
+    "name": "CNY-foreign-暂缓-payment-0.01",
+    "hash": "6bea36fe8c7a71c3ad45f8599969e76f261779f39b684173d6b5873bafa792fe"
+  },
+  {
+    "name": "CNY-foreign-暂缓-verification--0.01",
+    "hash": "d0c85b7319802ad192f331170bd78b0ed3ce31b75ebf521c3d0ca339ba7b21b0"
+  },
+  {
+    "name": "CNY-foreign-暂缓-verification-0",
+    "hash": "3cc794af0c223445f38fd3f68fd81fdf5127dd7b3be46edd945a5af6f4f04c8f"
+  },
+  {
+    "name": "CNY-foreign-暂缓-verification-0.01",
+    "hash": "27f8b0c6c470862bf0370f61a13dda15ee43f2a9f1747e82ddfc8299e14da752"
+  },
+  {
+    "name": "CNY-foreign-暂缓-highUnit--0.01",
+    "hash": "03a074b57c6bfc215dd8ebf6f802a1085285d902f351574566fec10f826cec2f"
+  },
+  {
+    "name": "CNY-foreign-暂缓-highUnit-0",
+    "hash": "907614cbe4aee59a61743875aba90bb9975099fc0d56758006811e78d85cd0df"
+  },
+  {
+    "name": "CNY-foreign-暂缓-highUnit-0.01",
+    "hash": "edf7dd7cfa6435af009fb2d8c92b83c6414ade2324b631beb04baaf3184c4368"
+  },
+  {
+    "name": "CNY-foreign-暂缓-highGroup--0.01",
+    "hash": "30617b1490968c06526f634475f67fcce7c8237ca27189d55864364416edd5c3"
+  },
+  {
+    "name": "CNY-foreign-暂缓-highGroup-0",
+    "hash": "f200f63271193aec9c9969bd52a9c80926a452b76188cfa0c5f45a985a268c66"
+  },
+  {
+    "name": "CNY-foreign-暂缓-highGroup-0.01",
+    "hash": "5a4fae2fafa97d7eccb265f2242b116fdfc0fe8175aafa8fd3e8fe7c1fb83a93"
+  },
+  {
+    "name": "CNY-foreign-暂缓-outsourcedContract--0.01",
+    "hash": "fa955354adc914758d1d06f7d1bff54610adac2aef26c4644d669352f26be819"
+  },
+  {
+    "name": "CNY-foreign-暂缓-outsourcedContract-0",
+    "hash": "c213ce93294c9bfa861883bb339a20838a75a96d5b9e8e4290d68bf2a6923dc0"
+  },
+  {
+    "name": "CNY-foreign-暂缓-outsourcedContract-0.01",
+    "hash": "78f37105c221db546ecdee5a62bb9735d106c88b11b37561b0c6ce9f679ddf58"
+  },
+  {
+    "name": "CNY-foreign-公转-inventory--0.01",
+    "hash": "e7649ebe9373013090e7cbe84ca11ff409aa89bd663008b795dcfa7d88e3aa9d"
+  },
+  {
+    "name": "CNY-foreign-公转-inventory-0",
+    "hash": "61d66bb5934689d6ef435ec8effb89f77077983f7884105986c0e7b8f0ba6438"
+  },
+  {
+    "name": "CNY-foreign-公转-inventory-0.01",
+    "hash": "19c963030e360dbb6c8c177a34801824bb871a03c0122f4ce5938258c49ec088"
+  },
+  {
+    "name": "CNY-foreign-公转-payment--0.01",
+    "hash": "bf11046d81a5873d7061e1f52cbd9deb33f67ccc568d41ad7039fec830d30fba"
+  },
+  {
+    "name": "CNY-foreign-公转-payment-0",
+    "hash": "5fd882ba7f3158902844797321b866906c878e04276adcdc3ef2c4b1d1052a08"
+  },
+  {
+    "name": "CNY-foreign-公转-payment-0.01",
+    "hash": "dae46e776d2a2f0a2242714c68edac1d409970802a532d8910953daec3ed785f"
+  },
+  {
+    "name": "CNY-foreign-公转-verification--0.01",
+    "hash": "6a6c7e5fd5b25a99ef230beef90c4ce5fb77b0b606514586ea186d5a89a1eb81"
+  },
+  {
+    "name": "CNY-foreign-公转-verification-0",
+    "hash": "5334653a92dced8a786befeb23a86c4fabb155174c9f858ea7956921c13c5727"
+  },
+  {
+    "name": "CNY-foreign-公转-verification-0.01",
+    "hash": "4dd48ec904ae9c2b639c2566fc7e04bc78a4c30c19ddb3c7c550e6b00c1b8b6b"
+  },
+  {
+    "name": "CNY-foreign-公转-highUnit--0.01",
+    "hash": "9ef8c589bc30e2a09a4739498f6cfda73a78469efb9b6cd9686b5f6e9e178795"
+  },
+  {
+    "name": "CNY-foreign-公转-highUnit-0",
+    "hash": "f1bac750a1a9dca59ae96dc65312c96c8c26a9971c68f49e506e088a48cacc7d"
+  },
+  {
+    "name": "CNY-foreign-公转-highUnit-0.01",
+    "hash": "d672d4aff80c248dcc8ae23a69931fabeb38093b6592e9ccb1522e9441054b68"
+  },
+  {
+    "name": "CNY-foreign-公转-highGroup--0.01",
+    "hash": "995fef48818487be8abe281d60efec5cca5f9ba320964b49f9e2017315106411"
+  },
+  {
+    "name": "CNY-foreign-公转-highGroup-0",
+    "hash": "129de994aec23f02e9201c5021cd2f60c08a4f11822cc04a159a8a6d10e32c5d"
+  },
+  {
+    "name": "CNY-foreign-公转-highGroup-0.01",
+    "hash": "fbe2ee648ac236e0bc94396a7f801df56a5778eb033b5b036f8b2d65585a81c2"
+  },
+  {
+    "name": "CNY-foreign-公转-outsourcedContract--0.01",
+    "hash": "d6b2c80325063dd6f1443e6be864f04600eaac3f1f1672bfd3767b41b1c80539"
+  },
+  {
+    "name": "CNY-foreign-公转-outsourcedContract-0",
+    "hash": "de6fa4bc3d9c766622fec31a35d164970bb88754999c9c755ab6364fc59d495a"
+  },
+  {
+    "name": "CNY-foreign-公转-outsourcedContract-0.01",
+    "hash": "a026e754c75de7ae57ef6442592948aadea142d156acd0c1463fc2901c65c2de"
+  },
+  {
+    "name": "CNY-foreign-外包-inventory--0.01",
+    "hash": "bbbac879e5591333c7e790c415533ef1ff7ee2c13af06c86db4125935e3b53b1"
+  },
+  {
+    "name": "CNY-foreign-外包-inventory-0",
+    "hash": "f8c68959e0c7386bd57e2d2f02afb4f47555dbb6fca238dd7a60e4ad745c6919"
+  },
+  {
+    "name": "CNY-foreign-外包-inventory-0.01",
+    "hash": "012c102b09806dadaf274961e6518e2897109d82866571069438fbd69c7b2a15"
+  },
+  {
+    "name": "CNY-foreign-外包-payment--0.01",
+    "hash": "3e2f76af7352f23b76948cacc2d0bb5f9a24a783ec03b43c66ecc58064ca05d0"
+  },
+  {
+    "name": "CNY-foreign-外包-payment-0",
+    "hash": "3c3238db5f8a19cb1524ba3781ebb3afaee98a42a0729d2cd5817933767dcca1"
+  },
+  {
+    "name": "CNY-foreign-外包-payment-0.01",
+    "hash": "2e8380f54f3d6f8b32dbe9e70dcea11775cd40f5a0bb00b841314236d57fb820"
+  },
+  {
+    "name": "CNY-foreign-外包-verification--0.01",
+    "hash": "aa0a5bf04d82d68faec573001f9b7f499a07b5eaadb334e6a1a826898408692c"
+  },
+  {
+    "name": "CNY-foreign-外包-verification-0",
+    "hash": "b3133ae881510a1090915c3ac166afa72ba1d6914bc9c6214db79d87c3abb859"
+  },
+  {
+    "name": "CNY-foreign-外包-verification-0.01",
+    "hash": "9fd193f487e014a36ef4d7efde868139c49c24a5cd1d7d6311a0a6d45b97d9f1"
+  },
+  {
+    "name": "CNY-foreign-外包-highUnit--0.01",
+    "hash": "c8696aa7e38ebff27155b4f69f65ffa87bfb64d3bf0d290b2f9c2e05c25ee71d"
+  },
+  {
+    "name": "CNY-foreign-外包-highUnit-0",
+    "hash": "e3ed234c00ccedf4a9a07b65bcbdf37e1ede3cc41974f945e09814b06880aa59"
+  },
+  {
+    "name": "CNY-foreign-外包-highUnit-0.01",
+    "hash": "9a2f353c40ac38f2d0cff60399f1fc52d70d95399905bce6bdc18a63ca313585"
+  },
+  {
+    "name": "CNY-foreign-外包-highGroup--0.01",
+    "hash": "14f8bceefc03b4ca2678d87d08028e5bd8730c63cc9d7270cd4a1ae52de57789"
+  },
+  {
+    "name": "CNY-foreign-外包-highGroup-0",
+    "hash": "df3de8904b715bcea36fc989d6d3dfb44fb883ff319aabe5a5af0b07fc2d411e"
+  },
+  {
+    "name": "CNY-foreign-外包-highGroup-0.01",
+    "hash": "f7f6a4f49837bbb9dfd7fe998edd8cf152229336b73f1645b26ad74891493232"
+  },
+  {
+    "name": "CNY-foreign-外包-outsourcedContract--0.01",
+    "hash": "e17a9199c4cbe9a7a5fd413038768f2063ae88b964df53ad778c52f4ddaceeba"
+  },
+  {
+    "name": "CNY-foreign-外包-outsourcedContract-0",
+    "hash": "84ecb6bcf5101bb2b705147fe9a4ad2bfbcd98494e09a540b2fdc605d7f520e0"
+  },
+  {
+    "name": "CNY-foreign-外包-outsourcedContract-0.01",
+    "hash": "94b7119f931bb5d5a9ff332ba9495ce7e47ac6e79bdbb09c80c98310a805aa1c"
+  },
+  {
+    "name": "CNY-foreign-AI-inventory--0.01",
+    "hash": "75d3136fb09a52e8ecce93b74c44dcee9bf7f6048e5e63a9724a47a9243eef8b"
+  },
+  {
+    "name": "CNY-foreign-AI-inventory-0",
+    "hash": "d611d335e8467b881b80e4ef82919d18ad852a566bceccae3f392b6e4fdf129a"
+  },
+  {
+    "name": "CNY-foreign-AI-inventory-0.01",
+    "hash": "79eff40e4eb8415c1a559fd73f828fe13d23fc4a46daabe186c40d4b3330f603"
+  },
+  {
+    "name": "CNY-foreign-AI-payment--0.01",
+    "hash": "1b97bae39ca4684201c8808009819b071b7038ee98fd42b88d95e504b30258ea"
+  },
+  {
+    "name": "CNY-foreign-AI-payment-0",
+    "hash": "fdc164fd4dfabc94edaccafc0bf264e7e63c5db6b49a5267833d189a4f95fe38"
+  },
+  {
+    "name": "CNY-foreign-AI-payment-0.01",
+    "hash": "811867b539527a32835e485fca2fa8d71443378ba14d8859e3c72f3709827c53"
+  },
+  {
+    "name": "CNY-foreign-AI-verification--0.01",
+    "hash": "e7ec5670407f6dfd1d38aa138a53c0d2d066b5057f135ce76fa90eb3f609f1ae"
+  },
+  {
+    "name": "CNY-foreign-AI-verification-0",
+    "hash": "af72803a0dacfc17c598ae9f0b0af718629e6b4d5acad8cedb99ed64e8a0575f"
+  },
+  {
+    "name": "CNY-foreign-AI-verification-0.01",
+    "hash": "392bac89631d96e0043cf31a31c6bea3270b7af928f0d7cb3096dec6b68b5dc1"
+  },
+  {
+    "name": "CNY-foreign-AI-highUnit--0.01",
+    "hash": "26dcc8cc5b7df91356e986d523b8611c45f5e1e57015904e5fd92476e42c0068"
+  },
+  {
+    "name": "CNY-foreign-AI-highUnit-0",
+    "hash": "99ad0e35514edb7da427254ccb54b277366747bf26515b35e5ef020888c06b9e"
+  },
+  {
+    "name": "CNY-foreign-AI-highUnit-0.01",
+    "hash": "89846903d69b0ec615be520c10bb071ca70d33c7955f5836574e088a8e44bf05"
+  },
+  {
+    "name": "CNY-foreign-AI-highGroup--0.01",
+    "hash": "2aa8b39cb495143f4f2660bf4910c5c3f2e7f4c425340fe39f925d0c2a10f6ee"
+  },
+  {
+    "name": "CNY-foreign-AI-highGroup-0",
+    "hash": "1faa1894c256b67d978437b28acbef44784418b8c4bd1ae506dcfb947a044a99"
+  },
+  {
+    "name": "CNY-foreign-AI-highGroup-0.01",
+    "hash": "8d45d0ee43e1f3311ec2b3f9bd763c6aae5a84b44779443b49a4e130f7dc4812"
+  },
+  {
+    "name": "CNY-foreign-AI-outsourcedContract--0.01",
+    "hash": "69425a1d96820219ee6d3d8033689fdcf01ba766e2d9c91d1bfe5f416f6de55b"
+  },
+  {
+    "name": "CNY-foreign-AI-outsourcedContract-0",
+    "hash": "647795edb79f2f48307f9f1b4d40e158513c36d889ae3da5345794c96554c445"
+  },
+  {
+    "name": "CNY-foreign-AI-outsourcedContract-0.01",
+    "hash": "bdd5935f2834894beb26b4fc567a8e9966c580b4ad373944033d3b935a08863c"
+  },
+  {
+    "name": "CNY-manual-普通-inventory--0.01",
+    "hash": "62e3273841647ca56ca5d496487dd47a3d6e104dc1ed1b8493a64d89e4b6013e"
+  },
+  {
+    "name": "CNY-manual-普通-inventory-0",
+    "hash": "3cb4a46cdc33113efffe03963e8db70cea1fb606c357a3554054e374f287ad10"
+  },
+  {
+    "name": "CNY-manual-普通-inventory-0.01",
+    "hash": "4de105c15178f92b01b4e9917970dd469a68d70f4c0f53f802487706022b75ea"
+  },
+  {
+    "name": "CNY-manual-普通-payment--0.01",
+    "hash": "7831bc7f6e3a3fc679de5044398ca1242e96fcb9255b6ceb1217016fb9c90934"
+  },
+  {
+    "name": "CNY-manual-普通-payment-0",
+    "hash": "a669a2aa885190566efbff0f8190519678db5b1946f45fb456f360f2bc9058b9"
+  },
+  {
+    "name": "CNY-manual-普通-payment-0.01",
+    "hash": "9ad7ffbdb9beb53422238bf83a6dca9cb7c3bc6fd38efd3763dd6c76e5933d7c"
+  },
+  {
+    "name": "CNY-manual-普通-verification--0.01",
+    "hash": "24805be65aee911fc7e209eef6e3936fb9dcf878e8f60c9ac7e5c800deaf731b"
+  },
+  {
+    "name": "CNY-manual-普通-verification-0",
+    "hash": "659f21e1b803da6d3e3bd61e49a2930b1d9173cb13965179e6839400be983d7d"
+  },
+  {
+    "name": "CNY-manual-普通-verification-0.01",
+    "hash": "a1ca7cc927075f3273ce22f0dce2a6982bbf8dfa36b009dec811acc6addff6e8"
+  },
+  {
+    "name": "CNY-manual-普通-highUnit--0.01",
+    "hash": "2afccb86f810998151a7423c73b26a3d21dba43628ecf4984e21c70feed3f632"
+  },
+  {
+    "name": "CNY-manual-普通-highUnit-0",
+    "hash": "248882d74350e2062a0750e06c31ffffe4e34f7aa6728fd9431023bf5142824c"
+  },
+  {
+    "name": "CNY-manual-普通-highUnit-0.01",
+    "hash": "4491310e0fb735be356c13da5411466a06ecaafca8b6aba25bec50b5c0d1ef9e"
+  },
+  {
+    "name": "CNY-manual-普通-highGroup--0.01",
+    "hash": "34d1b8e7b445ed77f77a3f44b3349096ab669904a3d4f6f44970203fefde5343"
+  },
+  {
+    "name": "CNY-manual-普通-highGroup-0",
+    "hash": "df75240e3c9fc13331cb866570121a565cd8a7e9ad6fcd7d47985e1ff593d29b"
+  },
+  {
+    "name": "CNY-manual-普通-highGroup-0.01",
+    "hash": "56f4fad6d02657ce73c6a41ac0f2c2884111fda4e2b8866a87e48929edd3a1e6"
+  },
+  {
+    "name": "CNY-manual-普通-outsourcedContract--0.01",
+    "hash": "72cf6ae2931eaf1dd82ff58fce1a304ed024a31f7f860708430b5f2e7cdd43cb"
+  },
+  {
+    "name": "CNY-manual-普通-outsourcedContract-0",
+    "hash": "79e63438e2e0d96e8d2eea59b694c71dba253dec9e24f4de1780a7c3932c8227"
+  },
+  {
+    "name": "CNY-manual-普通-outsourcedContract-0.01",
+    "hash": "7ac9d525a7a4a9cdbf50503b67f15f989e2b16919ffd9389873c318ba48352cd"
+  },
+  {
+    "name": "CNY-manual-暂缓-inventory--0.01",
+    "hash": "540c310958ecb44358e9e4f8a0d89d44dff2d23c867ad9fec20577c25c775a96"
+  },
+  {
+    "name": "CNY-manual-暂缓-inventory-0",
+    "hash": "c1cfb138466a45187d6dba48917f0fa6c38fe3801e29bfa1a7c779cf5d297c62"
+  },
+  {
+    "name": "CNY-manual-暂缓-inventory-0.01",
+    "hash": "40283343aef6966e11cde031aa215c7ee68e3f3405474834917b0431c79cc8b4"
+  },
+  {
+    "name": "CNY-manual-暂缓-payment--0.01",
+    "hash": "7d559e550d5ef046bbbfefd2f423348719cdb34b629ae0726932ebd782db054d"
+  },
+  {
+    "name": "CNY-manual-暂缓-payment-0",
+    "hash": "600be20516468f918d14b12761789b15230b272ee16672c985e4fe3d2040e398"
+  },
+  {
+    "name": "CNY-manual-暂缓-payment-0.01",
+    "hash": "b214dee7f27af19a4a2c225e2d853ed9e895fdcffa530998dc61a9ca3b6fa8e9"
+  },
+  {
+    "name": "CNY-manual-暂缓-verification--0.01",
+    "hash": "2021a5fd7fef42516dda5f0a7edf262acc87e0593afa862a8728362841445946"
+  },
+  {
+    "name": "CNY-manual-暂缓-verification-0",
+    "hash": "31b6e750a5c630ff55e41be8762acfcd1a85ca53c2594de68700d7a3ebde34c4"
+  },
+  {
+    "name": "CNY-manual-暂缓-verification-0.01",
+    "hash": "88742dc413f9e4402792bc262de537d0277342dbf2e81d0d3a3fca1b0fe63759"
+  },
+  {
+    "name": "CNY-manual-暂缓-highUnit--0.01",
+    "hash": "b4be3badad4d7433cf3837853f8b677687ce229beede4f87325c8c1b3839796b"
+  },
+  {
+    "name": "CNY-manual-暂缓-highUnit-0",
+    "hash": "fc0ffa0a623ce6f361c0ae94fd1a487596f77175f1aeeedfa8dfce7b2ee5116b"
+  },
+  {
+    "name": "CNY-manual-暂缓-highUnit-0.01",
+    "hash": "307dcd252370a0c0258da56aad070d430825825278f1e4a04f5c93486e73e0d7"
+  },
+  {
+    "name": "CNY-manual-暂缓-highGroup--0.01",
+    "hash": "c533b29d671275f2d7b5a7e11e6824de7184713ba47ca3d4dbbc2aa93950d139"
+  },
+  {
+    "name": "CNY-manual-暂缓-highGroup-0",
+    "hash": "69566d6b7702f405ef4f28af503c0542f4e966a575af35ca2a789fdb825adad4"
+  },
+  {
+    "name": "CNY-manual-暂缓-highGroup-0.01",
+    "hash": "c9641901bd0d9eedbc67ad32e946b6b22db9c1254d16440b130132e41ec8e0f3"
+  },
+  {
+    "name": "CNY-manual-暂缓-outsourcedContract--0.01",
+    "hash": "c84b9c9af697084de761bdf52596e7841ec14c999f39e77c0e39edda5e68790d"
+  },
+  {
+    "name": "CNY-manual-暂缓-outsourcedContract-0",
+    "hash": "86d3e9d46f46a1e8beecbf68a046e3f2ebed13e5dfd0887fa32d7c9076ea2d34"
+  },
+  {
+    "name": "CNY-manual-暂缓-outsourcedContract-0.01",
+    "hash": "263e9e09e66df68e985dce5b05fa2c156e840b94d1ed6b4c02e7745097c9b72d"
+  },
+  {
+    "name": "CNY-manual-公转-inventory--0.01",
+    "hash": "f9a2a7134c037477b9b10fd304622d539b9404fa715dbf0e7ddd9bd08a8c031c"
+  },
+  {
+    "name": "CNY-manual-公转-inventory-0",
+    "hash": "03ec86e1efdd64029e751b9d0bc6e134533e48da125a4f0b99072bbdc2da63a1"
+  },
+  {
+    "name": "CNY-manual-公转-inventory-0.01",
+    "hash": "ad29318a34929b3c3e496c6203a6a1ccda27aca2012a832e73944e963307ef89"
+  },
+  {
+    "name": "CNY-manual-公转-payment--0.01",
+    "hash": "edbc4c4589e7eb9f4c950059cee00eb52e5dafdbc3aa343a81e26c44a50202c8"
+  },
+  {
+    "name": "CNY-manual-公转-payment-0",
+    "hash": "b1da194b6785f1fbdaf6a9547c01d89ab4dcdb26fdc0080428f3b617676d0973"
+  },
+  {
+    "name": "CNY-manual-公转-payment-0.01",
+    "hash": "4aa46966bfda1c6e088778de3edfad648a64fef4a0ba835f94fdb89ac0d35ac1"
+  },
+  {
+    "name": "CNY-manual-公转-verification--0.01",
+    "hash": "9d4c0c66c0ba59ed73c815d354e13f26a4ba19ba56b3a58d98363c9acf047708"
+  },
+  {
+    "name": "CNY-manual-公转-verification-0",
+    "hash": "631a49d970d5638b4e35a7c00dd1a1549bf4b8884b04a568e72b28eba5388406"
+  },
+  {
+    "name": "CNY-manual-公转-verification-0.01",
+    "hash": "ae46e42ae4e5047f4769cebc6d73d2a62a1776811f6727e4cdbd98e3da240288"
+  },
+  {
+    "name": "CNY-manual-公转-highUnit--0.01",
+    "hash": "fb2b823384e94638e95979643273cd9595bfa5c5b2b6e70eeff9ed0295c10777"
+  },
+  {
+    "name": "CNY-manual-公转-highUnit-0",
+    "hash": "c8ebefb70e115b8e880503ffd45661112949376fa8c55989acfec6a575b7ac33"
+  },
+  {
+    "name": "CNY-manual-公转-highUnit-0.01",
+    "hash": "e3d57481f5c12bafe91c33a9e13a463da4cee3e36d9aaed3abb1eb544dfe755f"
+  },
+  {
+    "name": "CNY-manual-公转-highGroup--0.01",
+    "hash": "b8d72bcc14cfccca06efc387c42b479a2e5eec5c9ecdfbb0b35694f7052e6520"
+  },
+  {
+    "name": "CNY-manual-公转-highGroup-0",
+    "hash": "d60d308101fc60160bad7207d7096c3dc589747842e5d58f71ffa432010e589f"
+  },
+  {
+    "name": "CNY-manual-公转-highGroup-0.01",
+    "hash": "21d3bd3078c2d10c513fac6c505efafbbfe630fe571ffa6d51a49f196b032b83"
+  },
+  {
+    "name": "CNY-manual-公转-outsourcedContract--0.01",
+    "hash": "b02aaf8e4dceecc491e9ef7a1b4f6540357288733d0f19158eeab5fd63825274"
+  },
+  {
+    "name": "CNY-manual-公转-outsourcedContract-0",
+    "hash": "2b5bedd90de37b07c0aee7836957b0c22a51d98143b0f2c59c8a1d3405ea6b4b"
+  },
+  {
+    "name": "CNY-manual-公转-outsourcedContract-0.01",
+    "hash": "6087e680fd35115d902f9af289622b53d9b7ee09323c0588a181f11a78cfe904"
+  },
+  {
+    "name": "CNY-manual-外包-inventory--0.01",
+    "hash": "5a4b9ba0bb57ef855a5263ae653d1afa2e9e8f7c83b75b526cc63e883cff3d86"
+  },
+  {
+    "name": "CNY-manual-外包-inventory-0",
+    "hash": "6f712a911d3d024dd452f867f6d8fa33873ad6b635cf5a86f61aad53da9fb8f6"
+  },
+  {
+    "name": "CNY-manual-外包-inventory-0.01",
+    "hash": "673949fe2f68c86cf4df10ea3ac6710f015797fc218fcd5e13a129c99bc101e3"
+  },
+  {
+    "name": "CNY-manual-外包-payment--0.01",
+    "hash": "fd6584e8086399023af59697c92c763f7859c308841670c911fe9054b7dfaac4"
+  },
+  {
+    "name": "CNY-manual-外包-payment-0",
+    "hash": "123328298a4e97e69fd42a8ed9e29cc1a5aadaa497357e8e4bcadcc92f2592c8"
+  },
+  {
+    "name": "CNY-manual-外包-payment-0.01",
+    "hash": "7e9642e214c88f4c2ec66bf01d1a70e40f19b507646fa2d72922a8e73962a789"
+  },
+  {
+    "name": "CNY-manual-外包-verification--0.01",
+    "hash": "6a90d5b1808e7ac298a7798baa29327e880e831300ab1f71705d6f40ceaa77c7"
+  },
+  {
+    "name": "CNY-manual-外包-verification-0",
+    "hash": "b457f5122e78fcff302c26d6cb1b8f2b0231b40169c3440bc46fd76e1e5c770d"
+  },
+  {
+    "name": "CNY-manual-外包-verification-0.01",
+    "hash": "f4820dfc51dd443342408bb3a33e6dbac129a6cf8f359756949038892e11c4b4"
+  },
+  {
+    "name": "CNY-manual-外包-highUnit--0.01",
+    "hash": "12de9eeb5ec6cdce61ba1ad298d8f6bf16195fda88625e485596c06dfeb8e799"
+  },
+  {
+    "name": "CNY-manual-外包-highUnit-0",
+    "hash": "fa271f1292b0cb09223311cb66ee531d2ecd92d8df0922c790f65f3cfa92e168"
+  },
+  {
+    "name": "CNY-manual-外包-highUnit-0.01",
+    "hash": "bb22278310f6cb86f0c38ee313d5c10d99a12a81cc239ceb919e0a7ebbad20b4"
+  },
+  {
+    "name": "CNY-manual-外包-highGroup--0.01",
+    "hash": "81a2e1caa8acc62e3f057249e83efb24e84dbb186f152bfe2826a725b1427ac8"
+  },
+  {
+    "name": "CNY-manual-外包-highGroup-0",
+    "hash": "aa567dfb45008da132400ce2c168303d193915fb57aa416797ec537d3118d097"
+  },
+  {
+    "name": "CNY-manual-外包-highGroup-0.01",
+    "hash": "f5e8907648ce9cf54af896cdaf529f6080d49c8a54f82541d60ed86ec0523eb9"
+  },
+  {
+    "name": "CNY-manual-外包-outsourcedContract--0.01",
+    "hash": "6c198dfdb58cc819053e595554307f0ae60923cc6d599a4913633a0e31d3b3f2"
+  },
+  {
+    "name": "CNY-manual-外包-outsourcedContract-0",
+    "hash": "42f2e3ce09848b276dd466483bfd72e8ea5eae9515185bf48d837d5897e6d3f3"
+  },
+  {
+    "name": "CNY-manual-外包-outsourcedContract-0.01",
+    "hash": "2f2a95d661f7143816632cb188282367c7fd977b7b0e95317cb2d45630a8fd94"
+  },
+  {
+    "name": "CNY-manual-AI-inventory--0.01",
+    "hash": "9cbf69b07203257d0fdab6ebb0beed38181afda2838d2d9ca280f117e973d5f7"
+  },
+  {
+    "name": "CNY-manual-AI-inventory-0",
+    "hash": "a5e509fc9fdcf9426fb7a83d86473a0e2db3f7bc027ea05686aea395134a40d9"
+  },
+  {
+    "name": "CNY-manual-AI-inventory-0.01",
+    "hash": "1cc4570df26e63e4395377bba73914ce798d0ffd364d8a3e19f90e9970e1af2a"
+  },
+  {
+    "name": "CNY-manual-AI-payment--0.01",
+    "hash": "e114f45189afd6c7d75699d9d39d85f4aa1450fe9ba2f8379e0f2d2b92295dad"
+  },
+  {
+    "name": "CNY-manual-AI-payment-0",
+    "hash": "48e8823105a1328afa3fb65480c5fa2fc7e695188b246b0b8706d2d74baf5d6b"
+  },
+  {
+    "name": "CNY-manual-AI-payment-0.01",
+    "hash": "551ea4c93b0d6b63e7d48d7c5d740ae7804cc38106dcdcfe4c2375f337a6c47b"
+  },
+  {
+    "name": "CNY-manual-AI-verification--0.01",
+    "hash": "f07da328888d4c44d7f5fea3f8f4a1733f99f5c7be2280de2b8c96a2de1dfbf5"
+  },
+  {
+    "name": "CNY-manual-AI-verification-0",
+    "hash": "15764f8fa356b7690d58da329961426a25edb6e9f96ab9a89a90ef87d488da1d"
+  },
+  {
+    "name": "CNY-manual-AI-verification-0.01",
+    "hash": "c999902dc1ae65ee32f9a91930633bc6555367d0eb5c95b740ec213fda736e9f"
+  },
+  {
+    "name": "CNY-manual-AI-highUnit--0.01",
+    "hash": "2afacc1900233d472aeeb770aef66bb15b0b2ffcb551772395f236dc4fa9da95"
+  },
+  {
+    "name": "CNY-manual-AI-highUnit-0",
+    "hash": "44633e483a3d5551f25bc8ac666015051f3d5927b6a918195b54e99f39a453f9"
+  },
+  {
+    "name": "CNY-manual-AI-highUnit-0.01",
+    "hash": "ac6be21946291eaaa00b2a4c8d65c87ece4784bd613ed00d2d094a5abe0f049f"
+  },
+  {
+    "name": "CNY-manual-AI-highGroup--0.01",
+    "hash": "b7a121d2a4191d5b253cb0425cc1126d00d33ecdc5d1c08129b8b33db1f38006"
+  },
+  {
+    "name": "CNY-manual-AI-highGroup-0",
+    "hash": "2747268ca5b8f37aa807081546676353e9db4a2ce2fc2a7305aae0165e494e96"
+  },
+  {
+    "name": "CNY-manual-AI-highGroup-0.01",
+    "hash": "45312e038462bcab3ac3ca75c2b9d4299bffc59020147b38105f700a6560ca85"
+  },
+  {
+    "name": "CNY-manual-AI-outsourcedContract--0.01",
+    "hash": "1d8253140f1dc9fcb82610f980d2beaac98a695afc2eb4f1cf3d871da0d8283c"
+  },
+  {
+    "name": "CNY-manual-AI-outsourcedContract-0",
+    "hash": "20fe0ccc5c970b65baea93817ed4ec8b649da1b434a45b25a0c5f1202c49cca0"
+  },
+  {
+    "name": "CNY-manual-AI-outsourcedContract-0.01",
+    "hash": "ccb3ec76d3f0dc96160f716849c311e3ff028b92a897ce8b4e79fe4b1d117d1b"
+  },
+  {
+    "name": "USD-domestic-普通-inventory--0.01",
+    "hash": "8216218366c07b82366c4f1ed6093f5417bad2ae648bab7c027b779e3efb7475"
+  },
+  {
+    "name": "USD-domestic-普通-inventory-0",
+    "hash": "a7bd45e5a9906a5d336b9265b79b6bc70ac19b587cc55811caaf8296589f28bb"
+  },
+  {
+    "name": "USD-domestic-普通-inventory-0.01",
+    "hash": "06c8eb928b2ad5d6611f46db98be1dce366898cf27d77d186c22ed9799a46fad"
+  },
+  {
+    "name": "USD-domestic-普通-payment--0.01",
+    "hash": "4d9f830996f9de05334fc64c93d6cbbb8c4b7aa46668b38eb07ffb4351c49980"
+  },
+  {
+    "name": "USD-domestic-普通-payment-0",
+    "hash": "5562c45ec35c8483fe25393a4d1f13606320b0eff408ce7e5560138c1bd3261f"
+  },
+  {
+    "name": "USD-domestic-普通-payment-0.01",
+    "hash": "3443bab4b61b83ed2f5f24d97112d40d8fcd72a7c587471330ce9f2bc03d171e"
+  },
+  {
+    "name": "USD-domestic-普通-verification--0.01",
+    "hash": "bde026cd6b1e5552cc9b0aec1ba00bc7502f10c709dadad783db23bf504e863f"
+  },
+  {
+    "name": "USD-domestic-普通-verification-0",
+    "hash": "56f89dd231891d0e6acfc132bd4a7eac0edc9ba0ee34364c589aa7cb8c04eb8f"
+  },
+  {
+    "name": "USD-domestic-普通-verification-0.01",
+    "hash": "5a50b8302e421a131ba6772ed6a5ad4c4105f41e8eca82506320c2dada1f0cc6"
+  },
+  {
+    "name": "USD-domestic-普通-highUnit--0.01",
+    "hash": "4cc62a8d84deba06d27be981a12c558f14703343960d1b9c72fe7ec49928d75c"
+  },
+  {
+    "name": "USD-domestic-普通-highUnit-0",
+    "hash": "e48a28aa64548926a9fd4b870c26eda8171428cd384e8e8fed2db6e12dcfa2ae"
+  },
+  {
+    "name": "USD-domestic-普通-highUnit-0.01",
+    "hash": "bd2b5ea69e62b97e82d376706fffbed9376c3a04bda859e73c2a68eafc57da6e"
+  },
+  {
+    "name": "USD-domestic-普通-highGroup--0.01",
+    "hash": "df36b2c5441037c5e46f0af3062ee0acbc9d968b8c725da521a65faae18170c3"
+  },
+  {
+    "name": "USD-domestic-普通-highGroup-0",
+    "hash": "8acccc7f7ccd18b20003c5246b090ae2a3c6e12d2475720137bee19d68721fa7"
+  },
+  {
+    "name": "USD-domestic-普通-highGroup-0.01",
+    "hash": "c79923004427dc1cf4ea740e95669de41a4cf662657d5ccc544b1e2e88d4985c"
+  },
+  {
+    "name": "USD-domestic-普通-outsourcedContract--0.01",
+    "hash": "d159a26c8725f283c30058b00f0a984d492f666107d43fb82aa9b8a96039be8e"
+  },
+  {
+    "name": "USD-domestic-普通-outsourcedContract-0",
+    "hash": "d89088a547263868b69e4d0870e0cd86f9786c46f1adc60a00db7cf77ce011bb"
+  },
+  {
+    "name": "USD-domestic-普通-outsourcedContract-0.01",
+    "hash": "4ca9c02157391e971b243e7b986dc19c345879df81a0b5b07a50e9e69533fd71"
+  },
+  {
+    "name": "USD-domestic-暂缓-inventory--0.01",
+    "hash": "12f0919292df2c9a88be61e12d7065df3aaae7d7099c028218f859cc757280f7"
+  },
+  {
+    "name": "USD-domestic-暂缓-inventory-0",
+    "hash": "3aea0331629fc90ae0d2e2019311b4b88df5c9f92eb65b2dbb6a1636b8f9e687"
+  },
+  {
+    "name": "USD-domestic-暂缓-inventory-0.01",
+    "hash": "bcfbae70d63d25bdbc5216df23f4009a9ca4f3e6c9c773d24d899f099920e46e"
+  },
+  {
+    "name": "USD-domestic-暂缓-payment--0.01",
+    "hash": "99b7124b33371acb55940ff6cfd5823515b057ea2ed3d20eaaf795f694216231"
+  },
+  {
+    "name": "USD-domestic-暂缓-payment-0",
+    "hash": "39f106c32c409df9ed3229eda7f5587b9b8bbcabdf2f39f242cae1a8ba728e7e"
+  },
+  {
+    "name": "USD-domestic-暂缓-payment-0.01",
+    "hash": "197377ab35314863d4718fcc917ae8b8f2fb343eb352676eb6084878822078dd"
+  },
+  {
+    "name": "USD-domestic-暂缓-verification--0.01",
+    "hash": "108b4b6719b63a58aecebfc7aa2876efea3b62b3bb94f0eab6ec2c506ff6a691"
+  },
+  {
+    "name": "USD-domestic-暂缓-verification-0",
+    "hash": "fbfe9bafccfe2c91cb1c400110f8119685f9982d212a2d8d4bdd502ea1ceadc8"
+  },
+  {
+    "name": "USD-domestic-暂缓-verification-0.01",
+    "hash": "cdeb448413b2676806205ba65ff3b7a165bb95b7165ef1efc6950448217b7b47"
+  },
+  {
+    "name": "USD-domestic-暂缓-highUnit--0.01",
+    "hash": "8c116ed274f0217845dd70abdcab842e95eff43de88be8a0cc3d6aad42161f11"
+  },
+  {
+    "name": "USD-domestic-暂缓-highUnit-0",
+    "hash": "fbfeedec1b30d6e68b3180e034145bf2194210664f3cd039cd07a381f258b681"
+  },
+  {
+    "name": "USD-domestic-暂缓-highUnit-0.01",
+    "hash": "ebdf1beb1e05fb44ba58dbc7ffca2ae724cc35141a38c667fb43ca7271ef294f"
+  },
+  {
+    "name": "USD-domestic-暂缓-highGroup--0.01",
+    "hash": "a3b6855a3e85bbd27a101afa9944b7d6d5977b7e0f1c1921589df1f119cb2723"
+  },
+  {
+    "name": "USD-domestic-暂缓-highGroup-0",
+    "hash": "2482efeee86906f80622278bcea1c34437269705c2fa110ec57b001187d998d5"
+  },
+  {
+    "name": "USD-domestic-暂缓-highGroup-0.01",
+    "hash": "a7e471fa5217dbe36ad2e75244fb295955f5ab1321201aef589616514478e708"
+  },
+  {
+    "name": "USD-domestic-暂缓-outsourcedContract--0.01",
+    "hash": "91b6f9526be27c6f6d09cd31ae3b813d882d090caedb61f22d2637730ea1de59"
+  },
+  {
+    "name": "USD-domestic-暂缓-outsourcedContract-0",
+    "hash": "d603350fca6371247c5fdedfe75917ee7628c773d710354d3a4f69c0c2431116"
+  },
+  {
+    "name": "USD-domestic-暂缓-outsourcedContract-0.01",
+    "hash": "d1572a40913c1160dd8ebfb57ceda077b40ed141b42d0180efcf6529b0986878"
+  },
+  {
+    "name": "USD-domestic-公转-inventory--0.01",
+    "hash": "b42e3c3096ec8e460a8d4acdc34069918f9456b16a033747fa59ceda71419a5f"
+  },
+  {
+    "name": "USD-domestic-公转-inventory-0",
+    "hash": "f5334d28479b830385c9dfffa1e78f6bee077b04c897bce095500041eec357a0"
+  },
+  {
+    "name": "USD-domestic-公转-inventory-0.01",
+    "hash": "edb39427dfd411aa15133283dcaeaa609024a3123408089b62b5e34a9804c34a"
+  },
+  {
+    "name": "USD-domestic-公转-payment--0.01",
+    "hash": "2bba6d64fcdcfc7602f4bed35c83346ebb6dd637537fdc4e31ceaebf1d189a1d"
+  },
+  {
+    "name": "USD-domestic-公转-payment-0",
+    "hash": "065375233740632ef41106bda073818c57a0332015ce48d860aa88f8428bb85c"
+  },
+  {
+    "name": "USD-domestic-公转-payment-0.01",
+    "hash": "7bd170d05dc7cf7c2a71b5f0951d1d4a23ce6e434dbf63e3328aeae5f3a6491e"
+  },
+  {
+    "name": "USD-domestic-公转-verification--0.01",
+    "hash": "866c7cdf6dc9533a29c29aef60fe7209760ff88bf2c62927bfafc31b13c875a1"
+  },
+  {
+    "name": "USD-domestic-公转-verification-0",
+    "hash": "bedcf82e117977d76fe1548716ec385b1d32a0ebb86acf96ea02be7219eb4183"
+  },
+  {
+    "name": "USD-domestic-公转-verification-0.01",
+    "hash": "bb86bbb7285b8a617f1d3ea84901d33b9dd066b106870751290863d12e1c315b"
+  },
+  {
+    "name": "USD-domestic-公转-highUnit--0.01",
+    "hash": "d16cdcd4ca340082c326f122c0f7027854bfcfba2feefd4e3d300b07b3e28eeb"
+  },
+  {
+    "name": "USD-domestic-公转-highUnit-0",
+    "hash": "9146967ed043188cc787ecfda61ac63c57d232d5779128eee3aa7f6d8fc65078"
+  },
+  {
+    "name": "USD-domestic-公转-highUnit-0.01",
+    "hash": "180767f3616d9b73d00530064112c4c3c15804c163b7974c350e7b02beccb0a1"
+  },
+  {
+    "name": "USD-domestic-公转-highGroup--0.01",
+    "hash": "23f3acf17d0d62dd5521ac72df69c5302a2a50abc82769f7357ae993954c5746"
+  },
+  {
+    "name": "USD-domestic-公转-highGroup-0",
+    "hash": "9750e8180bd6af45f2a4a6631f89a6e2c8dc6d401b17cf498be3858f72292e76"
+  },
+  {
+    "name": "USD-domestic-公转-highGroup-0.01",
+    "hash": "6b788928f223135741513d50f4d057cb6c2f66d221f440634101463177e70906"
+  },
+  {
+    "name": "USD-domestic-公转-outsourcedContract--0.01",
+    "hash": "fd153ca56dac5e14a504cef63863463210c7a9b3f73ff7e32b964c6a189294e9"
+  },
+  {
+    "name": "USD-domestic-公转-outsourcedContract-0",
+    "hash": "ad8201114d66a87253a3302ec46a680d152aa1931c9764eb84dd2559915b22d1"
+  },
+  {
+    "name": "USD-domestic-公转-outsourcedContract-0.01",
+    "hash": "1b98a176b6d953f208d1da090e8be3d00c76dfb22dfb198e7a80276b9e9f719a"
+  },
+  {
+    "name": "USD-domestic-外包-inventory--0.01",
+    "hash": "28dd3167a7cfe83c8807612e9c3d4b006617052bb5e01a17e73b9de7d77c1f71"
+  },
+  {
+    "name": "USD-domestic-外包-inventory-0",
+    "hash": "3416385f30c0ade3115131e10092fe96d97f4dd59374a5f608ea56a00c288d88"
+  },
+  {
+    "name": "USD-domestic-外包-inventory-0.01",
+    "hash": "8cc97fbdf8b68ced57ce42e756d6da1e43b302cb69eee198b5304b690ded4fc0"
+  },
+  {
+    "name": "USD-domestic-外包-payment--0.01",
+    "hash": "890ad41d5e11b213fc83f004e3f75a2ad83e8dbe3944d22496a95fa2bdb24ede"
+  },
+  {
+    "name": "USD-domestic-外包-payment-0",
+    "hash": "e3037c7a0c782d8af2b4af9a5e214aacb34c7877d04c0a168363f9d1065334b3"
+  },
+  {
+    "name": "USD-domestic-外包-payment-0.01",
+    "hash": "5074517c20e2b34342dc8f714c86ed8a79efaa318fb7e92882691de1defe6bb6"
+  },
+  {
+    "name": "USD-domestic-外包-verification--0.01",
+    "hash": "9df692db29b116a8cbe0416fc388740d293f7863d2e8537e9f36a739b5021b11"
+  },
+  {
+    "name": "USD-domestic-外包-verification-0",
+    "hash": "a56b4497bf3545056e4772d6579ecf33896e1962f09d695ce501ed7b65457cf3"
+  },
+  {
+    "name": "USD-domestic-外包-verification-0.01",
+    "hash": "48701c0c6dfafd95ac5126c2c365ecd0b923b0eaaea1e4c9048f7389462ca337"
+  },
+  {
+    "name": "USD-domestic-外包-highUnit--0.01",
+    "hash": "5ff1e3bf9bd964fbbc00da7ed4a4e440decf9b5d1097f1a855f71db6c553c385"
+  },
+  {
+    "name": "USD-domestic-外包-highUnit-0",
+    "hash": "d781406d04a7f2a6641951f4ff2e619c58474d8c4de191f758867d95efa2b442"
+  },
+  {
+    "name": "USD-domestic-外包-highUnit-0.01",
+    "hash": "27ef03eaa169490ffa6af9cdbfebc85fc0678598a734a3c82ad23abe5e5fd9b1"
+  },
+  {
+    "name": "USD-domestic-外包-highGroup--0.01",
+    "hash": "3e25cd72cf5ee5ce0973b1a5a1faff287aea3457cf2543e775a723be57e8fffe"
+  },
+  {
+    "name": "USD-domestic-外包-highGroup-0",
+    "hash": "bc9241a6b9af012ea2d9c1210dab106cd3b4e6da80bcd776c16a654e34002a4f"
+  },
+  {
+    "name": "USD-domestic-外包-highGroup-0.01",
+    "hash": "335b59677208f3861e71d4dbfe10bdbddde8bcfaa956a3d42958b18bea86d2e2"
+  },
+  {
+    "name": "USD-domestic-外包-outsourcedContract--0.01",
+    "hash": "b24fd2eea53b23ffbbe738958245dc762fb8a82c3a569107166dc8fbd96c2c22"
+  },
+  {
+    "name": "USD-domestic-外包-outsourcedContract-0",
+    "hash": "cd424499ed618bca3d6a7f6fb3a0d36512ce5044c7fda74c7c129345a222384d"
+  },
+  {
+    "name": "USD-domestic-外包-outsourcedContract-0.01",
+    "hash": "dfa0e6bccedd07986aa28bad8ea1f2142a419d808f07f6e39367aee1479ed556"
+  },
+  {
+    "name": "USD-domestic-AI-inventory--0.01",
+    "hash": "f776b71dc52d502bb9a6e30405de60fa1f774652be64382d09e810994856cbb6"
+  },
+  {
+    "name": "USD-domestic-AI-inventory-0",
+    "hash": "0c8ed82aecb910ec098df2c336ba84d15a9ccfb780e6b3e39b8bf5534530e44d"
+  },
+  {
+    "name": "USD-domestic-AI-inventory-0.01",
+    "hash": "b14890ebf1811ecc88d9aae96121ad29d01da188074f90671b675f36f194c24d"
+  },
+  {
+    "name": "USD-domestic-AI-payment--0.01",
+    "hash": "66ab87635cbf240864a5c0c52125913945561c8540d3def15172a37811dbb737"
+  },
+  {
+    "name": "USD-domestic-AI-payment-0",
+    "hash": "6bb3a1b6394b48ead6d3536cb6d89f79d5efec33559b585d34f8e03fe743dc32"
+  },
+  {
+    "name": "USD-domestic-AI-payment-0.01",
+    "hash": "30644d74bffb0cd3e07fd2430f6b33e7afcef2fc0f97e6fb1908c1c202481fa9"
+  },
+  {
+    "name": "USD-domestic-AI-verification--0.01",
+    "hash": "6c54de6c287770c7efeeda026d68cf81d1f64adff43deea6da4672eb3d3abfea"
+  },
+  {
+    "name": "USD-domestic-AI-verification-0",
+    "hash": "b9d70effd759011710de9483d46e97bed93f084d38f7f06f1ab32346c0029147"
+  },
+  {
+    "name": "USD-domestic-AI-verification-0.01",
+    "hash": "4eeae93965a650a3dd45eb5ad0a5be136a74139fc12b55f712627f6808c9f87c"
+  },
+  {
+    "name": "USD-domestic-AI-highUnit--0.01",
+    "hash": "a05e2007f3bf99af2740a6a7401b5fa434baf27f3a4dd71176170c27b50749d7"
+  },
+  {
+    "name": "USD-domestic-AI-highUnit-0",
+    "hash": "f2308c69edb0e9bf55923dd54f445a7deac9b834339df41d1ef7959c03168abd"
+  },
+  {
+    "name": "USD-domestic-AI-highUnit-0.01",
+    "hash": "0be7f1ce3767c7db62c0c9b5748fb9bd7e53f177dbe7fdd19ea93a83e10d186f"
+  },
+  {
+    "name": "USD-domestic-AI-highGroup--0.01",
+    "hash": "e2f94e1384c24560789983bc36bc2cbc9dcb0ee1f0fd35ef332c3e5d51f7d2fa"
+  },
+  {
+    "name": "USD-domestic-AI-highGroup-0",
+    "hash": "3c2efd41dafdb8ddc08d45ffe888614fd63b81f82a1a1fa3da28b9244c441e64"
+  },
+  {
+    "name": "USD-domestic-AI-highGroup-0.01",
+    "hash": "52ae3de39cf63bae226c619489421341bd123eb633dcd6cf01a95565fde56aa1"
+  },
+  {
+    "name": "USD-domestic-AI-outsourcedContract--0.01",
+    "hash": "8ef69c94d107de928ea1fd91092fd9154265e1dba0cd05f37de1617abca6a047"
+  },
+  {
+    "name": "USD-domestic-AI-outsourcedContract-0",
+    "hash": "99be1b95a1fc5c46e8a64936164ed9c32ae6868c30196cceee0b5aa39c347ab4"
+  },
+  {
+    "name": "USD-domestic-AI-outsourcedContract-0.01",
+    "hash": "f3b89b3e20f78f92cdcd6ba336286985012f2f72d5ecd2fd99a4bcbcbd403e6c"
+  },
+  {
+    "name": "USD-foreign-普通-inventory--0.01",
+    "hash": "2e3e687252b049133274f1d2d29aafc6b0ae795fd23adcc442be8b7f2263e214"
+  },
+  {
+    "name": "USD-foreign-普通-inventory-0",
+    "hash": "3ae03b599a92565ea6183c313c90320c6bc5793af503d034aa43bea7e2fe290c"
+  },
+  {
+    "name": "USD-foreign-普通-inventory-0.01",
+    "hash": "12f7e973c0efb6a99ce1083b37dc59850c6ab140bcf741d8c80d21d46e43c810"
+  },
+  {
+    "name": "USD-foreign-普通-payment--0.01",
+    "hash": "6c33a689a3c02d5e17fdb5099a13f4b1347283cedb73833b2bcf433972b69aa2"
+  },
+  {
+    "name": "USD-foreign-普通-payment-0",
+    "hash": "e9686a5ed17575004576bd19b6b081355af2e358466c3411359c3d8a3527dac5"
+  },
+  {
+    "name": "USD-foreign-普通-payment-0.01",
+    "hash": "c25f2e5c787caf956a4312d13a70a8d5c01a1ea9269ff9dc52d865e73715cb18"
+  },
+  {
+    "name": "USD-foreign-普通-verification--0.01",
+    "hash": "f6abdbdf8d404633297508f3e90fb9c22613a7985d0011ee92d4e5c6dea355f0"
+  },
+  {
+    "name": "USD-foreign-普通-verification-0",
+    "hash": "ecce400ee3ee178fb70df1d6a0207879e4538deb1abd465bfd9ac3871728f8f1"
+  },
+  {
+    "name": "USD-foreign-普通-verification-0.01",
+    "hash": "a13307b9d2ee36ae5f0c1fb75f35199e6cbbcc5f01c47856f3bc24f94640850f"
+  },
+  {
+    "name": "USD-foreign-普通-highUnit--0.01",
+    "hash": "2848e9f7f708d4e0f0b8c1a5d794869a169da74049c67bb3e8861ceb31f8181a"
+  },
+  {
+    "name": "USD-foreign-普通-highUnit-0",
+    "hash": "c6ef6e021ea793662d3de1cd3e9a807a8132df71a22446470ebbc45886f21e60"
+  },
+  {
+    "name": "USD-foreign-普通-highUnit-0.01",
+    "hash": "aca5e1bf58b7afa4702f2716d34adb784fd626dfa5e888fff8a5df66c96521c2"
+  },
+  {
+    "name": "USD-foreign-普通-highGroup--0.01",
+    "hash": "bda57b592142a01a36495aaa0a7f55acc9b2be2d710a28c15708d9cf9f8cbe68"
+  },
+  {
+    "name": "USD-foreign-普通-highGroup-0",
+    "hash": "4f1aaab86217d3cfe828c9578608b9f09b5f431a5ddcdc218e0957ee270cb653"
+  },
+  {
+    "name": "USD-foreign-普通-highGroup-0.01",
+    "hash": "737e1a6c4a1c2ef643503d54c5c24df03399eaba3393e257a6802095bfdef9f3"
+  },
+  {
+    "name": "USD-foreign-普通-outsourcedContract--0.01",
+    "hash": "7acc34a0e5795fa51a5dc422dcda1b2e288aebe8ab45f5f6732beac458afa6f3"
+  },
+  {
+    "name": "USD-foreign-普通-outsourcedContract-0",
+    "hash": "59f73b4595e7cff6b9e56e4000387559eef84dbd4525546ae8a2d33434f330a9"
+  },
+  {
+    "name": "USD-foreign-普通-outsourcedContract-0.01",
+    "hash": "96a4126cda15b4b9cb46680296eff28c98444dd9173e2245a3f2b1d3e3aae987"
+  },
+  {
+    "name": "USD-foreign-暂缓-inventory--0.01",
+    "hash": "fb1f2af86d5f80ee74d0b8c1659f8511c7b9b6531a6e1e71a63d703b26aeb187"
+  },
+  {
+    "name": "USD-foreign-暂缓-inventory-0",
+    "hash": "a2003f803c674e57b61ca3d3240ad1e53b7476d7eccf9854fd48f72ffb410191"
+  },
+  {
+    "name": "USD-foreign-暂缓-inventory-0.01",
+    "hash": "6fdd72b641e0413e52b6310d61bd2e0e244a372f98952c3335beeab8083db448"
+  },
+  {
+    "name": "USD-foreign-暂缓-payment--0.01",
+    "hash": "b79d64b402daf3aa0cd240812ca2033eec8253ee1123cbe9501ca183fb9f5c48"
+  },
+  {
+    "name": "USD-foreign-暂缓-payment-0",
+    "hash": "ed8ba1b2511e6a70b3b2541572d4189f0917f6dd7521c7305b3bbc8ef19f6abf"
+  },
+  {
+    "name": "USD-foreign-暂缓-payment-0.01",
+    "hash": "91315c545f4925afbc141df6044bd4390e6401926c82696be0d4147eaf335c7b"
+  },
+  {
+    "name": "USD-foreign-暂缓-verification--0.01",
+    "hash": "54dd0c11c721a890aa0c6abb24598854beb89d4464dac4942dc73448ff9bd15f"
+  },
+  {
+    "name": "USD-foreign-暂缓-verification-0",
+    "hash": "be41de212ccf5cd62a84df3fc9147eee63b977bc629c5f3b44fd5ce06761632e"
+  },
+  {
+    "name": "USD-foreign-暂缓-verification-0.01",
+    "hash": "9fcace9197b7c5ed8592a2b809bf599d529f52da3cf86611d20c1e12fa94493b"
+  },
+  {
+    "name": "USD-foreign-暂缓-highUnit--0.01",
+    "hash": "4f30204e6d1a6e8f632485ecf9772f3e8b98d37444ea814221570587a41dcd6d"
+  },
+  {
+    "name": "USD-foreign-暂缓-highUnit-0",
+    "hash": "938ed3bf839c868a44a6368b3366c47d46719f8189b85e8445995a6984e885ba"
+  },
+  {
+    "name": "USD-foreign-暂缓-highUnit-0.01",
+    "hash": "58f68d93532ebe68aa6c70c8089bf746fb88b830eb67b40129306670cbdc285d"
+  },
+  {
+    "name": "USD-foreign-暂缓-highGroup--0.01",
+    "hash": "14a574c9e8288b5e33a59de6b6ec0e8806ad13072e73b402dcc9f01a4a243767"
+  },
+  {
+    "name": "USD-foreign-暂缓-highGroup-0",
+    "hash": "30da29fed47d1f20e59437d2f31757d1b402f95b9f4e23579784b349e45059cc"
+  },
+  {
+    "name": "USD-foreign-暂缓-highGroup-0.01",
+    "hash": "5630ef712458fbd80833f58ae692f3b0f22072102adbaad59b92422477059bb6"
+  },
+  {
+    "name": "USD-foreign-暂缓-outsourcedContract--0.01",
+    "hash": "90c876161665d05474e4757c4c5616a9e1e438f61479b0ba162a1784cdce99ee"
+  },
+  {
+    "name": "USD-foreign-暂缓-outsourcedContract-0",
+    "hash": "c96472611883d49cd2a17bddeaf63902476e77b85825176a8733a694743304f9"
+  },
+  {
+    "name": "USD-foreign-暂缓-outsourcedContract-0.01",
+    "hash": "d9b1817ccbbe8b2898f9727f03e8003f12a450af33c7fd7daf6fab4f7dbd508c"
+  },
+  {
+    "name": "USD-foreign-公转-inventory--0.01",
+    "hash": "4c9128eaea60102d64efd702a2a389d8d46481a2504ec70cd78bb0922c2edc67"
+  },
+  {
+    "name": "USD-foreign-公转-inventory-0",
+    "hash": "5f3dd8f09c6a2b6a30179e925708a4940a1fd04193f1e2a1cd63b054b6d82baa"
+  },
+  {
+    "name": "USD-foreign-公转-inventory-0.01",
+    "hash": "ed408a738ffef260b97e18626ee089024f7ab5b9785b62226f8dd3fad8dbc74b"
+  },
+  {
+    "name": "USD-foreign-公转-payment--0.01",
+    "hash": "30d2b67445fbf631444c9a8bc9b3cb3e628c302f63c4b73f88afeac792c3491b"
+  },
+  {
+    "name": "USD-foreign-公转-payment-0",
+    "hash": "1baa2a088ecd667d8302fa080484cde1fddee51e3aca36ffb35dfb3c57773913"
+  },
+  {
+    "name": "USD-foreign-公转-payment-0.01",
+    "hash": "fa7a4082812080f5ccb6eaf1de5ca3d0da2ce7d89c8e5a86a186e3e1a9fec85e"
+  },
+  {
+    "name": "USD-foreign-公转-verification--0.01",
+    "hash": "5eab95f2f1732d51b571090ebe41c2a9527f1ca57d1f2e45694ac8b6be89229b"
+  },
+  {
+    "name": "USD-foreign-公转-verification-0",
+    "hash": "72dd02b92558e977ac0ca1a1fa6bb27150360a0838c436162278a78d9faf2cbf"
+  },
+  {
+    "name": "USD-foreign-公转-verification-0.01",
+    "hash": "a62fbbc770a54d38665c6c51866654f5f245dfc463a3271f59f6ea595bde86ce"
+  },
+  {
+    "name": "USD-foreign-公转-highUnit--0.01",
+    "hash": "e4a5eeb733b1ad25ffd56b56a4d2464b055ba09c403c9d587495548b6fba69b9"
+  },
+  {
+    "name": "USD-foreign-公转-highUnit-0",
+    "hash": "f9548a667f6cb0b12e522e50cc82dfea1a155c46fc829fa2d6b44e82254aea07"
+  },
+  {
+    "name": "USD-foreign-公转-highUnit-0.01",
+    "hash": "7566e2d317ef28134f19d646afd780d0402ea2c9d15c6185b410568c6fd99a90"
+  },
+  {
+    "name": "USD-foreign-公转-highGroup--0.01",
+    "hash": "123575ea73ed130d6307a6a2919278c0f43d6183d3ce61ab7b096a77bfb5b3a4"
+  },
+  {
+    "name": "USD-foreign-公转-highGroup-0",
+    "hash": "74f39ef55ab1901c331cf4e9328b410b567f1d71ae840a9ef105280a4db2f345"
+  },
+  {
+    "name": "USD-foreign-公转-highGroup-0.01",
+    "hash": "626496161e96d9528fe60e66514750792afccedb8dd49f74de8c3789cda9ae76"
+  },
+  {
+    "name": "USD-foreign-公转-outsourcedContract--0.01",
+    "hash": "7742078da7f3b0bac200c426555e4255be6f709fce8ea088810d01e764a97635"
+  },
+  {
+    "name": "USD-foreign-公转-outsourcedContract-0",
+    "hash": "741635e1468f5a4d357cad3f0096c7e2813e77d6a574c59aa4dd6326acbc7f1c"
+  },
+  {
+    "name": "USD-foreign-公转-outsourcedContract-0.01",
+    "hash": "4b616b406f4b72a78533cbe9c82d32f3c7f2316c542889096f8349bc3c1ce02a"
+  },
+  {
+    "name": "USD-foreign-外包-inventory--0.01",
+    "hash": "b0f3a4b108c04d884268eee77e96073f82270775f64305a19be485fc8a44b2ae"
+  },
+  {
+    "name": "USD-foreign-外包-inventory-0",
+    "hash": "0a3362bdf75c8b8322b38ffa54b6bad6c025e96db0097b08474e8e10e0fed7c4"
+  },
+  {
+    "name": "USD-foreign-外包-inventory-0.01",
+    "hash": "01906cf70d40c3fb81f058bfdb03a1617921b494c3a5ef41bc4870553b83d889"
+  },
+  {
+    "name": "USD-foreign-外包-payment--0.01",
+    "hash": "13aa780f1f2383c9fb0b85bb340e21b2af74a7621ebda9fa2fd37c501800b130"
+  },
+  {
+    "name": "USD-foreign-外包-payment-0",
+    "hash": "9e833858d419d7e2e7c518d7f6a224f1cfce6ac1661de654b426cd571ca03b45"
+  },
+  {
+    "name": "USD-foreign-外包-payment-0.01",
+    "hash": "ad21a0a13d45c1f008f9770f17df522b93d785c40b6b46467c27ef18d66c460f"
+  },
+  {
+    "name": "USD-foreign-外包-verification--0.01",
+    "hash": "16846ebd32bdb7c2e6c38b143eedb79d29e5a64ff32616827c9ccbd4f79dd50d"
+  },
+  {
+    "name": "USD-foreign-外包-verification-0",
+    "hash": "d1053570aca53c50c3960dc03554a5e795ce0ffaffa04fb63c6c654a324a8166"
+  },
+  {
+    "name": "USD-foreign-外包-verification-0.01",
+    "hash": "8769c9f52a48d8ca41d1d1beb21e8311491012188a39371c012ba4487a87857d"
+  },
+  {
+    "name": "USD-foreign-外包-highUnit--0.01",
+    "hash": "d6f68bc051d56afda44ecfa8a45868f2ce1e757a67c9e8cb2d444afe0ce8961c"
+  },
+  {
+    "name": "USD-foreign-外包-highUnit-0",
+    "hash": "626adc5ff5bace083732412ef2f66e4fe8bdb90a1b2b4b8ceab70b956676464e"
+  },
+  {
+    "name": "USD-foreign-外包-highUnit-0.01",
+    "hash": "d5c077510ac2ebb60651ace35313c82fcb4c74b41ef6976a59d4f839460fb9a8"
+  },
+  {
+    "name": "USD-foreign-外包-highGroup--0.01",
+    "hash": "8a829e7a71fa5e4a3273dc8fa84b49227c2d043ea999d275e2978a05da246a72"
+  },
+  {
+    "name": "USD-foreign-外包-highGroup-0",
+    "hash": "7e11c48b7069dcb866cf4b5cf97e8afcd773d407d9a4a339b4ea6c26ab4d04a8"
+  },
+  {
+    "name": "USD-foreign-外包-highGroup-0.01",
+    "hash": "b6a116a5929a73a2eff4c959d5ee4e6cf615ecf46f536f10d490580435f131fd"
+  },
+  {
+    "name": "USD-foreign-外包-outsourcedContract--0.01",
+    "hash": "6894e06f08d8a18035c26d010dc723d2a293cfd00694bbc51962f942e608e16a"
+  },
+  {
+    "name": "USD-foreign-外包-outsourcedContract-0",
+    "hash": "d46e6850ca42baf4a4800bcc4ba6890500a7d1de96e9f58b1e912b44823be116"
+  },
+  {
+    "name": "USD-foreign-外包-outsourcedContract-0.01",
+    "hash": "d3ed0122035aeb59be89654bdcac76f65445cf0253b4a56ec6ad2b6444582a13"
+  },
+  {
+    "name": "USD-foreign-AI-inventory--0.01",
+    "hash": "9fe15a8616614204dae2724c76251ee95fe95027213af39a8d7c5ba53e0f6553"
+  },
+  {
+    "name": "USD-foreign-AI-inventory-0",
+    "hash": "50fd85a6172902caa9d245af981e28eae83d7a66ab05ab7da0cd7417e0bd52e0"
+  },
+  {
+    "name": "USD-foreign-AI-inventory-0.01",
+    "hash": "97c5d68ab078067a6f01b33ebfc9126634719a6b9c5b7550b6e74aa475541364"
+  },
+  {
+    "name": "USD-foreign-AI-payment--0.01",
+    "hash": "6326aafeac860048d455a0b283bde6766ed558d3a00661ee71c7063d4b07a874"
+  },
+  {
+    "name": "USD-foreign-AI-payment-0",
+    "hash": "3badeba214f381a173e477cc03c3878cc6932fc62eb5619b7f4a22528af77d12"
+  },
+  {
+    "name": "USD-foreign-AI-payment-0.01",
+    "hash": "5f142f47e26e899f42372b368ceda33c84505b13a7764b2d9a7ab310f093cc36"
+  },
+  {
+    "name": "USD-foreign-AI-verification--0.01",
+    "hash": "cb668aface97694e97ccc22b3f84446af0ed752164672f7f9550c916061de6b2"
+  },
+  {
+    "name": "USD-foreign-AI-verification-0",
+    "hash": "e26a509fe7da7e02d4732f15794eec6a26b3726f027a9d580b9dc861c7600c06"
+  },
+  {
+    "name": "USD-foreign-AI-verification-0.01",
+    "hash": "f71d8f40805d7c2132a7217b21cec1273044cdb060c3a422bb42ce422486b154"
+  },
+  {
+    "name": "USD-foreign-AI-highUnit--0.01",
+    "hash": "ef052cf227e67eed98392399468e58a5f0ad3bcc2c36ba85808b550b9a26916f"
+  },
+  {
+    "name": "USD-foreign-AI-highUnit-0",
+    "hash": "38e28c06c23917cac6c860617347cf81372099d0623f8090d0a7758e1ddc740d"
+  },
+  {
+    "name": "USD-foreign-AI-highUnit-0.01",
+    "hash": "b971852697c7e37bcd3ea5037845b4189dfef007ca7e44897d80f665926c41d5"
+  },
+  {
+    "name": "USD-foreign-AI-highGroup--0.01",
+    "hash": "a4a01e1186a7030de462b6f46cf1f37e63648ffe9250295de8b9b21b10e4f169"
+  },
+  {
+    "name": "USD-foreign-AI-highGroup-0",
+    "hash": "e1c88d65fdb9fb62508b5b50b953f98202aad96fa1cbcf6e5bef630ea95e3f92"
+  },
+  {
+    "name": "USD-foreign-AI-highGroup-0.01",
+    "hash": "f624835c56c52afc6867d2cce304dd93599b95c5e1602323e4bfacf1d522dbb2"
+  },
+  {
+    "name": "USD-foreign-AI-outsourcedContract--0.01",
+    "hash": "75b34a1f84d075d232cf591cef686b3f903543342bba67bdd6ef2cd2c4d51688"
+  },
+  {
+    "name": "USD-foreign-AI-outsourcedContract-0",
+    "hash": "cb1d105bb6134e847bb4482b5b7ba0d4a0efbac68ac5213b24d14524b0859ce9"
+  },
+  {
+    "name": "USD-foreign-AI-outsourcedContract-0.01",
+    "hash": "9af675036f2d9b997fc2080223b20bee3a77ea649206e40cc0b6b5e1dea807b9"
+  },
+  {
+    "name": "USD-manual-普通-inventory--0.01",
+    "hash": "3ad3adfe463f265d972b5101f9ed844ce7664a6aab83861cd0103a3f7b60c55f"
+  },
+  {
+    "name": "USD-manual-普通-inventory-0",
+    "hash": "f1fe535f48bf1a32b84ca6e42f9de9ee1d520dc4897024959e42348055213657"
+  },
+  {
+    "name": "USD-manual-普通-inventory-0.01",
+    "hash": "5e9150d5edc741219fbdf6f783a9359d208fe07b3bcfec52ccaa016e5276a50d"
+  },
+  {
+    "name": "USD-manual-普通-payment--0.01",
+    "hash": "2d6f533d9de7a2a509611d1e2e2cc414bb5804e3962742c0458e902aeeb14d9a"
+  },
+  {
+    "name": "USD-manual-普通-payment-0",
+    "hash": "fa478aa8cf22152793f93b93b895fd0c7ad6888bbe90990f5940257b12dcbfa0"
+  },
+  {
+    "name": "USD-manual-普通-payment-0.01",
+    "hash": "a634de9d451492e3314391d5411607fc2233753f55988d13f38dbbf7985a92dc"
+  },
+  {
+    "name": "USD-manual-普通-verification--0.01",
+    "hash": "b67fa1c8f5cd1003d3e349426fa648af87294d6aab2f38fc7a51628d45f645d5"
+  },
+  {
+    "name": "USD-manual-普通-verification-0",
+    "hash": "9d67396fb8d2c8599824a8c74570981ee2dc138fdf5dc367f80bc01878728aaa"
+  },
+  {
+    "name": "USD-manual-普通-verification-0.01",
+    "hash": "5771b21bd13e3eaa3dd3574889ba5ef3158d55619fe189c60da7cac854642160"
+  },
+  {
+    "name": "USD-manual-普通-highUnit--0.01",
+    "hash": "ce9b4b50c0f155f9ff74d94c3972ebbac36519098c08a7739ed33325c3dcf846"
+  },
+  {
+    "name": "USD-manual-普通-highUnit-0",
+    "hash": "4ddf32719ca9eb14e8873fd5ea14d7d6238c81bae7f3eea09ed0b5f8936bbbe9"
+  },
+  {
+    "name": "USD-manual-普通-highUnit-0.01",
+    "hash": "8fdc4435a71b169e5a3d7cb0ac35a054554ab163655de7854ed220780e163929"
+  },
+  {
+    "name": "USD-manual-普通-highGroup--0.01",
+    "hash": "4615fa39afef6138d15194044da3cb9d28e3f929fdda979bd163d47920987ed0"
+  },
+  {
+    "name": "USD-manual-普通-highGroup-0",
+    "hash": "6d8aaa1d757712acfe6e3966e706b46d26872c94fc3f844d90c3df8344c9ecde"
+  },
+  {
+    "name": "USD-manual-普通-highGroup-0.01",
+    "hash": "2188babb771cf8de2d64ee164da91ded3df90af1d9289041ae4e89b2cb0047af"
+  },
+  {
+    "name": "USD-manual-普通-outsourcedContract--0.01",
+    "hash": "8db3e580e95e04183f49fed280f80025c324b162b6d3bc4edd67b89b62f28d96"
+  },
+  {
+    "name": "USD-manual-普通-outsourcedContract-0",
+    "hash": "2b2e12b83a09fc1126265793f09127bb6f8bffe8ab973eb818917dcd6ef1a10a"
+  },
+  {
+    "name": "USD-manual-普通-outsourcedContract-0.01",
+    "hash": "0a73924d79b410a895acabcfcf14c1c82c429c135d0fe8f53a72550a2f0e9dbd"
+  },
+  {
+    "name": "USD-manual-暂缓-inventory--0.01",
+    "hash": "5d3c2bb271e28bbef383d4b52f44d27da855aeab1e28a3f7600493394c3f3a5c"
+  },
+  {
+    "name": "USD-manual-暂缓-inventory-0",
+    "hash": "c1e9259a443db98f8abecff8839ee7686d5fd852aea8870ba046485bbc1e9ba9"
+  },
+  {
+    "name": "USD-manual-暂缓-inventory-0.01",
+    "hash": "a88912a6f1b2985dcc8820ba659f776e2af2319124bc712caebd8d0fd86ed17f"
+  },
+  {
+    "name": "USD-manual-暂缓-payment--0.01",
+    "hash": "9c17ff6b97cbe5d4ec966d44d1eca6cb6fbc86c274c653679241ad61e2d3a5e8"
+  },
+  {
+    "name": "USD-manual-暂缓-payment-0",
+    "hash": "9d3a2f66a04a9ee2d08020f314a672190b26c5b0c8b50b229370e4244d129807"
+  },
+  {
+    "name": "USD-manual-暂缓-payment-0.01",
+    "hash": "e20f835b0f9f7ea26c3771d90ae1741ee73ca3087d55866ea62ce6ee5a8d4fc7"
+  },
+  {
+    "name": "USD-manual-暂缓-verification--0.01",
+    "hash": "ac7e743b19cbb7f4c24aab8545fa937e0070d786553cae362a07c4515d63c535"
+  },
+  {
+    "name": "USD-manual-暂缓-verification-0",
+    "hash": "e8e824f1ea6754338ab8b9e8e998df1dc473c135f1c801a2a1036875f1f9f312"
+  },
+  {
+    "name": "USD-manual-暂缓-verification-0.01",
+    "hash": "c728c58f15f4bf213fddf1eedc86937c1a8585fc8db43670347286c6d205ccea"
+  },
+  {
+    "name": "USD-manual-暂缓-highUnit--0.01",
+    "hash": "ad25251ecada384aa31df7c9a9341143316a8f4d0391697355e8e487a9f863ef"
+  },
+  {
+    "name": "USD-manual-暂缓-highUnit-0",
+    "hash": "75001bd647249e1fb17d857b28cd47f03654276ee4f3e9b85151e7bd1d963fe7"
+  },
+  {
+    "name": "USD-manual-暂缓-highUnit-0.01",
+    "hash": "bd52396b16e20df9e6423c43d1327c76b487b2eb35b9f0fbe23ac260391e777f"
+  },
+  {
+    "name": "USD-manual-暂缓-highGroup--0.01",
+    "hash": "8b42843e3596a270d4672a0a65afce588f914d521c4b9862662b8958bfbc6bbc"
+  },
+  {
+    "name": "USD-manual-暂缓-highGroup-0",
+    "hash": "9b561adca55e420504bfd9c6f257279792ae6f16ab246fe30b41b4e4802002ae"
+  },
+  {
+    "name": "USD-manual-暂缓-highGroup-0.01",
+    "hash": "b99f41716006bc31daf0e844f56b6fd06d560c93b319a47114df7d2413fb8837"
+  },
+  {
+    "name": "USD-manual-暂缓-outsourcedContract--0.01",
+    "hash": "861082f3627d256a9004e62c7876a2d6bfc057cdfb5932fb7b2b2b76e9a5db3b"
+  },
+  {
+    "name": "USD-manual-暂缓-outsourcedContract-0",
+    "hash": "68ed780d4bef6f91f492cd29f43a52f79dd892081a0e666127718ee9db67a590"
+  },
+  {
+    "name": "USD-manual-暂缓-outsourcedContract-0.01",
+    "hash": "fc301238d203907428020d387584202e97ba25d7d905c16ed2827485b16e0c41"
+  },
+  {
+    "name": "USD-manual-公转-inventory--0.01",
+    "hash": "885e3fdbc73dc313bcd95704016ec08fe0689307870a0407f3efc9c11f2665b5"
+  },
+  {
+    "name": "USD-manual-公转-inventory-0",
+    "hash": "101395b92b4ec06f5c014419e989f0e19641073ac4d50fdd2a75bcd668c9322a"
+  },
+  {
+    "name": "USD-manual-公转-inventory-0.01",
+    "hash": "36af4509d4b7b4a13c9147e1a9e5936fe0baa9ba7d541cc6654e7930fe123e5e"
+  },
+  {
+    "name": "USD-manual-公转-payment--0.01",
+    "hash": "ab8b73c690f672c783c6d598924daafd0f3e969d150c776bcc021f862979c94f"
+  },
+  {
+    "name": "USD-manual-公转-payment-0",
+    "hash": "05883954e7a928f70aa7253216434581666abf016a13a1b8d3fe655079d43a80"
+  },
+  {
+    "name": "USD-manual-公转-payment-0.01",
+    "hash": "2aaddc0886b3a152e3befb3ea95d4dd74ad36d87418a8800250c629d773f6e59"
+  },
+  {
+    "name": "USD-manual-公转-verification--0.01",
+    "hash": "44dd67334fd2ef584c3701e4b75c0aeb7f8d1901e58c584424afaebe1224738a"
+  },
+  {
+    "name": "USD-manual-公转-verification-0",
+    "hash": "b65ff121b9a2a7dee54b1df88dae978edb1f59fb41139fcf8b785e5f1fa7c701"
+  },
+  {
+    "name": "USD-manual-公转-verification-0.01",
+    "hash": "81bd5ee3399f1dacb7097d86edfeb6d2452ff2fc71a9bc7ff6d640c0d3d630d4"
+  },
+  {
+    "name": "USD-manual-公转-highUnit--0.01",
+    "hash": "1b6b8e9b2a16560cf14f117cc4847c4313275d53ab995be0768b3034e47d2e4b"
+  },
+  {
+    "name": "USD-manual-公转-highUnit-0",
+    "hash": "8e03b28b54d387027972ca5cbc857bcb520f8dd799a4d0cc54530ea245a9b36c"
+  },
+  {
+    "name": "USD-manual-公转-highUnit-0.01",
+    "hash": "90457b9d91e7c8b4777c74159ad180acea0693307b030ea84238aadb783f6526"
+  },
+  {
+    "name": "USD-manual-公转-highGroup--0.01",
+    "hash": "47220a2384c545b5b6e16f7732990b71615511166764fee92a117b3a7014e91e"
+  },
+  {
+    "name": "USD-manual-公转-highGroup-0",
+    "hash": "d143fe2cc581eab979fb26a60e130e7fb24d94cb375bf275421a13726d7bf50e"
+  },
+  {
+    "name": "USD-manual-公转-highGroup-0.01",
+    "hash": "650f8d909446889e813a9c8940eec017cf249111c825170d6469e4b8124f05a3"
+  },
+  {
+    "name": "USD-manual-公转-outsourcedContract--0.01",
+    "hash": "4ff398885047f5bf5db7748a68a96caf17b0a4a12756f853801e5fc0e014f613"
+  },
+  {
+    "name": "USD-manual-公转-outsourcedContract-0",
+    "hash": "f2f5cc7001f009af7dd9f62dfe72f35a256971dd0c52d9d77900d116239af50c"
+  },
+  {
+    "name": "USD-manual-公转-outsourcedContract-0.01",
+    "hash": "4a16cf3fe7269675ec38e3b8bb43d23929d01408822ca613f32af5b81443b8a4"
+  },
+  {
+    "name": "USD-manual-外包-inventory--0.01",
+    "hash": "575bd4cb1164da587145ea705eff4a5c48c4ed0b91a73485484d083eaa57eb55"
+  },
+  {
+    "name": "USD-manual-外包-inventory-0",
+    "hash": "3f5a765d1db554284b2d3dd07f6c714b700eeb2c453736ae1fda27e179235192"
+  },
+  {
+    "name": "USD-manual-外包-inventory-0.01",
+    "hash": "9a4a61ffa46e6e2a32d6db9c936d19334afb2003be1e5ee13f6af06dc68af157"
+  },
+  {
+    "name": "USD-manual-外包-payment--0.01",
+    "hash": "c7db1d85d2a800856bb4ba7cd6314b0bbafab8925de806afff652d19b1af76a7"
+  },
+  {
+    "name": "USD-manual-外包-payment-0",
+    "hash": "c91a3e5c67d59f2cc1101031d61cea5cdf84043141deb03adfc4e5f0f6bb3550"
+  },
+  {
+    "name": "USD-manual-外包-payment-0.01",
+    "hash": "cecfa0e1c9232a5e011d40e402fb557f7d857c536659366a37508acad3db7c6d"
+  },
+  {
+    "name": "USD-manual-外包-verification--0.01",
+    "hash": "283ab3acae08cfb543d7ceef664b241d126faada4b2afe0d285a4b2b38eba282"
+  },
+  {
+    "name": "USD-manual-外包-verification-0",
+    "hash": "2f3d54abd93f3289b52993691b98b5d0f4117bad84c905bf3a8809716ea077e0"
+  },
+  {
+    "name": "USD-manual-外包-verification-0.01",
+    "hash": "36dd4b0589fb38ad3fe1215ef05958ed6b6066bd98b694ed5377ecc87041ff28"
+  },
+  {
+    "name": "USD-manual-外包-highUnit--0.01",
+    "hash": "a1bc810b5c4ec8991c1374bb59b9d12471d3023b5fe666a0ab66c3b2d5974e13"
+  },
+  {
+    "name": "USD-manual-外包-highUnit-0",
+    "hash": "f14149faf1a63ed709055f417bad11ef6e1c3e72d9c5eec02521bbe08cae2fdd"
+  },
+  {
+    "name": "USD-manual-外包-highUnit-0.01",
+    "hash": "f7ece03335028de9848a9fa428cb8a1c8537630c1b9363dd2a862746fdb01e92"
+  },
+  {
+    "name": "USD-manual-外包-highGroup--0.01",
+    "hash": "0d3f1421b4a3660aabe6eadd5bac904a239810a9903b5935d53ea7a03df2ff3e"
+  },
+  {
+    "name": "USD-manual-外包-highGroup-0",
+    "hash": "8502fdf69eb803f6fac04cd2b68c8b94873c0c75606811394b7151555e14c080"
+  },
+  {
+    "name": "USD-manual-外包-highGroup-0.01",
+    "hash": "9b0c3492612631a85f7fcf9b50214ecd7e36fcb26919a231e36037564d2d8b5c"
+  },
+  {
+    "name": "USD-manual-外包-outsourcedContract--0.01",
+    "hash": "545f38a86beb22c56336f13959562ba7832fdd72fd7152fac42743583869f9eb"
+  },
+  {
+    "name": "USD-manual-外包-outsourcedContract-0",
+    "hash": "b3d6a85f3aade18f6d21120d814e8c6258fe3bf3ecf5cde1e0a3963534b6ad04"
+  },
+  {
+    "name": "USD-manual-外包-outsourcedContract-0.01",
+    "hash": "51271c6e0f00778de66a36b916709a109e07120e37b245c2f2849e789e9c0fda"
+  },
+  {
+    "name": "USD-manual-AI-inventory--0.01",
+    "hash": "abf1103338412ebc9b68a377df8d40661a23761a97e7fe8c98476e3bb034e783"
+  },
+  {
+    "name": "USD-manual-AI-inventory-0",
+    "hash": "60b610754fa72c5766a303ea74a8d4b6e94288dea64202d6a4567df2125c4d2e"
+  },
+  {
+    "name": "USD-manual-AI-inventory-0.01",
+    "hash": "cd830ef38e5ab5e886e2ff5b20dc13ffaf10ae3d78dd63d3d5dc2b65da1e53ee"
+  },
+  {
+    "name": "USD-manual-AI-payment--0.01",
+    "hash": "a6cf334c5a83b0c2b7b9365e2121887165c7edf1b1d2ac411983bd6c5c843b60"
+  },
+  {
+    "name": "USD-manual-AI-payment-0",
+    "hash": "86f407a4702944217\u0037657573984c01ebafc9ccff08a48201b14f6dd852505798"
+  },
+  {
+    "name": "USD-manual-AI-payment-0.01",
+    "hash": "28fb205866e21a044dde7f90844862e42ac971eb2a694f925d69a7efe27b995d"
+  },
+  {
+    "name": "USD-manual-AI-verification--0.01",
+    "hash": "5d183b15964f25a5cdbbc49cea5c9ca173a24024b7d9c9705e2db9cce4e68ea5"
+  },
+  {
+    "name": "USD-manual-AI-verification-0",
+    "hash": "1c4d2359df2fb2cda62444631a4f09b8f224ab12bc54b7bd7e588d7f99c763c3"
+  },
+  {
+    "name": "USD-manual-AI-verification-0.01",
+    "hash": "1a3217da0f87ead8c73a7639919db8caa115eb20b53485155450938f2f8ff8ea"
+  },
+  {
+    "name": "USD-manual-AI-highUnit--0.01",
+    "hash": "9eaf8cefc730f6c525cf08f6ddc2ddf2be130fa99012b4c9e5f9404b9b48c270"
+  },
+  {
+    "name": "USD-manual-AI-highUnit-0",
+    "hash": "ba6ff1d0721785791fe8ff40d00397d5368c3ab3292ea262ab51b4db40c52351"
+  },
+  {
+    "name": "USD-manual-AI-highUnit-0.01",
+    "hash": "5802f9ab4bb4c28509041fbe2b66357e35ebffbc2b73d93c4521fc8f253e0a54"
+  },
+  {
+    "name": "USD-manual-AI-highGroup--0.01",
+    "hash": "2c191784a57594b40fd8edcbe0c02d92a13e96fc2725bc38ea8dbeafc9a9a255"
+  },
+  {
+    "name": "USD-manual-AI-highGroup-0",
+    "hash": "5ebed79cbdfc3cb17a60f0c2a2e18980d3f1326715356c807547c572ebfe71bb"
+  },
+  {
+    "name": "USD-manual-AI-highGroup-0.01",
+    "hash": "f17fbc95f72969b835b7ebbbce8dbafc6150d3f4ca02f46327a4108ebdf7edbc"
+  },
+  {
+    "name": "USD-manual-AI-outsourcedContract--0.01",
+    "hash": "6a9e9b6d99cf36c214a88b380f02d4fcbea2d929c9e671327de9e6318d33eb08"
+  },
+  {
+    "name": "USD-manual-AI-outsourcedContract-0",
+    "hash": "fe8429d7e263317a827e89450a4424939c9a136f303651df5a5626acfa0c2087"
+  },
+  {
+    "name": "USD-manual-AI-outsourcedContract-0.01",
+    "hash": "ca6cbded1a367440c05437bbb2216fb01150c4d948b72077156b86b9c6d20663"
+  },
+  {
+    "name": "seed-0",
+    "hash": "e6c1029b1c629ade5f4d1ef06624e3913c46721af7eda85c77221a5a3882295c"
+  },
+  {
+    "name": "seed-1",
+    "hash": "68dec51073fd0db85a0d09fb0abc8cb4e81cc1c79a54e2142cb727310607ec4c"
+  },
+  {
+    "name": "seed-2",
+    "hash": "9ca8478add8aeed9757c1236f4f055d8ecd59f0ef166eef8aae447bad742df05"
+  },
+  {
+    "name": "seed-3",
+    "hash": "2e474cc536e03a46f4e70dcb32e005e64178d162bed2df902fee9ced90495988"
+  },
+  {
+    "name": "seed-4",
+    "hash": "c58236d08130b277b75200d2d506b44bfc77800c7a9e7f9b7fb4fd9c228dc653"
+  },
+  {
+    "name": "seed-5",
+    "hash": "855661f5d66e331292b019293363a2c96dbaeb96c2957342f26b3a52340cca72"
+  },
+  {
+    "name": "seed-6",
+    "hash": "389e18eb962f2e1eb2e4f6003e185a4ccb0372ff8923cb6ec09a37b4102ce794"
+  },
+  {
+    "name": "seed-7",
+    "hash": "30b9e639b53edaabaffbfea06a5d03fc2dbb9cd5113ab859331886a90e6a9976"
+  },
+  {
+    "name": "seed-8",
+    "hash": "5480abc5842dbcfa5c2efa68bd9d41edc49dfa7a6de146ecab22d72842a06fb3"
+  },
+  {
+    "name": "seed-9",
+    "hash": "c16a7c846949035b6d0eb50f52e65d9a8c1dd3b5d61a1090dfa69e32f352ba7f"
+  },
+  {
+    "name": "seed-10",
+    "hash": "e747d2a48acad46fed1abb99bf64381d26d07e8bb947991c4142b31991409b47"
+  },
+  {
+    "name": "seed-11",
+    "hash": "7e696a64ac8fe8aba2ff2d63ca4053b177f9d93a27daaa234c2d4c6e297cfd09"
+  },
+  {
+    "name": "seed-12",
+    "hash": "672068a6471b1bee8f42ed0d25b9b038234940b7aa1759318fcaa2480d702e92"
+  },
+  {
+    "name": "seed-13",
+    "hash": "f79d60e0e95cb30e7319dcaadfeb6c33d9c1890831a5adbcf8918c7ef0194b38"
+  },
+  {
+    "name": "seed-14",
+    "hash": "eff322064e86ef36a7943dba2b13375ce64f9b44b50c35203be8a13a927cdd40"
+  },
+  {
+    "name": "seed-15",
+    "hash": "06be65512affe54c21d676fcea3f77ab81ce66eba2ad193819e282076c246d74"
+  },
+  {
+    "name": "seed-16",
+    "hash": "f098b4a35f6e11d7ab9dac0e2f9b349c58c1aa945b33dde026b299fbe3f6c40b"
+  },
+  {
+    "name": "seed-17",
+    "hash": "40a1ea4784f5d474a2c955dedda4332dd6ae6fd8d7ea9093b00b360fa5128ad7"
+  },
+  {
+    "name": "seed-18",
+    "hash": "f132c510b25ab2a61bc9b723bbb9bd76b088bbba3bfb97b2de12a64ce8bdcaaa"
+  },
+  {
+    "name": "seed-19",
+    "hash": "b0362ea753caee52cc788f98daa9f78a6626424eecd6c4c2f979bb71185110df"
+  },
+  {
+    "name": "seed-20",
+    "hash": "224f2cf3cccc4fbb8762ec9b2f019d4ae5f8cf4219bdf317507fd8fabd998f75"
+  },
+  {
+    "name": "seed-21",
+    "hash": "ba4b6949b47f547ff28930d8184f681ab3347cf6f8cd22cc58b5a71f6aedc085"
+  },
+  {
+    "name": "seed-22",
+    "hash": "deab141f20b3ac4bda38b10fdfc46540e1242799aee1feac7213413940e9f2fa"
+  },
+  {
+    "name": "seed-23",
+    "hash": "fb4d85eaff90eeced501f3c9f7cdcbbc557adb60b966d7beaf8ff22ff81e1347"
+  },
+  {
+    "name": "seed-24",
+    "hash": "b8011e2c45b7d27222cfa50521c21078d73554dd6d09ca0b08d0ccf460d27b35"
+  },
+  {
+    "name": "seed-25",
+    "hash": "427db9e66d37301ebf34d1df87d46147be95922a3b1b50e583285ce62b4d81ae"
+  },
+  {
+    "name": "seed-26",
+    "hash": "bf2cf66b5aa52ae3f6bf4a2e0d9d4644d3295317e02b2ae655b68d4ad3480675"
+  },
+  {
+    "name": "seed-27",
+    "hash": "01f6a3cc6321e7dd798402cc811966c62cf8d21d3c0abc39e4039b29374b375d"
+  },
+  {
+    "name": "seed-28",
+    "hash": "20f103093362e98eb0db41042e9c8244664c77878605b4df5bf67ac9b0052df8"
+  },
+  {
+    "name": "seed-29",
+    "hash": "9fe4c64d302ed75d695fe6dd15592e9c9cced0fb859292d364dc37a9f861c949"
+  },
+  {
+    "name": "seed-30",
+    "hash": "141732ce13d3826f5ab43c0807ee0d98dcd8bf63a159eed84bce988bf6004ed5"
+  },
+  {
+    "name": "seed-31",
+    "hash": "8f608973bbcfa4054782c58bc643fea36bce255163468abd4d5c1d7c9b3a35c6"
+  },
+  {
+    "name": "seed-32",
+    "hash": "c75fb38ec7565b7cb0d142d7ba59e06a571b07b594385fdac2c2b24324d55029"
+  },
+  {
+    "name": "seed-33",
+    "hash": "78302b42295aa258e3e442c38485d0cc82f49c36e2410c9481e42ff7cf149c0e"
+  },
+  {
+    "name": "seed-34",
+    "hash": "6e5a111ea75ab79b4215e25784c7c89260652f0d1eef3a863c03c2935195717b"
+  },
+  {
+    "name": "seed-35",
+    "hash": "85a8fc8b5859a70c199d364f6f3e850f174ef4dab30e88a22398d9da121e784a"
+  },
+  {
+    "name": "seed-36",
+    "hash": "6bfc9a151c006d564e61be9e2340f58aeb4f03e717ceaa9f1ffe52aa4a14de59"
+  },
+  {
+    "name": "seed-37",
+    "hash": "f77dc34f679a8d23c4a1b35df154be2839eaeaa020db496493a9caca1b337037"
+  },
+  {
+    "name": "seed-38",
+    "hash": "4e70f1a129b3bfc589c1674f09af1ddd5be2a4fd765b4212db8a55aba00fe990"
+  },
+  {
+    "name": "seed-39",
+    "hash": "3aa56772e20d2748c625842886b2fc8e3cb9e86a5b965333e11899b6440d7c7a"
+  },
+  {
+    "name": "seed-40",
+    "hash": "22eeff601a9ab086d0b3a803f2f45b43831ebf78f49833117e98ddc23c20bb91"
+  },
+  {
+    "name": "seed-41",
+    "hash": "630f2d29de9b481c1ad2dc2497db441480fe16886034df2b911408bfd8c8b00d"
+  },
+  {
+    "name": "seed-42",
+    "hash": "3c176dbc4efbf93de3f93281a3bebd3578000549635f5fa292c8649726368155"
+  },
+  {
+    "name": "seed-43",
+    "hash": "e576a17cf8945a7595857f3a661b08d197f0bb2d44d6774fa09b09877da26a13"
+  },
+  {
+    "name": "seed-44",
+    "hash": "2806daf7b518f9a3b5f2b0e4adc4346ebd928274d5795e726ff2059e04a4e41d"
+  },
+  {
+    "name": "seed-45",
+    "hash": "a640bf468da9bb73ef11e7494200bad6b6bd54e07b7d1a20bbccf27ccd931f70"
+  },
+  {
+    "name": "seed-46",
+    "hash": "c6ad39c52b996fab64f1490dd0136b2e40b36355605e54afb5fc56c37ad23d43"
+  },
+  {
+    "name": "seed-47",
+    "hash": "b5cbe3fc8da93b10785d57c4a8ce5be1be118fdac81c3dd373bfb1dc5c33e2ef"
+  },
+  {
+    "name": "seed-48",
+    "hash": "f6cf93f68bcf030819acdc821bc74c447c2e708037a0852aae76656eba84a3f0"
+  },
+  {
+    "name": "seed-49",
+    "hash": "3e6e83853f5ded05d2763c3a3f5146b50043101ed082ca48227fee2ba2fc51e3"
+  },
+  {
+    "name": "seed-50",
+    "hash": "33996330f39197850eed20f3113993dbe74972d4977bc3e519b82724030a17ec"
+  },
+  {
+    "name": "seed-51",
+    "hash": "a9cb17b60608d308987aca37985531f1b666b8d5d31eb164925374680283e80d"
+  },
+  {
+    "name": "seed-52",
+    "hash": "675894f18bc1d83c8ab3c152f04351bada8142fa38c4452ae4ab9454b687465a"
+  },
+  {
+    "name": "seed-53",
+    "hash": "9c868778f2a333318c315d1a0ab835495171d5fd96f8cc72aa955cf84881a66d"
+  },
+  {
+    "name": "seed-54",
+    "hash": "7a7fd57a23ea7f46830dda9e25fa4ce05c02b0c4f613d7344a82b7e1d8d569b5"
+  },
+  {
+    "name": "seed-55",
+    "hash": "07638fe668ca5120117cc8d7a44185b8c1360eb6c3f06a3ea0b0b43dabf683b2"
+  },
+  {
+    "name": "seed-56",
+    "hash": "d78296dcd72bdec67d6421437a59143be77144e6872663ef7cd7e7bd08bbfcb6"
+  },
+  {
+    "name": "seed-57",
+    "hash": "f2a5b9f8fcbe6209a65d35faa5464927ecc23075b1c5b7088421f6cc7a4d7251"
+  },
+  {
+    "name": "seed-58",
+    "hash": "6f41768a1a6797a33e67754aa5c99fb574c0f0305ae01efc520b374ebe270987"
+  },
+  {
+    "name": "seed-59",
+    "hash": "1dd45a8219dab2a0a8afdffd083043c8be153e2d30b9e0dc5ce93aaa7b554ee5"
+  },
+  {
+    "name": "seed-60",
+    "hash": "56e7cb045485bea9120bc0c2b19da35c8e39eddb33911c6f9cbbf45851332a61"
+  },
+  {
+    "name": "seed-61",
+    "hash": "62aeebbfbc2a955b22bfeeee671ea63392eb2ecca4669d18a008d676a60dc4b3"
+  },
+  {
+    "name": "seed-62",
+    "hash": "b1aac89b249efb50b15358dad79939180564190ceb33cc691f724a9019504c3d"
+  },
+  {
+    "name": "seed-63",
+    "hash": "2d54b8552eadb08ef6b740a2122c4809c940cf6543dff24011711d77412b4c95"
+  },
+  {
+    "name": "seed-64",
+    "hash": "793a30c3e21aa5c74aa747e409d34edb0aea631d90e1759233a353a500e39023"
+  },
+  {
+    "name": "seed-65",
+    "hash": "25f240fea658d52c66425180ad417883e5aa2dfb4c988df2676953c6e1779275"
+  },
+  {
+    "name": "seed-66",
+    "hash": "d139524d6a01e12fa5cb258c80770b98e049065b90918e2a3b695affd5369737"
+  },
+  {
+    "name": "seed-67",
+    "hash": "dcc226790fb981a3ca54f05132fb41bbb03d61ea1f58a5c474a0b6136ed41ee7"
+  },
+  {
+    "name": "seed-68",
+    "hash": "203aee7ad3acfaa22826dd75aec4bd529293ee63cd3db6720d50c85a2ac8d4dc"
+  },
+  {
+    "name": "seed-69",
+    "hash": "be0e4efa01875c67c6c3d8d289450c686b408fbd331f928e37fba3c7786d9636"
+  },
+  {
+    "name": "seed-70",
+    "hash": "57237efc0abe268084c358a308da84732eedc9582317e62aedc8ee79e36f1e47"
+  },
+  {
+    "name": "seed-71",
+    "hash": "734b0ef53f490f9c2ec89b1feceebc22a26df34af332ee31f57e5663813d4bf7"
+  },
+  {
+    "name": "seed-72",
+    "hash": "46b087ea2c6fc48024e0f78004f7f45754f16450f7c37875d14a0949e08a3089"
+  },
+  {
+    "name": "seed-73",
+    "hash": "99189c9f30b43e5eae49ba2e7f273da1b540203dbf58df9215a87876d368b84d"
+  },
+  {
+    "name": "seed-74",
+    "hash": "399f1bd6f1a9be459c01b1cdf5705dec9e450f19ca44727f9ac53bcedb4e5ae0"
+  },
+  {
+    "name": "seed-75",
+    "hash": "fb45ac54bc3c6f054b36ebbf28178e8c13fc62797f135edaa9abc3a964beb508"
+  },
+  {
+    "name": "seed-76",
+    "hash": "c33a4c8ea5d98b27f766222bbb7fba3f7c93d3c6359ac0b7adaeef61b119de32"
+  },
+  {
+    "name": "seed-77",
+    "hash": "5aa5b459aa2f809670e630a4aab31c74111cc37a7a3f0a2459ed3892be823207"
+  },
+  {
+    "name": "seed-78",
+    "hash": "5e6db98fcc92a008a3f6e4e830a2c555fa4e0226bc0409907886be5d900b62ad"
+  },
+  {
+    "name": "seed-79",
+    "hash": "ec4992b073cf02efd02c50b699f3c23a0618942c90f6965cf55ff547f8346036"
+  },
+  {
+    "name": "seed-80",
+    "hash": "bf137ce50f744734c16434517572e15f1af3010065e18082065711365a1f3b07"
+  },
+  {
+    "name": "seed-81",
+    "hash": "7720be416d7f1d4a970c7637ddb435ae928ac8bb9ba9417f6d0cca12ea06251b"
+  },
+  {
+    "name": "seed-82",
+    "hash": "5e22d814fc170d37c3c328097b671c127d967eb7fa8bb534c7f67b79f2c67adc"
+  },
+  {
+    "name": "seed-83",
+    "hash": "1cd323bed5e0b25e866d9039e515de74899ae5f40013c1486128ef2919e7f69f"
+  },
+  {
+    "name": "seed-84",
+    "hash": "d5ce9dbca8d4be7d7695a96c00ea931e515b763c46d3f7b09f14a0a5c6e54079"
+  },
+  {
+    "name": "seed-85",
+    "hash": "0cb61ade7b6eec64463a56eeb3e3262cc04fcd77b5fbd016eafc493f6f04a194"
+  },
+  {
+    "name": "seed-86",
+    "hash": "d470f6c60c60789df12bd0df52971ed0206d7a6d6c126ba083ad657a869cef49"
+  },
+  {
+    "name": "seed-87",
+    "hash": "4ba3bcdd9e101f6fcd43fb004839ec3d8f63d4a9950d6077101491be1d9ebfdf"
+  },
+  {
+    "name": "seed-88",
+    "hash": "81f983862dc0dc7afc9603ec905c0681b39a4d800942fd0cb170938b5e9adf7e"
+  },
+  {
+    "name": "seed-89",
+    "hash": "d390dce2ce3a7f698a67a04f6c4565609a9a77692bc30a389ce9c46604cc0493"
+  },
+  {
+    "name": "seed-90",
+    "hash": "bd496c73b958c4f45a14589659e3b25ae991d9f1d3e63e696f69c778790b0a26"
+  },
+  {
+    "name": "seed-91",
+    "hash": "48d14d723cdcecdf300ef025eb592a57fa32e0593ccd9506445c0cb96baedb86"
+  },
+  {
+    "name": "seed-92",
+    "hash": "07003a135e21c187a3cc33c73578021f8d53c9d87a444fabbc532ddc0f4e3c99"
+  },
+  {
+    "name": "seed-93",
+    "hash": "362fee8f00524d0de7751509335d02d7d0ee108a0c8585598fe94b2fbd3574b4"
+  },
+  {
+    "name": "seed-94",
+    "hash": "c3b8839428b82f3d44919ac2f66cb3fee2d537a9f8943ab473b91988f22ca367"
+  },
+  {
+    "name": "seed-95",
+    "hash": "83bf4c721ccf49ccb747cac6beb679065d1b2cfc96c63ececb7c9e908425548b"
+  },
+  {
+    "name": "seed-96",
+    "hash": "4f056c2113dc9c340e11a08f49e40506cd320f9024689d0bf89292f154a592ff"
+  },
+  {
+    "name": "seed-97",
+    "hash": "73d5b23f5d2137547295e0c3248291e8a4df6813fec10535c4f988f453f1d6a2"
+  },
+  {
+    "name": "seed-98",
+    "hash": "45664f7edc42c495ba4f526a51e7c4dd5632b73c615dd0bb87f154cd4e1b031b"
+  },
+  {
+    "name": "seed-99",
+    "hash": "72613c525cc31142164e37d5c42b312b0c69640eebd4592924b2b4946bf61a14"
+  },
+  {
+    "name": "seed-100",
+    "hash": "36f565dded61d98aef1ae6b01f19d573aa31b95fc0ec020178163cd941e1c43d"
+  },
+  {
+    "name": "seed-101",
+    "hash": "255ef9347e95c88ad1973afc7fb123e5e03d9bb4c23a08e8c62cdc26d23d67f3"
+  },
+  {
+    "name": "seed-102",
+    "hash": "d90e88b1971ac7764da86ea1c131ec175f979ba29e55b68948123b93b131d76b"
+  },
+  {
+    "name": "seed-103",
+    "hash": "da6d62d15ca32a8146fb02faaf4c3f77948f881c9df7fc3f25f393dc72e2e94a"
+  },
+  {
+    "name": "seed-104",
+    "hash": "b8a51f703b555da2980d45ea885bb011a92754150da95207b96e022999525af2"
+  },
+  {
+    "name": "seed-105",
+    "hash": "5a4b20177f3492a944e56d129181ab6196c0618e2b1a1e119925b57f8c6bd866"
+  },
+  {
+    "name": "seed-106",
+    "hash": "7581a8245d8efaec251e0cfb67a0804da8d05324b13bd1ad7e3e86eed228f5e3"
+  },
+  {
+    "name": "seed-107",
+    "hash": "e4dce0779233894ae0164fc016335a917f6831d97c803399f881b8f083551043"
+  },
+  {
+    "name": "seed-108",
+    "hash": "1197bfd9f81a3db3eb77cd4b267dab0b15a4c952ec1928a8c2420672c8a83578"
+  },
+  {
+    "name": "seed-109",
+    "hash": "86dd02361ca1037ce9409491efc61adde263d550041ff9a305682ad0526a1536"
+  },
+  {
+    "name": "seed-110",
+    "hash": "d483d3e149f1e2510116c1ac172cf5d4df06e967a2469520d39856e6cd9a30bc"
+  },
+  {
+    "name": "seed-111",
+    "hash": "54f6be1241f73baa3f6e511c69908c2735325d06f65b18867e55a68e32245d01"
+  },
+  {
+    "name": "seed-112",
+    "hash": "40dbc64683b3efd6b4fff704f8cff2740ac3c77768aa7cbfd494fe0c09c5463d"
+  },
+  {
+    "name": "seed-113",
+    "hash": "a1687452ed18896dca2328f73c9328daa2f6b115ff1e810b2b745db99adc1a34"
+  },
+  {
+    "name": "seed-114",
+    "hash": "c73c5f6053da528fd7342de0e9f405f488f53443d8671342e1d9efdbee496de5"
+  },
+  {
+    "name": "seed-115",
+    "hash": "904c782d10a06589bfcdb638a83e2c43b3e2ee1fddecc55388bc5431dfa8f470"
+  },
+  {
+    "name": "seed-116",
+    "hash": "6c734d14799627d73e05850912dbe435c9ed9a40470442b35d1007c54e2c7050"
+  },
+  {
+    "name": "seed-117",
+    "hash": "4a3f5ccd050ec67e3a452e9a729972283a2aaabf90d828d01185767cd3de45e5"
+  },
+  {
+    "name": "seed-118",
+    "hash": "1e577ca3480eda07feb2d55961c33603abda83b9e35de18148ac3372c69b81c4"
+  },
+  {
+    "name": "seed-119",
+    "hash": "495172415f1adecbb5dcbad6265cd6bdedc87e01bcb3a3251d62dd65eabf092f"
+  },
+  {
+    "name": "seed-120",
+    "hash": "d4a80a7a691b05835f48c0f262d5109f6a331cbf023aa402b40fea9d4991bcaa"
+  },
+  {
+    "name": "seed-121",
+    "hash": "180f32fddb9eed5b9dd3e3a392944241271b66ea76105e2b24b915b826871eae"
+  },
+  {
+    "name": "seed-122",
+    "hash": "fa17a4f25fdd69c70906263ada5703b0cf707b446b02f37e5ca5af26d2413772"
+  },
+  {
+    "name": "seed-123",
+    "hash": "c2833e8c00484dfd39d35668ba3010c0b31a8fe43cc26a6fe09898df421553ae"
+  },
+  {
+    "name": "seed-124",
+    "hash": "6a4eb9ad487abe4bdde9f5c5d3abd8697cb63a5bb7b5bd5cf57456b1c12f1a11"
+  },
+  {
+    "name": "seed-125",
+    "hash": "1885f3ee4c3062ebbe695f46543c3d7159323f15a6252e5f7160b53c6e97b699"
+  },
+  {
+    "name": "seed-126",
+    "hash": "82d78dcf6e9c328afe19df9ad7c55770d66b5c1871a98e8ef8603b624b95d0bb"
+  },
+  {
+    "name": "seed-127",
+    "hash": "28b3f8be19f7104eac7dbb5652ab1e4b8cc3d16259aee2d9da83fd18810001f2"
+  },
+  {
+    "name": "seed-128",
+    "hash": "035dbced6b3212b71af6110f08c74a2ea964f5af0de6a2d9698524d1da35a466"
+  },
+  {
+    "name": "seed-129",
+    "hash": "28be7a3edda2e1edce8666a00ecd9e9c6a45938da8d7f2e5d7f9b5406cad879e"
+  },
+  {
+    "name": "seed-130",
+    "hash": "508e133284c0692a10b8648fe9fea2139e3b00153c1bc51010f584d79da0fd9f"
+  },
+  {
+    "name": "seed-131",
+    "hash": "667078416d064ef1e40bc5ee87c17c7f5ba25b19f1493995325ef0de3e716c1f"
+  },
+  {
+    "name": "seed-132",
+    "hash": "b105480f2cf0bfa23ab0894828f6a196e3ee7eea0fcced0461abd2792397b7b3"
+  },
+  {
+    "name": "seed-133",
+    "hash": "db8bb0b3a845caec85a0c3bccd0e0a3d040b3139eee31b56f87d2349eebb7aba"
+  },
+  {
+    "name": "seed-134",
+    "hash": "18e04c41f2ede9b9a6c6b66cd997b9de78723e8edd5a1430a532c62e3d281048"
+  },
+  {
+    "name": "seed-135",
+    "hash": "aa08ee7cdbc8979fccf2a2be404af2f8501d602d7d1e1fbd498df7e8b1e5e8e6"
+  },
+  {
+    "name": "seed-136",
+    "hash": "cc110432989e0e139d7f2713d0a69c0241b1bcee556e5053bc85106b8aedf916"
+  },
+  {
+    "name": "seed-137",
+    "hash": "4e8776065d4612bbf40eb06bab79fa729e5744a94f782a9e6d40af62f8a0df8c"
+  },
+  {
+    "name": "seed-138",
+    "hash": "74ca7cc2ee6332391343f18e28769cdbc0d01407f178a7149182242b8f958db0"
+  },
+  {
+    "name": "seed-139",
+    "hash": "21573273624de80dfc93c97cc09aea31dab54ea710bdaefb77d5f08506370ffc"
+  },
+  {
+    "name": "seed-140",
+    "hash": "d61d44cb39c47a2af0f9cad5572f8a4a9c32e06bed6c656f0b81281166d66132"
+  },
+  {
+    "name": "seed-141",
+    "hash": "cf5a7bd9950ebb54f0bb471f74ace0f0c939dfc1e535922b81292c1803e60807"
+  },
+  {
+    "name": "seed-142",
+    "hash": "815968d2dc0c5a3f839ad258087723b12edf21ee0622ac5f595096ead80c83cb"
+  },
+  {
+    "name": "seed-143",
+    "hash": "fff0bb610e61f044db55136dff8af0ca0da6ed00e02795b6846dc2ba5ec7159b"
+  },
+  {
+    "name": "seed-144",
+    "hash": "bdc114cac2e05353da7edbcdfd5ac069a2012044fb95e5c67bdc234b52faae68"
+  },
+  {
+    "name": "seed-145",
+    "hash": "00eca58c61097ddbac51cd0760bbded0c02d9ec2ab68149413396914977ddf08"
+  },
+  {
+    "name": "seed-146",
+    "hash": "01c284fb01805d73061b0cc7dc9edd92beb771b1d575b87c5963174d431ce3c0"
+  },
+  {
+    "name": "seed-147",
+    "hash": "6a6556efb2899a6d0c4197ea6188f9e7fd8b6adc1bc2781542783e5bce87cded"
+  },
+  {
+    "name": "seed-148",
+    "hash": "17fc136dc57fa1faf85241984680be31befc56a26e438d9c0a413a5c304fd003"
+  },
+  {
+    "name": "seed-149",
+    "hash": "cd80d61d6e502c6ed85789479492e653b1c9539495bec70d29132367a746d89c"
+  },
+  {
+    "name": "seed-150",
+    "hash": "cedd02847345d01d8f00a18cd2aef909f7628ba76f05fb3d4cd72151e65b5f26"
+  },
+  {
+    "name": "seed-151",
+    "hash": "23b08ddc93814478e999a75b20f9fe52afc139f0f0049936f2b9ad62f9e02616"
+  },
+  {
+    "name": "seed-152",
+    "hash": "090124f37b880a0fa82aeafe8b7d152d258704077512a07cfbc1ed4ba432c793"
+  },
+  {
+    "name": "seed-153",
+    "hash": "4c3b68919e4b1a80e5745709b134e16a9002aeebfcb028b6e647137192ba00fc"
+  },
+  {
+    "name": "seed-154",
+    "hash": "5591dd2526d8171657b7ff5d56d1c9e0d65dcca7ce2857c9c48bbfb9558ead73"
+  },
+  {
+    "name": "seed-155",
+    "hash": "e68711bc2ae8ba86001f9166b6b8cfb265564cc6e63d30cee7edb6fb2ac0d6eb"
+  },
+  {
+    "name": "seed-156",
+    "hash": "dbcedeff7a4f226123a4f905ce39675b74a7a459e7874ac2f79fb0294634acf0"
+  },
+  {
+    "name": "seed-157",
+    "hash": "c06ea892c9d127cd122b109bfc4edc4a318e272bb5cfdbfd7cb9c92e59355b47"
+  },
+  {
+    "name": "seed-158",
+    "hash": "90be20959b00745e3957063f6d704ac87cc90c5b07ee018e0076578ccc27e26c"
+  },
+  {
+    "name": "seed-159",
+    "hash": "2b2cbb3adef84cbb49a54d6eb8c4175bd50d3a102d6a1e4b1d160de6c4d6f347"
+  },
+  {
+    "name": "seed-160",
+    "hash": "fcaad4a25b80b88b5a3738449419f8150fe7aaef4c9d9bbf447d9015761ac4fa"
+  },
+  {
+    "name": "seed-161",
+    "hash": "d1620b77b17811c6f57303d7ae631ee01d285a8336f068ed9489c46c6419a22e"
+  },
+  {
+    "name": "seed-162",
+    "hash": "64c80ae9118ca9616e130385500a2fd010e0aa1eda2964767c815585f94b30db"
+  },
+  {
+    "name": "seed-163",
+    "hash": "37f572582748aff94942e966886c3f31339e7c74d50abb103037ef38fdbfa2bf"
+  },
+  {
+    "name": "seed-164",
+    "hash": "82b9f822d28482c3cce37b260e14323d40955d3ab83558a0906e77500b0bf4d7"
+  },
+  {
+    "name": "seed-165",
+    "hash": "c8bf0f7ac8b5f13f151220492b8a49a52f165a3764dfc84579592d1cabe6c8f2"
+  },
+  {
+    "name": "seed-166",
+    "hash": "191f812fc5d168ad6711ffc497c7d8cc2867be0825d752267c46dc4db86c30ca"
+  },
+  {
+    "name": "seed-167",
+    "hash": "ffce6fb99c80bb4a9efcd65989497539be858b86f749b82b0452a5f7fa3a68e1"
+  },
+  {
+    "name": "seed-168",
+    "hash": "a9b48b9768a485c1772096f205c0ece9df6d6dfedb24734980b45ddf97d88c5e"
+  },
+  {
+    "name": "seed-169",
+    "hash": "d15a86182a30cae2a42d50f2bfc9a4aa7c40a583b453b945de7480cad55c374b"
+  },
+  {
+    "name": "seed-170",
+    "hash": "4f6e0e0f2a33e11aef785f13795016008f32a2c6b92ed979d6ae9e345e3d16fa"
+  },
+  {
+    "name": "seed-171",
+    "hash": "c0c5342212c9ace3f9a597f1f790a2a391355ff407a6a133e9a2e4a67551b547"
+  },
+  {
+    "name": "seed-172",
+    "hash": "bd958087dab6e8d38c667835d8be4ae26c1fe4923ac3b777473e1abb6433999f"
+  },
+  {
+    "name": "seed-173",
+    "hash": "123dfc5f4f9711da192e6437ce06bdc0cbe4e977a07908538f886ea7994df4cc"
+  },
+  {
+    "name": "seed-174",
+    "hash": "da7c09c736d1da58d0358303ea22ffe7681cff6626efea5755f4b46e951922f2"
+  },
+  {
+    "name": "seed-175",
+    "hash": "2ac60c215ff6cec51f531fca31af1451270774732d7fcb3d260469c585283d0f"
+  },
+  {
+    "name": "seed-176",
+    "hash": "0c3d4a2ba46ba66190cbd05f06597f79903ea022e96ee52a4d96e5feaa79d379"
+  },
+  {
+    "name": "seed-177",
+    "hash": "bf74df821c690677534c3da369824098472990bb24a7c5f70ed58d62a703f573"
+  },
+  {
+    "name": "seed-178",
+    "hash": "06b3da237a5cde6f321ab78dc9368d001a801c227d3ab63e4ed772aedd192a59"
+  },
+  {
+    "name": "seed-179",
+    "hash": "23dee5c9ef4f766f5cbeeacb49c4431c92145b0876e645630b6c639807a4e611"
+  },
+  {
+    "name": "option-buyer-off",
+    "hash": "02354605afd8b44776d1f3e4ccd7eb63985c4f522e91e5589e68c0448391cd87"
+  },
+  {
+    "name": "option-buyer-error",
+    "hash": "e8fa109ac66a4080b6db085569a909aadf5005e2c407bbf3560ea0ee12256e22"
+  },
+  {
+    "name": "option-buyer-info",
+    "hash": "211cb7c649983431cd12c0089aadf9a6baafdcbc56f0b117b4866ce14164b477"
+  },
+  {
+    "name": "option-R1-off",
+    "hash": "93f7d9a211a24dc3b6113f59d33586c8b504ff15444cc0787ec3a2ec1dbf8cac"
+  },
+  {
+    "name": "option-R1-error",
+    "hash": "90ac47634f242d6947a757d550ef025b5dab2a47d72315dbecfcd3de7920c7e8"
+  },
+  {
+    "name": "option-R1-info",
+    "hash": "b8647aa7f6c49e144efa8269e802a01d93542ace7153c9d428e5b42fdf04c524"
+  },
+  {
+    "name": "option-R11-off",
+    "hash": "fb9cb24234843e9b3ccb02cd89be43ad340738163dde118cd0c1718e84db2b6a"
+  },
+  {
+    "name": "option-R11-error",
+    "hash": "607966f5054ad4fe875af5abf8dfee20f63a9b9182cccc906c8eaebc47fe06dd"
+  },
+  {
+    "name": "option-R11-info",
+    "hash": "d21063dde7d6567855a793724772ec630e6b4488d6b740747d4dade1a82952eb"
+  },
+  {
+    "name": "option-R9-off",
+    "hash": "45fbe3733cb0b612c85d0709622fde4308aab6fa5a3a85b45172c02f8d27e17c"
+  },
+  {
+    "name": "option-R9-error",
+    "hash": "369c9e028a28e6edd4abf1225cc6dfd57aa0ef8708a1963154d60a7a8f19503a"
+  },
+  {
+    "name": "option-R9-info",
+    "hash": "c6ba361d13485eae771084ac0bd6bbc3d51ce4075213e8c87989657b28e0f1d6"
+  },
+  {
+    "name": "option-R2-off",
+    "hash": "7b2127cde50e2cf18ab25bc02951c8f4ca0e36cd4facb62aeba9c5bd34dd21e8"
+  },
+  {
+    "name": "option-R2-error",
+    "hash": "5272993359fa62c4a53d2bb87afc03809ef99e733294c9bbb0ad0cddc5468e67"
+  },
+  {
+    "name": "option-R2-info",
+    "hash": "f25a3f58d9a3bc57c0e0cb9954bc7948f7a0f0901f997efdde3e259b7c0754d1"
+  },
+  {
+    "name": "option-R7-off",
+    "hash": "b4187f675cada32cccddfac6ee6d9cc666803193e65884d2faf0c2f308b8a757"
+  },
+  {
+    "name": "option-R7-error",
+    "hash": "1dd802beed8c3ae662658c505b5ff16fea92f3227933a2f785be944b88e0f8e8"
+  },
+  {
+    "name": "option-R7-info",
+    "hash": "92c1193c1c56a263812d7d0b0e7ed6452304421fa6358d4a61d0b53380655d98"
+  },
+  {
+    "name": "option-R13-off",
+    "hash": "69c9d466e46ccd1b17a0cf2fd311ff62cb888d836e6cd1ee882fa4196c982388"
+  },
+  {
+    "name": "option-R13-error",
+    "hash": "753dd889cea83428c43cb05ab9aa81c737fbd8080dcea818be7abdbc9e08d1ad"
+  },
+  {
+    "name": "option-R13-info",
+    "hash": "136f7c741ceb780e7ddebab03c3975360b737b2a8c129c00bc96f93d71b6bef2"
+  },
+  {
+    "name": "option-R12-off",
+    "hash": "98033966c166f133d9439831b8f44c9a417932fa4fccf982c64b65c3e98525e7"
+  },
+  {
+    "name": "option-R12-error",
+    "hash": "6954e289ccda7d75b0e1b4273ec0e5d82df81860993a0e7cf5363453233a84af"
+  },
+  {
+    "name": "option-R12-info",
+    "hash": "8ed84a23392691140204466f891dc5cba9fc4c1851f9c1caf18856b2390bccb5"
+  },
+  {
+    "name": "option-R4-off",
+    "hash": "81d8dbb4cfd88ab9bd096ebd18d86fa332fce7dcb97e76b88679f141bc62bc95"
+  },
+  {
+    "name": "option-R4-error",
+    "hash": "4c3d6c1c298ba2ca6bfbfd0b3e44142243292f63b6b6c066fbdf151a5afcf110"
+  },
+  {
+    "name": "option-R4-info",
+    "hash": "706dc25ccf17193045187daaccf98ff4e60e33c0bd59115d5dad8544c32a9cbd"
+  },
+  {
+    "name": "option-R5-off",
+    "hash": "2976cc692e2c28345377030032cefef2d828465561c0032074d3632d7be80046"
+  },
+  {
+    "name": "option-R5-error",
+    "hash": "c1e6ac9a182336666d30620b1abe80b119224651707ae81dfc9396b14119830e"
+  },
+  {
+    "name": "option-R5-info",
+    "hash": "80439d25d99a554c21cf58f7e829e16bd562ca3fc525237747e2a2e2efc9aa8d"
+  },
+  {
+    "name": "option-R6-off",
+    "hash": "11d0fc7413fad8d40162b57a513fa7948da210450079287f96728d8eda09fd63"
+  },
+  {
+    "name": "option-R6-error",
+    "hash": "521fd83de8f85a049bfd4cc426c80025f526cc26f0cf462ac676a257e3bf03a1"
+  },
+  {
+    "name": "option-R6-info",
+    "hash": "eba7c834ff8f466fa7467c263310e538091de380bea38620b069aa79459b69cf"
+  },
+  {
+    "name": "option-R3-off",
+    "hash": "34bcb12cc4f84159ae2d2089794c58331a34f26d03ef875f9298404795879f9e"
+  },
+  {
+    "name": "option-R3-error",
+    "hash": "8932044909015845d5a9026662885f2ceda1b2b19176e9de2049300e28766cd0"
+  },
+  {
+    "name": "option-R3-info",
+    "hash": "88709ffd84d09968d9b8560453dc6373810ba946bfe30ea0b8d4065bb1d54356"
+  },
+  {
+    "name": "option-R10-off",
+    "hash": "557ba3fdf951d131146dd8df2d48c934c867eb54cc4660b0039a35366c6ac0d2"
+  },
+  {
+    "name": "option-R10-error",
+    "hash": "387360c9421d4d74283c969455759d08a4fbb63eaf512f1e400f87386949bc31"
+  },
+  {
+    "name": "option-R10-info",
+    "hash": "d5455c960038dec069a58d20d050d8da95e4a43c92ef54dcbfa299e0646dbe28"
+  },
+  {
+    "name": "option-F1-off",
+    "hash": "9c86a67f488d49a48e489bcf53fa3b9f40f09d3d911977f44517eeaf4c8ec9c0"
+  },
+  {
+    "name": "option-F1-error",
+    "hash": "984e596b81a9f65f5dcb5268c143f42de5305a692c00c574ace3dfbf26d817ef"
+  },
+  {
+    "name": "option-F1-info",
+    "hash": "4dde3f4d88fc0f8a5f58c490ffe052f8e53b75d218bfada982b8e63eacfa056b"
+  },
+  {
+    "name": "option-F2-off",
+    "hash": "9bb4879a6787ff8dc97d23409e89ca83baedfe564f5b3a6aead7cb228cbd85fc"
+  },
+  {
+    "name": "option-F2-error",
+    "hash": "1c8a78b8896276a2c98baa124f8ff476e0ee072fbf40ff27938adafad756a31b"
+  },
+  {
+    "name": "option-F2-info",
+    "hash": "48221c7d230c145aecf992c54bde0ca03baae43d568d672de8899bcd5a48684e"
+  },
+  {
+    "name": "option-F5-off",
+    "hash": "4dfe4322c4fcfc5e5a5de2ee884dd5783b0bc96b49af661eda4e2c4542eb9640"
+  },
+  {
+    "name": "option-F5-error",
+    "hash": "796a157cfc5878aa590dfe5025f2f9662af06021a55613c62c564e7350786387"
+  },
+  {
+    "name": "option-F5-info",
+    "hash": "bf72e13fe534db07c3618c4f54c6f5550819b058a644498a0fd522546de46763"
+  },
+  {
+    "name": "option-F5-documents-off",
+    "hash": "32ade8a1b8e96d3864f1137d7e8b0a259e32f6f76981bacd46b31730c036cba5"
+  },
+  {
+    "name": "option-F5-documents-error",
+    "hash": "76446e7148a2aa63f4c1c9eef25a6466e4ee1ec8333b1d66cfbba63aa8677c4c"
+  },
+  {
+    "name": "option-F5-documents-info",
+    "hash": "0fbaac49560350741b54ce65c4a02e005040cb43b4cf8e3f84a1cde27d531dbf"
+  },
+  {
+    "name": "option-F6-off",
+    "hash": "cee0ecae5e0942e01621fb19746790169e64772e3b17798bc72d003bb5b03138"
+  },
+  {
+    "name": "option-F6-error",
+    "hash": "cebb38a30b35ceceb4ed4a9e0d2eaf146410b10ec39c322ad67a31a881745286"
+  },
+  {
+    "name": "option-F6-info",
+    "hash": "1e545e6f5e991233e29a1604784f4348a9954216380d308887706f1f36f385d0"
+  },
+  {
+    "name": "option-dup-off",
+    "hash": "480562e9956cce87732639ce9560a99f690dc20e02c3243e21c1be889e96cfd3"
+  },
+  {
+    "name": "option-dup-error",
+    "hash": "a1be6936354685f45e959e0db118be14dafe88bc9c2a498fc707daeb1e0ee776"
+  },
+  {
+    "name": "option-dup-info",
+    "hash": "0586ac93127210d9e7f942073f37067df56ba3d44ef6ce925e31e9a340d30490"
+  },
+  {
+    "name": "option-rejected-off",
+    "hash": "aa163a9b5be5357389795393abc8c300fd9f38d259ec88e5778a698c6feec5ff"
+  },
+  {
+    "name": "option-rejected-error",
+    "hash": "cd0cf0cda57edb5a9befa58e41bb49eb51e38115a2e5dfe0a3cdf8fb5c472b2f"
+  },
+  {
+    "name": "option-rejected-info",
+    "hash": "1ee35f955be693e733903c3ef87000b7fb11a061988f9924542fb83642771954"
+  },
+  {
+    "name": "option-expense-off",
+    "hash": "0b96b7a0baeb217aed61451c2ab4574cf90df23480eab935a255ba46b0362647"
+  },
+  {
+    "name": "option-expense-error",
+    "hash": "a9db0be4bcff49c9729a75da3dfe48e817c1cf4d610153519436e1cc61a3a223"
+  },
+  {
+    "name": "option-expense-info",
+    "hash": "9b468e007e76aab7c3ce3526d56e7a606581ead9b521585307d8f392018c2b73"
+  },
+  {
+    "name": "option-parse-off",
+    "hash": "9be95ad4366fa4820217d04733a35c0a7b74daed9ddac5843bf36eca8cbaf295"
+  },
+  {
+    "name": "option-parse-error",
+    "hash": "c712837de97c7842b7567584ee25273a2e59a6cd3222befa36f8ef202bd9b0ba"
+  },
+  {
+    "name": "option-parse-info",
+    "hash": "f55b5d67cad7e3fc4f1bd62e5b0813a324de449b2b2d7ff2545c8350d7eab7c6"
+  },
+  {
+    "name": "option-manual-off",
+    "hash": "4ee87bc6143eacb97c59433207b1b7793a35c3b6733508b4c0670701e5b21145"
+  },
+  {
+    "name": "option-manual-error",
+    "hash": "94768439121d1bc1797049d741073875524dbfd979e1698469b5ac1f2bd7dae5"
+  },
+  {
+    "name": "option-manual-info",
+    "hash": "1019823c77640761042992124bb0ff28516aab6b45a7232447aab0d972c63114"
+  },
+  {
+    "name": "option-ofd-off",
+    "hash": "60db40bb2f2fd658bac9f500ae27e7b83d86851bd7a16f9c0363ada380b45d6a"
+  },
+  {
+    "name": "option-ofd-error",
+    "hash": "5f095bf34c5a8e102452d99304efafe937e9df9ec69d9afa1fa176da612decc5"
+  },
+  {
+    "name": "option-ofd-info",
+    "hash": "460ea9e91a0b47e8f3f98b172c7674c747c436e73a3f510c0548d38605e80ea0"
+  },
+  {
+    "name": "option-unrecognized-pdf-off",
+    "hash": "b837748e215433e7b9cfc5fa1d29a709963ccb88865c3ebd3e84121ba2a88ce6"
+  },
+  {
+    "name": "option-unrecognized-pdf-error",
+    "hash": "27d0c57a32dadfb5fb612e9fd91ffb9ca26bc7b8b56c1037abcf5c6c6687066a"
+  },
+  {
+    "name": "option-unrecognized-pdf-info",
+    "hash": "e5a3d0c9bae622f88c1d1e8a06f2716c5071d9f795a05958d9153f0981058286"
+  },
+  {
+    "name": "option-L1-off",
+    "hash": "b56bb7fe729580c32df2cc986b246e6154209a88249611870a17a83c5da1a0c4"
+  },
+  {
+    "name": "option-L1-error",
+    "hash": "023f8fe417130f324d74bc677b378c874bd75bf8a6fd8ecaaae9457ecff8485e"
+  },
+  {
+    "name": "option-L1-info",
+    "hash": "d40b0b0665260fec6f7a60afe1a536a29a26c28930e453e254cf62008c9a88f3"
+  },
+  {
+    "name": "option-L2-off",
+    "hash": "e4f8fa7263006c4671cc79877cde177cd62b2fae70cdb73ecb54a6171433c36f"
+  },
+  {
+    "name": "option-L2-error",
+    "hash": "b0d8fca44e400a4c623292214bf6f75a0b39d9e88f1601b3f94ce3c5000205fa"
+  },
+  {
+    "name": "option-L2-info",
+    "hash": "da6f184fe8864145ccd981713bed11a2ad46a21286f4890cdcc85b864bd218a6"
+  },
+  {
+    "name": "option-L3-off",
+    "hash": "db9a0e560a5c957b02b5d1297ec223e26a8ac480b8014996b986cf21407c7e90"
+  },
+  {
+    "name": "option-L3-error",
+    "hash": "2636634208826a5184c5cb70bb781e5d6a520d26d9a2a3bccc72f64293ad2055"
+  },
+  {
+    "name": "option-L3-info",
+    "hash": "8de8a661aab0c98846be6df4715a6f2736d808f9daea91bdb1dfc8422e28db4d"
+  },
+  {
+    "name": "option-L4-off",
+    "hash": "a4de6c606f0f43f161bc245110ba4b84f1849ef4dab847a384218eb43938ef37"
+  },
+  {
+    "name": "option-L4-error",
+    "hash": "fcd2f03c4516db77a86791a554ab04034278c4c85bd1c8cc0d12cc28d424a58f"
+  },
+  {
+    "name": "option-L4-info",
+    "hash": "1ecc46c4797be2c4871ed6f37ad7482f152a417e62eb5ece66e6247afc383402"
+  },
+  {
+    "name": "option-L5-off",
+    "hash": "9a9da588e97ed7012153b41a09e2845fb36314fcff5132fabe7165cd23582a9a"
+  },
+  {
+    "name": "option-L5-error",
+    "hash": "8ade8656f65c52fb6056b22efc1efecf570d426eb722955267eeef87542b18ea"
+  },
+  {
+    "name": "option-L5-info",
+    "hash": "892997f692b4971720ec9d5930941fe5531513586ba30f565ddc45e61f1b4e24"
+  },
+  {
+    "name": "option-L6-off",
+    "hash": "0ef9d9c9c59ad5c790bf8577877f9ab586467c68bbee3a15fbceaf7310f3e311"
+  },
+  {
+    "name": "option-L6-error",
+    "hash": "37afa88ea636d768c0d8ae5f45e27874a041ee12d8df88b52cc10052d12f1700"
+  },
+  {
+    "name": "option-L6-info",
+    "hash": "353ec64c9100e0c08ef0a66fb6b028a2963a78145ffb5cffe322d89611c46b3a"
+  },
+  {
+    "name": "option-T1-off",
+    "hash": "8504d59ebfda21d96dc2c8aa0b4e5bd29ee09346b0e39e33dd462b7729c74489"
+  },
+  {
+    "name": "option-T1-error",
+    "hash": "e3277e9a3169001e271fb14c5f330e8fdf0dbdd414f7c66cd41a1719a8304277"
+  },
+  {
+    "name": "option-T1-info",
+    "hash": "e93fc4f77bfa7be5046979a50f6fcdd9e6f493cf34da8ed76772f4ddbcd79fc0"
+  },
+  {
+    "name": "option-T2-off",
+    "hash": "077fce805892ea429479d60d52b41f58edb1e411ff2792ba0e918d1cc02008ac"
+  },
+  {
+    "name": "option-T2-error",
+    "hash": "06a6489bf79bae8e8ff2528b3a7382cac15d3b3e8d84003cabaed66a9cf69e39"
+  },
+  {
+    "name": "option-T2-info",
+    "hash": "467c27b570c24939bdf65e89e16ef9c348a9c424069600f091a191f21511662c"
+  },
+  {
+    "name": "seller-tax",
+    "hash": "f499201cb88029d5f059d1feba77f9d8f37e05cdfbc35a65f6092e0d7721375d"
+  },
+  {
+    "name": "seller-name",
+    "hash": "071c5a8617a31dcbcf397aaf48faff66ce822f7004d9e9444e2e80481d6d147e"
+  },
+  {
+    "name": "seller-unique",
+    "hash": "9e5dd704ac7c7d7605e1dae3e1e774257c3d544ddf91d7c315edd6a0c4a88cfb"
+  },
+  {
+    "name": "seller-ambiguous",
+    "hash": "468c7ee401ef61ebb8c1697b8c71b6b241d1575f1dc732a8abacf66cd8d944b0"
+  },
+  {
+    "name": "seller-missing",
+    "hash": "16315dfde814c76b0919c51cbda98608539959f97d893ac6b56b8abd44f6d008"
+  },
+  {
+    "name": "seller-date",
+    "hash": "544801512b62b8361dbaf1f70dbe8ca32caed2d79e3c74ce85cf67679e0ed34d"
+  },
+  {
+    "name": "seller-whitespace",
+    "hash": "7d97636358d6e0dbc4816b2982d6639758afe5dad061392a52a307397126b3c4"
+  },
+  {
+    "name": "empty-AI-false",
+    "hash": "de5724dc516faedd35e428c57a323dc48d1a8695cec9d5cb0925cc3cdf97135e"
+  },
+  {
+    "name": "images-AI-false",
+    "hash": "8d72abd1330e7ed1dd6bac8742e4b94ffc30f05d82af08aa5f2bb49c798fa1f9"
+  },
+  {
+    "name": "empty-AI-true",
+    "hash": "6a455549c7d990b44fc2bbcc8a414ea726f699f1526dc059b014e21c26c8fa14"
+  },
+  {
+    "name": "images-AI-true",
+    "hash": "04a7044406e3d52df218b5cf7fa24940e666368a7a018695b11205b1f880ce9f"
+  },
+  {
+    "name": "empty-普通-false",
+    "hash": "c7588213e503528e045c060a39b3554bee4dc932b029280a60d180191eba2e82"
+  },
+  {
+    "name": "images-普通-false",
+    "hash": "9ca531a27292be1661cf5b13523799dbea814f10622eb1f1c5d6f57f3c7ad500"
+  },
+  {
+    "name": "empty-普通-true",
+    "hash": "07850cc9d05ca65072d8dfb90878f6d15f6725885a0750597c331c8faca44253"
+  },
+  {
+    "name": "images-普通-true",
+    "hash": "bc8e1ca428e9b2ce3a5afffe2f9918f7570975ba86ca9225f9d72a5a3633d173"
+  },
+  {
+    "name": "cross-formats",
+    "hash": "211a609814c8cabc846d412d561f685aedc7e57402cfa166f9a4e1410aaa8498"
+  },
+  {
+    "name": "cross-same-format",
+    "hash": "3825513f4758c6fa76887c396dc538d1403d4ad6c3cebec6ec46a4f888f7a9ad"
+  },
+  {
+    "name": "cross-directories",
+    "hash": "d83cff6e706ca3feac41dc6c8a137a45cf2c91e57f6dc2b4a8f4666290c452fa"
+  },
+  {
+    "name": "cross-manual",
+    "hash": "a5ef5a29825e7f010f1b2255f5b4421d84560c78e19b6ea4429fb58890299b66"
+  },
+  {
+    "name": "cross-recorded",
+    "hash": "837f3a878b83af74848595acf6608f1191f17d372f7819f3655be5a1513945ee"
+  },
+  {
+    "name": "cross-inferred",
+    "hash": "8a7dc842c0b8f7a099dc1a40d898c7bfb578a02350f693c572b2d511f889eff4"
+  },
+  {
+    "name": "cross-history",
+    "hash": "e468a742b884bf1da6efa32fe36dc249c161c57a62f6a67739f85b342f7892f4"
+  },
+  {
+    "name": "cross-other",
+    "hash": "0d6240fa4ec45c0b05ff8fb102b400b8275852efdba5698df5160521680c0bf3"
+  },
+  {
+    "name": "cross-submitted",
+    "hash": "8f8e56ea0d2b41dfbf2653d087f9cee5f750fac0068c22c5cbbc695c869aa523"
+  },
+  {
+    "name": "cross-self",
+    "hash": "c3929efb26668631a98cd907452c955070acf8a5f345a1e2a33a5253ab839fc2"
+  },
+  {
+    "name": "diagnostic-parse",
+    "hash": "5b5719836c6500f9ace1940fc46ee53bc1b827c0204bab1334204a78f287f91b"
+  },
+  {
+    "name": "diagnostic-manual",
+    "hash": "87cd79e19663680651384207a2c2b2acce8db4febbc6bc1174d1a848d8c69731"
+  },
+  {
+    "name": "diagnostic-ofd",
+    "hash": "a1b82049a732212e49ff70272feef4a5963fa7956b391727c031a166ba8e6f04"
+  },
+  {
+    "name": "diagnostic-unrecognized-pdf",
+    "hash": "3de37cc6833f7efe5ccbf2901324d7b978a2c3e9169733f0e4bf7b434d851fc2"
+  },
+  {
+    "name": "edge-inventory->=--0.01",
+    "hash": "32bf0c96a4d363b4ad6f12a682e63abc22bb8138bc6376ebe807145f2dba0a3a"
+  },
+  {
+    "name": "edge-split-inventory->=--0.01",
+    "hash": "6ee380896bb6f0ab4ceadbf533c123bbd4eae9d07ae0f71961b6ad4f10a7babd"
+  },
+  {
+    "name": "edge-inventory->=--1e-9",
+    "hash": "0b2d2f1359b6c536b07b8be56d84505e7d105918a1562327a0bd7b383d1dfeea"
+  },
+  {
+    "name": "edge-split-inventory->=--1e-9",
+    "hash": "5a1699f2b1064b3b1f6ac9e383be4e0ec6fd78ebab365c2f87462ce0ccde53f2"
+  },
+  {
+    "name": "edge-inventory->=-0",
+    "hash": "8d8a21c5a3d3bea48a8d2da4480e20cd0bbdad4c4459d3405e8dc0702328c727"
+  },
+  {
+    "name": "edge-split-inventory->=-0",
+    "hash": "6e37b0d228f2a43a84124fe1f9b1dca46374ad6c2958ef4395468dd6e94ed9d0"
+  },
+  {
+    "name": "edge-inventory->=-1e-9",
+    "hash": "7096eb8819e1ac040a93b1bd5e5b5919db0c4a0e0d53aad816e3ca70d87773e6"
+  },
+  {
+    "name": "edge-split-inventory->=-1e-9",
+    "hash": "9449c59297c483bf5f6191a8b414ff51a4f29387a1d63bd214ef24c8809082cf"
+  },
+  {
+    "name": "edge-inventory->=-0.01",
+    "hash": "45bdff33e873f744811ef61c132a03f3ca19e0eb3e041babf95e555229f77aec"
+  },
+  {
+    "name": "edge-split-inventory->=-0.01",
+    "hash": "a86b64357d8a1f57424577de6d1f7899786822247a708cd5f3378aca753eccf6"
+  },
+  {
+    "name": "edge-inventory->--0.01",
+    "hash": "32bf0c96a4d363b4ad6f12a682e63abc22bb8138bc6376ebe807145f2dba0a3a"
+  },
+  {
+    "name": "edge-split-inventory->--0.01",
+    "hash": "61d951717f1dbb46e6c28ea5c62cdf2af1a43f9b1ef1b6d22efaa8b814d5f6c8"
+  },
+  {
+    "name": "edge-inventory->--1e-9",
+    "hash": "839b205b83f18875bffbfc68e47ed0e5d966e79794f38b485bf6d4a26ffd4658"
+  },
+  {
+    "name": "edge-split-inventory->--1e-9",
+    "hash": "4a7026da87a3080aab1cae0c99a42f1d6c5c8cac4e4969de8dd4f7d081984f00"
+  },
+  {
+    "name": "edge-inventory->-0",
+    "hash": "d375b4c9dd51818faff437afd9ac1961793907eff169b3208c470a738600da77"
+  },
+  {
+    "name": "edge-split-inventory->-0",
+    "hash": "f47032f2cb63bdb04ad031f68bac59c399a7a224700b7968b6728d00b18c5cc8"
+  },
+  {
+    "name": "edge-inventory->-1e-9",
+    "hash": "cfcdea129311b0c994050cdff0af61b9f388883b51ac3a21dfb772b085077a6c"
+  },
+  {
+    "name": "edge-split-inventory->-1e-9",
+    "hash": "77bc6490e766a53549159f347b2df046e336f317a17ca195f619786258e99cf9"
+  },
+  {
+    "name": "edge-inventory->-0.01",
+    "hash": "45bdff33e873f744811ef61c132a03f3ca19e0eb3e041babf95e555229f77aec"
+  },
+  {
+    "name": "edge-split-inventory->-0.01",
+    "hash": "a86b64357d8a1f57424577de6d1f7899786822247a708cd5f3378aca753eccf6"
+  },
+  {
+    "name": "edge-payment->=--0.01",
+    "hash": "5a402fabb774107ebfa73204eb9268a131e7a5d50f1c1c739189fc12d16ebc15"
+  },
+  {
+    "name": "edge-split-payment->=--0.01",
+    "hash": "cb4b52dae713569a61220c4eb2e09dbed1bbc3a600d40dd7cb7359c586464200"
+  },
+  {
+    "name": "edge-payment->=--1e-9",
+    "hash": "480676fa84523919125ddec0c4190c759c1495da797f353e97029b119b2e02ee"
+  },
+  {
+    "name": "edge-split-payment->=--1e-9",
+    "hash": "cf0008e811dc5f1a065b466fac68aae54460a02d73689a1b7c6b8127fefe3b98"
+  },
+  {
+    "name": "edge-payment->=-0",
+    "hash": "66cad41811cf0deb79c28aacc4744a247b9637078e3f79ab72ae3a7d3eabd5cf"
+  },
+  {
+    "name": "edge-split-payment->=-0",
+    "hash": "07691802f16021560958f7a70b2f0dcccf90dea211dbd52f7397c73deee1c0b1"
+  },
+  {
+    "name": "edge-payment->=-1e-9",
+    "hash": "9d4f96c2a6aea5d0bb51b72d7bbab568efb305fb53b8809a4c55c7a0fb33e74f"
+  },
+  {
+    "name": "edge-split-payment->=-1e-9",
+    "hash": "a0480943f51af02dfe8fd5c9a010b3700318d07344577ca2f9212c2e5342ce83"
+  },
+  {
+    "name": "edge-payment->=-0.01",
+    "hash": "cbe0027ef0970601c0a1afdd892ae723a92af59c9a7713ac077076c861f624db"
+  },
+  {
+    "name": "edge-split-payment->=-0.01",
+    "hash": "5151f46c2f4ee2ea61cfe37ba419115b0a0a5874fc24316e44d6b5e8ee07492e"
+  },
+  {
+    "name": "edge-payment->--0.01",
+    "hash": "5a402fabb774107ebfa73204eb9268a131e7a5d50f1c1c739189fc12d16ebc15"
+  },
+  {
+    "name": "edge-split-payment->--0.01",
+    "hash": "90b460fb396682d4e0402827f5e2a6ddd26b75db28608dbe85ab16758cc87b48"
+  },
+  {
+    "name": "edge-payment->--1e-9",
+    "hash": "c1422205c06c8760a4ceb7a54548db29fb3ad08a61dd9908da8ec359d76e3598"
+  },
+  {
+    "name": "edge-split-payment->--1e-9",
+    "hash": "cc2644fefe3129a710425ceb35587585dd8399efa778ccc6c84cf3a2fd69a5d2"
+  },
+  {
+    "name": "edge-payment->-0",
+    "hash": "b8e293c172db7d87f6dce2c7066f62ad46a3f1341415e5c254fcceefc50ff69f"
+  },
+  {
+    "name": "edge-split-payment->-0",
+    "hash": "d6467c1887d14badb3cb6e11d933c2ea62e990d10c78a6ab4f940cbd3d422358"
+  },
+  {
+    "name": "edge-payment->-1e-9",
+    "hash": "81ac659b3a23cae68d296bcc39cabfd528c4e1d167ee12f94531ce83f6cbe048"
+  },
+  {
+    "name": "edge-split-payment->-1e-9",
+    "hash": "06b905712ef15cc01e069b1a87c1e36ae45ac047b1964c3acf4fa169e9f29429"
+  },
+  {
+    "name": "edge-payment->-0.01",
+    "hash": "cbe0027ef0970601c0a1afdd892ae723a92af59c9a7713ac077076c861f624db"
+  },
+  {
+    "name": "edge-split-payment->-0.01",
+    "hash": "5151f46c2f4ee2ea61cfe37ba419115b0a0a5874fc24316e44d6b5e8ee07492e"
+  },
+  {
+    "name": "edge-verification->=--0.01",
+    "hash": "0658d3fe07939e680a8e9b566904b2794f221f330ef4d4d9d70c239c36636285"
+  },
+  {
+    "name": "edge-verification->=--1e-9",
+    "hash": "e023a2bcf5e4a98ffa3053b9f1bd1e20b7069bc9daaa423a9d7728d442f138cf"
+  },
+  {
+    "name": "edge-verification->=-0",
+    "hash": "abb182be8eb59094d1bda42888cfef205b1566c4f9a1f381a4365b2ee9805f55"
+  },
+  {
+    "name": "edge-verification->=-1e-9",
+    "hash": "6405b0eec7ec47d5071da28346626c31f1effa70031802be24bd2ac06209b847"
+  },
+  {
+    "name": "edge-verification->=-0.01",
+    "hash": "dbe0e2450ceba180d94833115f3f652cdf5e37b7a3f1f01b502b548b14d001f0"
+  },
+  {
+    "name": "edge-verification->--0.01",
+    "hash": "0658d3fe07939e680a8e9b566904b2794f221f330ef4d4d9d70c239c36636285"
+  },
+  {
+    "name": "edge-verification->--1e-9",
+    "hash": "d4cd44bcfac81e661754e4a44a806b986f5b8d292a69ed65dc6d0eb9e1c2c1b5"
+  },
+  {
+    "name": "edge-verification->-0",
+    "hash": "cf9efe3c04ccdce1553ad8e817a1b1926ad0349456f67e1050dcd8d23c74d29b"
+  },
+  {
+    "name": "edge-verification->-1e-9",
+    "hash": "66daede461b5e3be30716cf9f3f837dfc92cfa9d857c2022baeb0e4b27620f25"
+  },
+  {
+    "name": "edge-verification->-0.01",
+    "hash": "dbe0e2450ceba180d94833115f3f652cdf5e37b7a3f1f01b502b548b14d001f0"
+  },
+  {
+    "name": "edge-highUnit->=--0.01",
+    "hash": "5a402fabb774107ebfa73204eb9268a131e7a5d50f1c1c739189fc12d16ebc15"
+  },
+  {
+    "name": "edge-highUnit->=--1e-9",
+    "hash": "480676fa84523919125ddec0c4190c759c1495da797f353e97029b119b2e02ee"
+  },
+  {
+    "name": "edge-highUnit->=-0",
+    "hash": "66cad41811cf0deb79c28aacc4744a247b9637078e3f79ab72ae3a7d3eabd5cf"
+  },
+  {
+    "name": "edge-highUnit->=-1e-9",
+    "hash": "9d4f96c2a6aea5d0bb51b72d7bbab568efb305fb53b8809a4c55c7a0fb33e74f"
+  },
+  {
+    "name": "edge-highUnit->=-0.01",
+    "hash": "cbe0027ef0970601c0a1afdd892ae723a92af59c9a7713ac077076c861f624db"
+  },
+  {
+    "name": "edge-highUnit->--0.01",
+    "hash": "5a402fabb774107ebfa73204eb9268a131e7a5d50f1c1c739189fc12d16ebc15"
+  },
+  {
+    "name": "edge-highUnit->--1e-9",
+    "hash": "2323a9a0612759539cada7ccf0cd41cfc852c7f0ed3f6d1cf8c573d55a707e5e"
+  },
+  {
+    "name": "edge-highUnit->-0",
+    "hash": "a4b08c3e02098f685fc12fce1e409a62538b73625a029267b6820dc9d6d9dcbe"
+  },
+  {
+    "name": "edge-highUnit->-1e-9",
+    "hash": "03dc36262f104e2ae2352fc44c7d6c90b1ca5f1551b61ac795c2009959d20ef9"
+  },
+  {
+    "name": "edge-highUnit->-0.01",
+    "hash": "cbe0027ef0970601c0a1afdd892ae723a92af59c9a7713ac077076c861f624db"
+  },
+  {
+    "name": "edge-highGroup->=--0.01",
+    "hash": "775b74ebe2d8fcc5066daad052444692fa9fb4773082e9adcd1813b081d39cc5"
+  },
+  {
+    "name": "edge-highGroup->=--1e-9",
+    "hash": "20a46394c9b7b0f69158afc86d47b373f51912560e9fbd5be7591fc760f76752"
+  },
+  {
+    "name": "edge-highGroup->=-0",
+    "hash": "f2385676fd92beda7934204b7f03df690b1fde75bdbcaee861209bc14167969a"
+  },
+  {
+    "name": "edge-highGroup->=-1e-9",
+    "hash": "9d237ae1e74e6d63f14287fa7380b8d97f6651943ea1717bba2c36ac14678030"
+  },
+  {
+    "name": "edge-highGroup->=-0.01",
+    "hash": "ec2dbe1ec92f816274612549dedc7ff993cf0a0efa1e344ee1fdeb9dae95ae03"
+  },
+  {
+    "name": "edge-highGroup->--0.01",
+    "hash": "775b74ebe2d8fcc5066daad052444692fa9fb4773082e9adcd1813b081d39cc5"
+  },
+  {
+    "name": "edge-highGroup->--1e-9",
+    "hash": "f273b395e05d6c6a914b860229401dcbaee12860b2322ad796e5e5ce0a9be8c8"
+  },
+  {
+    "name": "edge-highGroup->-0",
+    "hash": "1e55e12708b5e1f5026c1571cc84260452baa482dc91f2f85a41ee6b91d0978e"
+  },
+  {
+    "name": "edge-highGroup->-1e-9",
+    "hash": "3927a60331819cb777a52e1785e64f7fd649cf2a6403f4f89066dabeb9aebce8"
+  },
+  {
+    "name": "edge-highGroup->-0.01",
+    "hash": "ec2dbe1ec92f816274612549dedc7ff993cf0a0efa1e344ee1fdeb9dae95ae03"
+  },
+  {
+    "name": "edge-outsourcedContract->=--0.01",
+    "hash": "e0a75894b2dc1a99c5a5b4389f9a4dec5be8a0d9d9288f97c12950e858095543"
+  },
+  {
+    "name": "edge-outsourcedContract->=--1e-9",
+    "hash": "6f1fe699374793c84641b939ebeed7a6864acb87b366991d46afe261747e4512"
+  },
+  {
+    "name": "edge-outsourcedContract->=-0",
+    "hash": "018e3a383b92be8bc18f623373f35eb43619360b07e768b5027efeef6493e317"
+  },
+  {
+    "name": "edge-outsourcedContract->=-1e-9",
+    "hash": "987ee1b6f253d7002df7c66ed22807888c041234d3458927e8f17595e30b5628"
+  },
+  {
+    "name": "edge-outsourcedContract->=-0.01",
+    "hash": "d4584730d2f20b025aab600e694ad77c7c123f86d07096f2144cade29ebea666"
+  },
+  {
+    "name": "edge-outsourcedContract->--0.01",
+    "hash": "e0a75894b2dc1a99c5a5b4389f9a4dec5be8a0d9d9288f97c12950e858095543"
+  },
+  {
+    "name": "edge-outsourcedContract->--1e-9",
+    "hash": "b9283829e6b85c93b7858f5781e298ec8600d1fcaf0ab4a2aa88648aa40cf29f"
+  },
+  {
+    "name": "edge-outsourcedContract->-0",
+    "hash": "300801ac6e6864287467c27affb1fc4578919363d684eebaa3583892b833eff1"
+  },
+  {
+    "name": "edge-outsourcedContract->-1e-9",
+    "hash": "76072962df88eeba7b323c0f0718f8730a98f76cb126f5cb9b816135b2344c49"
+  },
+  {
+    "name": "edge-outsourcedContract->-0.01",
+    "hash": "d4584730d2f20b025aab600e694ad77c7c123f86d07096f2144cade29ebea666"
+  },
+  {
+    "name": "incremental-rounding-166.665-166.665-166.665",
+    "hash": "9b428f2b20d91839ead759be77ca4fe581cf3d4d7198355478214b9863a29dcf"
+  },
+  {
+    "name": "incremental-rounding-0.005-499.99",
+    "hash": "c06dd937a14c2045a3bcc0efd69e6e9c45d2d81465aa48276a863795afe02805"
+  },
+  {
+    "name": "incremental-rounding-333.333-333.333-333.333",
+    "hash": "ce97c8a76964cf7d2348ce7d6b9dfbd2a7c6503ca32fe1844f4bc7c577b6d5bd"
+  },
+  {
+    "name": "delegated-mixed",
+    "hash": "35666350e51eae98828f6f2030d916e739c7b4134965bb1eed986666edcf87b5"
+  },
+  {
+    "name": "delegated-all",
+    "hash": "45d3670cb5b2a4c5cce492a49ba057b527434d8f0d2e4ea07fd59f343d991227"
+  },
+  {
+    "name": "delegated-empty",
+    "hash": "80dfcace296615dfcfc0a0c2257dff5a7e213182b9a58df872829294f6de1641"
+  },
+  {
+    "name": "delegated-ai",
+    "hash": "cb631b76514e2fc20aae2594076290c043215d69ccfe41054cbfc795f7d0587b"
+  },
+  {
+    "name": "delegated-foreign",
+    "hash": "7818f5af2b0a15de0e993f4632c6b55c80cf882a60f2e5e3cb933a57038a2913"
+  },
+  {
+    "name": "delegated-missing",
+    "hash": "624b7c92d223c7de57eb665f87b5ecceee11e2e0bfdef10c4c7e310ce3a97188"
+  },
+  {
+    "name": "delegated-names",
+    "hash": "f6ba7e21a4e3adfc67e6c0b07b69846639a11f63e3a2a7dc27fd9d621a8ce9b1"
+  },
+  {
+    "name": "high-value-mixture-false",
+    "hash": "58b97d98a7649c7cce15df3c57f410cd89b173dab5f579c580d547282d2fa09f"
+  },
+  {
+    "name": "high-value-mixture-true",
+    "hash": "0fd186fde072d7a5286904a97fb451db1b3ccb69e37b70c88c0e0430d62d83b9"
+  },
+  {
+    "name": "payment-subset-AI",
+    "hash": "6d8349bc7f88e624674974981c3dd007e45e77748b187915780b9a4678c2a1d1"
+  },
+  {
+    "name": "ai-flag-AI-false",
+    "hash": "3b66dac26a141646c7d2572c049694f86bd870d51c49e39cb153a1c9a2dbfbc9"
+  },
+  {
+    "name": "ai-flag-AI-true",
+    "hash": "fdf0a6a3c7895f301569dc75d0518ca29dc3a4b1b66141cb39656740f6fce255"
+  },
+  {
+    "name": "payment-subset-ai",
+    "hash": "57ca672664625ca4bf4d18d81f6da263c7aa6e5071d5cd938d776bb8f116ed93"
+  },
+  {
+    "name": "ai-flag-ai-false",
+    "hash": "6982f069ba9c5dea3eef46db83d7a311ee4c14604e8af31d392ba5dfb4302d62"
+  },
+  {
+    "name": "ai-flag-ai-true",
+    "hash": "039edad1c1350391f222ac0e065c5c971d02d1532d796d44bce220092ee25041"
+  },
+  {
+    "name": "payment-subset-AI其他",
+    "hash": "bd5a85dbfb196af4ebe02b48fabbe8f6e47b1405c685a340b149d5334c983717"
+  },
+  {
+    "name": "ai-flag-AI其他-false",
+    "hash": "bcf1320f250514156306008b7ab0e5e6b6e1bd787d0c115075c9b2bc2f2b9b31"
+  },
+  {
+    "name": "ai-flag-AI其他-true",
+    "hash": "55d44cc89948e06ac74e4da920b64ff86a7ab7e0819669909e0fd05a64c35624"
+  },
+  {
+    "name": "payment-subset-普通",
+    "hash": "278bcdbe3ff551401ff1df5198437ad1b161d888d872211909fdcbb1296c4088"
+  },
+  {
+    "name": "ai-flag-普通-false",
+    "hash": "a8d4b4cc328fa39adc03790de382145d6c0b8d252b6872394426394a47914c69"
+  },
+  {
+    "name": "ai-flag-普通-true",
+    "hash": "cc8dfd4ddc782427ed2bbbfff97b00124feeba2614395ad289eca83312660e05"
+  },
+  {
+    "name": "manual-match-number-false",
+    "hash": "29fad5de08b9978b6d7a2248b2c127b2fb3433e72722d8cb1b89f60989840347"
+  },
+  {
+    "name": "manual-match-number-true",
+    "hash": "844daadbd75a55cb052c99638b62386476c97245774fd29853af1a7986e99ea7"
+  },
+  {
+    "name": "manual-match-source-false",
+    "hash": "c8970fadc8bc63e19adb87cb8e0cf0516b267246985d3e36b9dae05b6d5ff55d"
+  },
+  {
+    "name": "manual-match-source-true",
+    "hash": "520a9b98711d5fa09f833549d4f3ede7cc263a5eaad2ea722cfb01671081386d"
+  },
+  {
+    "name": "manual-match-group-false",
+    "hash": "84f708b0b3bec69b8cf1db2d507a857558c54bf6c232e13def03e16084410883"
+  },
+  {
+    "name": "manual-match-group-true",
+    "hash": "82f363554e597e19a1e75ee194c9275270815304a11c06eae0e30ce2d62c0079"
+  },
+  {
+    "name": "manual-match-currency-false",
+    "hash": "415e07e1322d31abac139d5fda29ca32c772756ac78681a850802ce698b436f9"
+  },
+  {
+    "name": "manual-match-currency-true",
+    "hash": "5c7d35e41b24f8fdb26b2d8f5f1fec5cef1dc7f2da6de34920f28475f9950968"
+  },
+  {
+    "name": "manual-match-date-false",
+    "hash": "bb279d5ddef546330d2f44d98a72fcd01aeffa25374d265b9486c841aaf2a52b"
+  },
+  {
+    "name": "manual-match-date-true",
+    "hash": "8a6b26b36f992c0fc8e510ec0ad6aa7f4c3fdbfbba0efa6098b91bd957e85a61"
+  },
+  {
+    "name": "manual-match-type-false",
+    "hash": "2e8dd5a93bcf14d864b78afea6a2a3735214cdce37601b50f4bdf2830662da3b"
+  },
+  {
+    "name": "manual-match-type-true",
+    "hash": "0dd6a13a895da5ff787c4a2b4521f5a2b5476fc4e6e274e99cee3a7e70bd04ed"
+  },
+  {
+    "name": "manual-match-zero-false",
+    "hash": "59e1d401cc1b928e32d148d4364d0adc1e001da697131376df779ab05eacd60b"
+  },
+  {
+    "name": "manual-match-zero-true",
+    "hash": "9df0cf83c82a2fac48a9f91cc53bb1688f20fc715a350cefb9f2c8fda3bc954a"
+  },
+  {
+    "name": "manual-match-none-false",
+    "hash": "5090cd809a055d260d68a408e2cb61bad7235e737ae660b1e91342a70d0cf1eb"
+  },
+  {
+    "name": "manual-match-none-true",
+    "hash": "97fb5d38c172c096243744861dfc65bab98173488baa1ace419a943dff5f150e"
+  },
+  {
+    "name": "travel-prefix",
+    "hash": "fa6c5f02708f844f75565515c8f2dd8705e3689d3612d2d3382927ad1e8687fe"
+  },
+  {
+    "name": "travel-amount",
+    "hash": "cf6673348130e669676f51cd966a59971fcfc6b0e208d18d91105244718f5db1"
+  },
+  {
+    "name": "travel-ambiguous",
+    "hash": "5bcc2a25e9f645e3bde3360992e4c90591fd4620533bd7102676d3d50c6a19ce"
+  },
+  {
+    "name": "travel-unused",
+    "hash": "47b44f57dfbf45a83f4194288edac6f4d8ac83d47d005b8f998c059635931a76"
+  },
+  {
+    "name": "travel-wrong-directory",
+    "hash": "6b7f223d39a1312bd8fd153b0efe809b8bf81e3b73411f488256bd215cc712e8"
+  },
+  {
+    "name": "travel-global-prefix",
+    "hash": "55d3e261ff09f15c72e5238e931c0314a4243eccc0854d101ed55be8255af46b"
+  },
+  {
+    "name": "materials-root",
+    "hash": "c2fb2df65981fb59d6e4f3d8a5daea9b4082aba0ba52f03f245c92a3c8b529cc"
+  },
+  {
+    "name": "materials-materials",
+    "hash": "6c20a8e7fb24126674ab2c7011f200ece37854e400ac138319bf7307bccfe350"
+  },
+  {
+    "name": "materials-local",
+    "hash": "d4375ab3b2e8e55228244137e9f907330d3eaf5632013f7857bcc47bb6b2f6b8"
+  },
+  {
+    "name": "materials-other",
+    "hash": "07516362001e63efd76459f6fe6c4d96fdedf3f5c1750d1f1a7fca4307f4aeff"
+  },
+  {
+    "name": "materials-unnamed",
+    "hash": "b93642f22ea7d76825b6669b87fed1b169ebfc955985963de09176ca677994f9"
+  },
+  {
+    "name": "invoices-without-group",
+    "hash": "c168584741a3a229dfefd5855832c87c496bf96de7f0a41714165f0a4e36b3ef"
+  },
+  {
+    "name": "all-disabled-conversion",
+    "hash": "879f145ad418aac54604cc2d37abbfad68d7182fcfe3327c63f0ebff90d5b7e7"
+  },
+  {
+    "name": "literal-config-braces",
+    "hash": "d4b2ce981afdcded8f514325a2a90694a3acaf208faaf537642d6fb9c6524def"
+  }
+]

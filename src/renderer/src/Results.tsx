@@ -8,6 +8,7 @@ import { Findings } from './Findings.js';
 import { INVOICE_TYPE_LABELS } from '../../core/rules/catalog.js';
 import { groupAnchor } from '../../shared/navigation.js';
 import { CorrectionProvider, CorrectionAction, ReplacementRecords } from './SingleFileCheck.js';
+import { ClaimStatus } from './ClaimStatus.js';
 
 export function Results({
   view,
@@ -42,6 +43,7 @@ export function Results({
               ← 批次总览
             </button>
             <strong>{batch.id}</strong>
+            <ClaimStatus key={batch.dir} view={view} run={run} update={update} />
             {!view.readOnly && (
               <div className="actions">
                 <CorrectionAction global />
@@ -61,16 +63,6 @@ export function Results({
                 </button>
                 <button onClick={() => void run(() => window.precheck.openOutput(batch.dir))}>
                   打开输出文件夹
-                </button>
-                <button
-                  onClick={() =>
-                    apply(
-                      () => window.precheck.markSubmitted(batch.dir, !view.markedAt),
-                      view.markedAt ? '已撤销本批 APP 提交标记' : '本批发票号码已记入提交历史',
-                    )
-                  }
-                >
-                  {view.markedAt ? '撤销提交标记' : '标记本批已提交'}
                 </button>
               </div>
             )}
@@ -92,8 +84,10 @@ export function Results({
               <span className="muted">
                 {batch.submitted ? '✓ 已有学校报销单' : '未找到学校报销单'}
               </span>
-              {view.markedAt && <span className="muted">✓ APP 已标记提交</span>}
             </div>
+            {batch.submitted && ['draft', 'ready'].includes(view.claim.state) && (
+              <p className="muted">已找到学校报销单，可标记为已提交</p>
+            )}
             {(report.unconverted.length > 0 || report.deferredGroups.length > 0) && (
               <details className="small">
                 <summary>
@@ -116,7 +110,24 @@ export function Results({
             )}
             <p className="path small">{batch.dir}</p>
           </div>
-          <Findings scope={batch.dir} report={report} run={run} locate={locate} />
+          <Findings
+            scope={batch.dir}
+            report={report}
+            run={run}
+            locate={locate}
+            waivers={view.claim.waivers}
+            waive={
+              view.readOnly
+                ? undefined
+                : async (id, reason) =>
+                    update(await window.precheck.waiveFinding(batch.dir, id, reason))
+            }
+            unwaive={
+              view.readOnly
+                ? undefined
+                : async (id) => update(await window.precheck.unwaiveFinding(batch.dir, id))
+            }
+          />
           <section aria-label="分组与材料">
             <div className="section-heading">
               <h2>分组与材料</h2>
