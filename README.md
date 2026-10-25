@@ -13,9 +13,11 @@ Pre-check results do not guarantee reimbursement approval.
 
 以下截图使用合成票据和示例工作区，不含真实报销资料。维护者可用 `npm run screenshots` 生成或更新；脚本也会输出总览表格 `overview.png` 与台账页 `ledger.png`。
 
+![批次总览：状态、合计与批量操作](docs/images/overview.png)
 ![批次结果：问题概述与规则计数](docs/images/results.png)
 ![收件箱：集中分类和忽略待识别文件](docs/images/inbox.png)
 ![发票：跨批次筛选与跳转](docs/images/invoices.png)
+![台账：报销单与发票登记簿](docs/images/ledger.png)
 ![问题详情与规则原文](docs/images/rule-explanation.png)
 ![劳务费检查](docs/images/labor.png)
 ![可编辑的规则总览](docs/images/settings-rules.png)
