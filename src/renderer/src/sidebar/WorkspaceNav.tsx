@@ -35,6 +35,14 @@ export function WorkspaceNav() {
         <span className={styles.treeLabel}>发票</span>
         <span className={styles.treeBadge}>{count} 张</span>
       </button>
+      <button
+        className={styles.treeNode}
+        aria-current={page === 'ledger' ? 'page' : undefined}
+        disabled={busy}
+        onClick={() => navigate({ page: 'ledger' })}
+      >
+        <span className={styles.treeLabel}>台账</span>
+      </button>
     </nav>
   );
 }

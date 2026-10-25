@@ -12,7 +12,8 @@ import type { Claim, ClaimState } from '../core/domain/claim.js';
 import type { Registry } from '../core/domain/registry.js';
 import type { InboxItem } from '../core/types.js';
 
-export type ClaimMeta = Pick<Claim, 'claimant' | 'project' | 'fund'>;
+export type { ClaimMeta, Submission } from './claim.js';
+import type { ClaimMeta } from './claim.js';
 import type { LaborManualEntry, LaborReport } from '../core/labor/types.js';
 import type {
   ReplacementHistory,
@@ -24,13 +25,6 @@ import type {
 export interface AppSettings {
   rules: RuleConfig;
   bocUrl: string;
-}
-export interface Submission {
-  claimId?: string;
-  batchDir: string;
-  batchId: string;
-  markedAt: string;
-  numbers: string[];
 }
 export interface BatchView {
   claim: Claim;
@@ -143,6 +137,7 @@ export interface DesktopApi {
   ignoreFile(batchDir: string, relativePath: string): Promise<WorkspaceView>;
   unignoreFile(batchDir: string, relativePath: string): Promise<WorkspaceView>;
   registry(): Promise<Registry>;
+  exportLedger(): Promise<string>;
   getSettings(): Promise<AppSettings>;
   saveSettings(settings: AppSettings): Promise<AppSettings>;
   resetSettings(): Promise<AppSettings>;
@@ -192,6 +187,7 @@ export const channels = {
   ignoreFile: 'app:ignore-file',
   unignoreFile: 'app:unignore-file',
   registry: 'app:registry',
+  exportLedger: 'app:export-ledger',
   getSettings: 'app:get-settings',
   saveSettings: 'app:save-settings',
   resetSettings: 'app:reset-settings',

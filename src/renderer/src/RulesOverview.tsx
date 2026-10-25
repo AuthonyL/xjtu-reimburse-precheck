@@ -1,6 +1,5 @@
 import styles from './settings/rules.module.css';
 import uiStyles from './styles/ui.module.css';
-import { Hint } from './ui.js';
 import { useRuleFocus } from './store/route.js';
 import { useEffect, useRef, useState } from 'react';
 import type { RuleConfig } from '../../core/rules/config.js';
@@ -13,8 +12,8 @@ import {
 import { Collapsible } from './Collapsible.js';
 import { useDisclosures } from './disclosures.js';
 import { RuleCard } from './settings/RuleCard.js';
-const sourceGroups = ['readme', 'finance', 'labor', 'practice', 'system'] as const;
-const groupOf = (rule: RuleDefinition) => (rule.id.startsWith('L') ? 'labor' : rule.source.kind);
+import { RetiredRules } from './settings/RetiredRules.js';
+import { SOURCE_GROUPS, KIND_GROUPS, groupOf, type RuleGrouping } from './settings/rule-groups.js';
 const anchor = (id: string) => 'settings-rule-' + encodeURIComponent(id);
 
 export function RulesOverview({
@@ -30,13 +29,19 @@ export function RulesOverview({
 }) {
   const focusRule = useRuleFocus();
   const [search, setSearch] = useState('');
+  const [grouping, setGrouping] = useState<RuleGrouping>('source');
+  const groups = grouping === 'source' ? SOURCE_GROUPS : KIND_GROUPS;
+  const groupKey = (rule: RuleDefinition) => grouping + ':' + groupOf(rule, grouping);
   const [expanded, setExpanded] = useDisclosures(scope, 'sections');
   const lastFocus = useRef<ReturnType<typeof useRuleFocus>>(null);
   const target = RULE_CATALOG.find((r) => r.id === focusRule?.id);
   useEffect(() => {
     if (!target || !focusRule) return;
     setSearch('');
-    setExpanded(['rule:' + target.id, 'source:' + groupOf(target)], true);
+    setExpanded(
+      ['rule:' + target.id, 'source:' + groupOf(target, 'source'), 'kind:' + target.kind],
+      true,
+    );
   }, [focusRule]);
   useEffect(() => {
     if (
@@ -45,7 +50,7 @@ export function RulesOverview({
       lastFocus.current === focusRule ||
       search ||
       !expanded['rule:' + target.id] ||
-      expanded['source:' + groupOf(target)] === false
+      expanded[groupKey(target)] === false
     )
       return;
     const timer = window.setTimeout(() => {
@@ -53,7 +58,7 @@ export function RulesOverview({
       lastFocus.current = focusRule;
     }, 0);
     return () => window.clearTimeout(timer);
-  }, [expanded, focusRule, search]);
+  }, [expanded, focusRule, search, grouping]);
   const matches = (value: string) =>
     value.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase());
   const filtered = RULE_CATALOG.filter((rule) =>
@@ -80,11 +85,24 @@ export function RulesOverview({
         />
       </label>
       <div className={uiStyles.actions + ' ' + styles.ruleBulkActions}>
+        {(['source', 'kind'] as const).map((value) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={grouping === value}
+            onClick={() => setGrouping(value)}
+          >
+            {value === 'source' ? '按来源' : '按类型'}
+          </button>
+        ))}
         <button
           type="button"
           onClick={() =>
             setExpanded(
-              [...filtered.map((r) => 'rule:' + r.id), ...sourceGroups.map((g) => 'source:' + g)],
+              [
+                ...filtered.map((r) => 'rule:' + r.id),
+                ...Object.keys(groups).map((g) => grouping + ':' + g),
+              ],
               true,
             )
           }
@@ -103,30 +121,22 @@ export function RulesOverview({
           全部收起
         </button>
       </div>
-      {sourceGroups.map((source) => {
+      {Object.entries(groups).map(([source, title]) => {
         const rulesInGroup = filtered
-          .filter((r) => groupOf(r) === source)
+          .filter((r) => groupOf(r, grouping) === source)
           .sort((a, b) => a.id.localeCompare(b.id, 'en', { numeric: true }));
         const notes = source === 'readme' ? retired : [];
         if (!rulesInGroup.length && !notes.length) return null;
         return (
           <Collapsible
-            key={source}
+            key={grouping + ':' + source}
             scope={scope}
-            disclosureKey={'source:' + source}
-            title={
-              {
-                readme: 'README 规则',
-                finance: '财务补充',
-                labor: '劳务费',
-                practice: '课题组惯例',
-                system: '系统检查',
-              }[source]
-            }
+            disclosureKey={grouping + ':' + source}
+            title={title}
             summary={`${rulesInGroup.length} 条 · ${rulesInGroup.map((r) => r.id).join('、')}`}
             defaultOpen
-            open={expanded['source:' + source] ?? true}
-            onOpenChange={(open) => setExpanded(['source:' + source], open)}
+            open={expanded[grouping + ':' + source] ?? true}
+            onOpenChange={(open) => setExpanded([grouping + ':' + source], open)}
           >
             {rulesInGroup.map((rule) => (
               <RuleCard
@@ -139,20 +149,16 @@ export function RulesOverview({
                 restore={() => restore(rule)}
               />
             ))}
-            {notes.map((note) => (
-              <Hint key={note.id} text={note.sourceText}>
-                <div
-                  className={styles.retiredRule + ' ' + uiStyles.panel}
-                  data-testid={'retired-' + note.id}
-                >
-                  R14（README 第 14 条）· {note.note}
-                  <span className={styles.ruleExcerpt}>原文：{note.sourceText}</span>
-                </div>
-              </Hint>
-            ))}
+            <RetiredRules notes={notes} />
           </Collapsible>
         );
       })}
+      {grouping === 'kind' && retired.length > 0 && (
+        <section aria-label="已停用编号">
+          <h2>已停用编号</h2>
+          <RetiredRules notes={retired} />
+        </section>
+      )}
       {!filtered.length && !retired.length && <p className={uiStyles.muted}>没有匹配的规则。</p>}
     </div>
   );

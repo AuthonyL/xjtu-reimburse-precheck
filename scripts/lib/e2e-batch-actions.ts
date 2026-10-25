@@ -49,10 +49,12 @@ export async function checkBatchActions(page: Page, workspace: E2eWorkspace, pre
   await expect(
     page.getByTestId('actionable-findings').locator('.finding').filter({ hasText: 'F2 ·' }),
   ).toHaveCount(1);
-  await expect(page.locator('[class*="_results_"] section').first()).toHaveAttribute(
-    'aria-label',
-    '待处理问题',
-  );
+  // 头部的流转记录折叠区也是 section；只断言待处理问题排在分组与材料之前。
+  const sectionLabels = await page
+    .locator('[class*="_results_"] section[aria-label]')
+    .evaluateAll((nodes) => nodes.map((node) => node.getAttribute('aria-label')));
+  expect(sectionLabels.indexOf('待处理问题')).toBeGreaterThanOrEqual(0);
+  expect(sectionLabels.indexOf('待处理问题')).toBeLessThan(sectionLabels.indexOf('分组与材料'));
   await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
   await openRule(page.locator('[class*="_settings_"]'), 'F2');
   await page

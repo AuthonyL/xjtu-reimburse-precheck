@@ -1,0 +1,50 @@
+.summary {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 22px;
+}
+.summary span {
+  display: inline-block;
+  margin-right: 16px;
+}
+.tabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+}
+.tabs [data-state='active'] {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.filter {
+  max-width: 360px;
+  margin-bottom: 20px;
+}
+.tableScroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+}
+.tableScroll table {
+  min-width: 1060px;
+}
+.tableScroll th,
+.tableScroll td {
+  padding: 10px;
+}
+.tableScroll td {
+  overflow-wrap: anywhere;
+  max-width: 220px;
+}
+.output {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}

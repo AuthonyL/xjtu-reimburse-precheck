@@ -2,6 +2,9 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { Report, Requirement, RequirementCounts } from '../types.js';
 import { attachmentLabels, requirementStatusLabels } from '../attachments.js';
+import type { Claim } from '../domain/claim.js';
+import { CLAIM_STATE_LABELS } from '../domain/transitions.js';
+import { FUND_LABELS } from './ledger.js';
 
 const countText = (counts: RequirementCounts): string =>
   `需要${counts.total} / 已找到${counts.found} / 待确认${counts.unconfirmed} / 缺失${counts.missing}`;
@@ -24,13 +27,19 @@ function renderRequirement(requirement: Requirement): string {
   if (requirement.note) parts.push(`；${requirement.note}`);
   return parts.join('');
 }
-export function renderMarkdown(report: Report): string {
+export function renderMarkdown(report: Report, claim?: Claim): string {
   const lines = [
     `# ${escape(report.batchId)} 报销预检`,
     '',
     `发票张数：${report.invoiceCount}；人民币已知金额合计：${report.totalCny.toFixed(2)} 元。`,
     '',
   ];
+  if (claim) {
+    if (claim.claimant?.trim()) lines.push(`经办人：${escape(claim.claimant)}`, '');
+    if (claim.project?.trim()) lines.push(`项目 / 经费卡：${escape(claim.project)}`, '');
+    if (claim.fund) lines.push(`经费类型：${FUND_LABELS[claim.fund]}`, '');
+    lines.push(`当前状态：${CLAIM_STATE_LABELS[claim.state]}`, '');
+  }
   lines.push(`材料要求：${countText(report.requirementCounts)}。`, '');
   if (report.unconverted.length || report.incompleteGroups.length)
     lines.push('存在未折算或待手填金额，以上不是完整可报销总额。', '');
@@ -93,9 +102,13 @@ export function renderMarkdown(report: Report): string {
   }
   return lines.join('\n') + '\n';
 }
-export async function exportMarkdown(report: Report, targetDir: string): Promise<string> {
+export async function exportMarkdown(
+  report: Report,
+  targetDir: string,
+  claim?: Claim,
+): Promise<string> {
   await mkdir(targetDir, { recursive: true });
   const path = join(targetDir, '汇总.md');
-  await writeFile(path, renderMarkdown(report), 'utf8');
+  await writeFile(path, renderMarkdown(report, claim), 'utf8');
   return path;
 }

@@ -1,0 +1,33 @@
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 110px auto 70px;
+  align-items: end;
+  gap: 12px;
+  margin: 0 0 20px;
+}
+.saved {
+  color: var(--accent);
+  font-size: 12px;
+  align-self: center;
+}
+.history {
+  padding-left: 24px;
+}
+.history li {
+  padding: 6px 0;
+  overflow-wrap: anywhere;
+}
+.history time,
+.history strong,
+.history span {
+  display: block;
+}
+.history time {
+  color: var(--muted);
+  font-size: 12px;
+}
+@container (max-width: 800px) {
+  .meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -18,9 +18,7 @@ try {
   app = await electron.launch({ args: [resolve('.')], env, timeout: 30000, chromiumSandbox: true });
   const page = await app.firstWindow();
   page.on('pageerror', (error) => console.error('renderer:', error.message));
-  await app.evaluate(({ nativeTheme }) => {
-    nativeTheme.themeSource = 'light';
-  });
+  await page.emulateMedia({ colorScheme: 'light' });
   await (await app.browserWindow(page)).evaluate((win) => win.setContentSize(1440, 900));
   await page.getByLabel('文件夹路径').fill(sample.root);
   await page.getByRole('button', { name: '打开路径', exact: true }).click();
@@ -46,6 +44,18 @@ try {
     await page.screenshot({ path: join(output, name), fullPage: false });
   };
   const nav = page.getByRole('navigation', { name: '工作区页面' });
+  await page.getByRole('textbox', { name: '经办人', exact: true }).fill('示例经办人');
+  await page.getByRole('textbox', { name: '项目 / 经费卡', exact: true }).fill('示例课题');
+  await page.getByRole('combobox', { name: '经费类型', exact: true }).selectOption('vertical');
+  await page.getByRole('button', { name: '保存', exact: true }).click();
+  await expect(page.getByText('已保存', { exact: true })).toBeVisible();
+  await page.locator('[class*="_workspaceName_"]').click();
+  await page.getByRole('checkbox', { name: '全选批次', exact: true }).check();
+  await page.getByRole('button', { name: '展开支出合计 20260103', exact: true }).click();
+  await screenshot('overview.png');
+  await nav.getByRole('button', { name: '台账', exact: true }).click();
+  await expect(page.getByRole('table', { name: '报销单台账', exact: true })).toBeVisible();
+  await screenshot('ledger.png');
   await nav.getByRole('button', { name: /^收件箱/ }).click();
   await expect(page.getByRole('article', { name: 'abcdef0123456789.jpg' })).toBeVisible();
   await screenshot('inbox.png');
@@ -70,7 +80,7 @@ try {
   await expect(page.getByTestId('rule-F2')).toBeVisible();
   await page.getByRole('searchbox', { name: '搜索规则' }).scrollIntoViewIfNeeded();
   await screenshot('settings-rules.png');
-  console.log('已生成 6 张合成数据截图：' + output);
+  console.log('已生成 8 张合成数据截图：' + output);
 } finally {
   try {
     await app?.close();

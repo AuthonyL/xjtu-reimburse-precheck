@@ -56,6 +56,9 @@ try {
   await checkMaterialCorrections(application, page, workspace, prefix);
 
   await tree.locator('[data-batch-id="20260102"]').click();
+  await page.getByRole('textbox', { name: '经办人', exact: true }).fill('重启合成经办人');
+  await page.getByRole('button', { name: '保存', exact: true }).click();
+  await expect(page.getByText('已保存', { exact: true })).toBeVisible();
   await expect
     .poll(
       async () =>
@@ -74,6 +77,9 @@ try {
     'true',
   );
   await expect(restored.getByTestId('batch-summary')).toContainText('1,453.00');
+  await expect(restored.getByRole('textbox', { name: '经办人', exact: true })).toHaveValue(
+    '重启合成经办人',
+  );
   await expect(restored.locator('[class*="_workspaceName_"]')).toHaveText('合成工作区');
   const restoredScreenshot = packaged ? 'packaged-restored.png' : 'desktop-restored.png';
   await restored.screenshot({ path: join(resultDir, restoredScreenshot), fullPage: true });
@@ -94,7 +100,7 @@ try {
     path: join(resultDir, packaged ? 'packaged-900px.png' : 'desktop-900px.png'),
   });
   console.log(
-    `PASS Electron${packaged ? ' 打包产物' : ''}：收件箱徽标/PNG分类/材料已找到、发票搜索/多状态筛选/分组跳转/900px明暗主题、反馈表单/已反馈/导出预览/默认无原文件、默认收起/连续序号/规则说明/设置定位/无侧栏规则按钮、双批次倒序/手风琴侧栏、问题收起/多展开/规则筛选/收起拖入、分组定位自动展开、XML/PDF解析、确认附件、外币手填、导出、报销状态/退回备注持久化、F2关键字增删、拒票原因、劳务树/L1/L2/L6/Word导出、单文件直接放入/toast/失败过滤/补交/归档/撤销/目录内确认不复制/反馈隔离、结果顺序、重启恢复、900px布局`,
+    `PASS Electron${packaged ? ' 打包产物' : ''}：总览全选/顺序批量导出/跳过非法迁移/支出展开、经办人保存/重启恢复、台账双标签/筛选/导出文件、收件箱徽标/PNG分类/材料已找到、发票搜索/多状态筛选/分组跳转/900px明暗主题、反馈表单/已反馈/导出预览/默认无原文件、默认收起/连续序号/规则说明/设置定位/无侧栏规则按钮、双批次倒序/手风琴侧栏、问题收起/多展开/规则筛选/收起拖入、分组定位自动展开、XML/PDF解析、确认附件、外币手填、导出、报销状态/退回备注持久化、F2关键字增删、拒票原因、劳务树/L1/L2/L6/Word导出、单文件直接放入/toast/失败过滤/补交/归档/撤销/目录内确认不复制/反馈隔离、结果顺序、重启恢复、900px布局`,
   );
   console.log('截图：' + join(resultDir, screenshot) + '、' + join(resultDir, restoredScreenshot));
 } catch (error) {

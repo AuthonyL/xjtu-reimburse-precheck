@@ -46,6 +46,7 @@ const api: DesktopApi = {
   ignoreFile: (dir, file) => ipcRenderer.invoke(channels.ignoreFile, dir, file),
   unignoreFile: (dir, file) => ipcRenderer.invoke(channels.unignoreFile, dir, file),
   registry: () => ipcRenderer.invoke(channels.registry),
+  exportLedger: () => ipcRenderer.invoke(channels.exportLedger),
   getSettings: () => ipcRenderer.invoke(channels.getSettings),
   saveSettings: (settings) => ipcRenderer.invoke(channels.saveSettings, settings),
   resetSettings: () => ipcRenderer.invoke(channels.resetSettings),

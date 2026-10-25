@@ -11,7 +11,7 @@ Pre-check results do not guarantee reimbursement approval.
 
 ## 界面
 
-以下截图使用合成票据和示例工作区，不含真实报销资料。维护者可用 `npm run screenshots` 生成或更新。
+以下截图使用合成票据和示例工作区，不含真实报销资料。维护者可用 `npm run screenshots` 生成或更新；脚本也会输出总览表格 `overview.png` 与台账页 `ledger.png`。
 
 ![批次结果：问题概述与规则计数](docs/images/results.png)
 ![收件箱：集中分类和忽略待识别文件](docs/images/inbox.png)
@@ -27,7 +27,7 @@ Pre-check results do not guarantee reimbursement approval.
 - 独立检查劳务情况说明：姓名、职称、日期、线上线下、金额及两套标准；生成 Word 草稿。
 - 确认未命名附件，手填外币与汇率，从中行历史牌价页截取带红圈的价格。
 - “放入改好的文件”先在临时副本预检，通过后放入原目录、归档旧版，并支持撤销。
-- 导出入库登记清单、高值材料明细、Markdown 汇总；在本机记录已提交历史。
+- 批量导出入库登记清单、高值材料明细和 Markdown 汇总；保存经办人、项目与报销状态，查看并导出台账。
 - 标记“这条不对”，预览并导出脱敏反馈包，由用户自己发送给维护者。
 
 详细操作见 [使用说明](docs/使用说明.md)。扫描件和截图不做 OCR，附件内容仍需人工核对。

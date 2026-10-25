@@ -8,6 +8,8 @@ import type { Claim } from '../../../core/domain/claim.js';
 import type { WorkspaceView } from '../../../shared/api.js';
 import { CorrectionAction } from '../SingleFileCheck.js';
 import { ClaimStatus } from './ClaimStatus.js';
+import { ClaimMeta } from './ClaimMeta.js';
+import { ClaimHistory } from './ClaimHistory.js';
 
 export function ClaimHeader({
   id,
@@ -26,27 +28,31 @@ export function ClaimHeader({
   const mutate = (fn: () => Promise<WorkspaceView>, notice?: string) =>
     void run(() => apply(fn), notice);
   return (
-    <div className={styles.resultsToolbar}>
-      <TextButton onClick={back}>← 批次总览</TextButton>
-      <strong>{id}</strong>
-      <ClaimStatus key={dir} claim={claim} dir={dir} readOnly={readOnly} />
-      {!readOnly && (
-        <div className={uiStyles.actions + ' ' + styles.toolbarActions}>
-          <CorrectionAction global />
-          <button onClick={() => mutate(() => window.precheck.recheck(dir))}>重新检查</button>
-          <button
-            className={uiStyles.primary}
-            onClick={() =>
-              mutate(() => window.precheck.exportBatch(dir), '导出完成，可在下方打开文件')
-            }
-          >
-            导出到批次文件夹
-          </button>
-          <button onClick={() => void run(() => window.precheck.openOutput(dir))}>
-            打开输出文件夹
-          </button>
-        </div>
-      )}
-    </div>
+    <>
+      <div className={styles.resultsToolbar}>
+        <TextButton onClick={back}>← 批次总览</TextButton>
+        <strong>{id}</strong>
+        <ClaimStatus key={dir} claim={claim} dir={dir} readOnly={readOnly} />
+        {!readOnly && (
+          <div className={uiStyles.actions + ' ' + styles.toolbarActions}>
+            <CorrectionAction global />
+            <button onClick={() => mutate(() => window.precheck.recheck(dir))}>重新检查</button>
+            <button
+              className={uiStyles.primary}
+              onClick={() =>
+                mutate(() => window.precheck.exportBatch(dir), '导出完成，可在下方打开文件')
+              }
+            >
+              导出到批次文件夹
+            </button>
+            <button onClick={() => void run(() => window.precheck.openOutput(dir))}>
+              打开输出文件夹
+            </button>
+          </div>
+        )}
+      </div>
+      {!readOnly && <ClaimMeta key={dir} claim={claim} dir={dir} />}
+      <ClaimHistory claim={claim} dir={dir} />
+    </>
   );
 }

@@ -7,6 +7,27 @@ import { exportInventory, exportHighValue, exportMarkdown } from '../src/core/ex
 import { checkBatch } from '../src/core/rules/engine.js';
 import { buildReport } from '../src/core/report.js';
 import { batch, config, invoice, line } from './helpers.js';
+import { renderMarkdown } from '../src/core/export/markdown.js';
+import { defaultClaim } from '../src/core/domain/claim.js';
+
+it('汇总头部输出已填元数据和中文状态，空字段省略并转义换行', () => {
+  const report = buildReport(checkBatch(batch(), config()));
+  const claim = {
+    ...defaultClaim('synthetic-export', '2026-01-01'),
+    claimant: '合成|经办\n人',
+    project: '合成项目',
+    fund: 'vertical' as const,
+  };
+  const text = renderMarkdown(report, claim);
+  expect(text).toContain('经办人：合成 经办 人');
+  expect(text).toContain('项目 / 经费卡：合成项目');
+  expect(text).toContain('经费类型：纵向');
+  expect(text).toContain('当前状态：草稿');
+  const empty = renderMarkdown(report, defaultClaim('empty', '2026-01-01'));
+  expect(empty).not.toContain('经办人：');
+  expect(empty).not.toContain('项目 / 经费卡：');
+  expect(empty).not.toContain('经费类型：');
+});
 
 it('两个工作簿列名、含税金额、合计及情况说明草稿回读', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'precheck-export-'));

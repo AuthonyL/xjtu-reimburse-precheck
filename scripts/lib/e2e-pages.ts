@@ -3,6 +3,7 @@ import { rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createExampleWorkspace } from './example-workspace.js';
 import { examplePng } from './example-documents.js';
+import { checkArchitecturePages } from './e2e-architecture.js';
 
 /** 独立合成工作区，避免改变后续纠错、导出和重启恢复场景的数据。 */
 export async function checkWorkspacePages(
@@ -67,6 +68,7 @@ export async function checkWorkspacePages(
   await expect(page.getByTestId('batch-summary')).toContainText('3 张');
   await expect(page.getByTestId('group-PCB')).toHaveClass(/group-highlight/);
   await page.emulateMedia({ colorScheme: 'light' });
+  await checkArchitecturePages(app, page, sample.root);
   await win.evaluate((window) => window.setContentSize(1280, 900));
   // 只替换一次系统选择器，仍走真实 chooseFolder IPC 打开主场景。
   await app.evaluate(({ dialog }, dir) => {

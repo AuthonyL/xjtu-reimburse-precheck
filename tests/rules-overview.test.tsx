@@ -1,22 +1,42 @@
 import { onTestFinished } from 'vitest';
 import { useRouteStore } from '../src/renderer/src/store/route.js';
 import { act } from '@testing-library/react';
-import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { cleanup, render, screen, within, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { App } from '../src/renderer/src/App.js';
-import { buildReport, checkBatch } from '../src/core/index.js';
-import { batch, finding } from './helpers.js';
 import { Settings } from '../src/renderer/src/Settings.js';
 import { FindingList } from '../src/renderer/src/FindingItem.js';
 import { RuleHelpProvider } from '../src/renderer/src/RuleHelp.js';
 import { RULE_CATALOG } from '../src/core/rules/catalog.js';
-import { config } from './helpers.js';
+import { config, finding } from './helpers.js';
 import { DEFAULT_BOC_URL, validateSettings } from '../src/main/store.js';
 import type { AppSettings } from '../src/shared/api.js';
 afterEach(cleanup);
+it('按类型分组显示中文名称和条数，切换不改变规则编辑', async () => {
+  render(<Settings initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }} userData="/synthetic" />);
+  const user = userEvent.setup();
+  await user.click(screen.getByRole('button', { name: '按类型' }));
+  for (const title of [
+    '阈值规则',
+    '关键字规则',
+    '税目规则',
+    '购买方',
+    '重复票',
+    '拒票',
+    '劳务标准',
+    '组合判定',
+    '解析诊断',
+  ])
+    expect(
+      screen.getByRole('button', { name: new RegExp('^' + title + ' · \\d+ 条') }),
+    ).toBeTruthy();
+  await user.click(within(screen.getByTestId('rule-F2')).getByRole('button', { name: /^F2 ·/ }));
+  expect(screen.getByRole('textbox', { name: '横向限制关键字' })).toBeTruthy();
+  await user.click(screen.getByRole('button', { name: '按来源' }));
+  expect(screen.getByRole('button', { name: /^README 规则 ·/ })).toBeTruthy();
+  expect(screen.getByRole('textbox', { name: '横向限制关键字' })).toBeTruthy();
+});
 it('规则组默认展开、规则收起且所有编号可见，收起时可切换启用，R14只读', async () => {
   let saved: AppSettings | null = null;
   Object.assign(window, {
@@ -143,80 +163,4 @@ it('规则按搜索结果全部展开收起，附件和分组编辑器默认收�
   expect(screen.queryByRole('table')).toBeNull();
   await user.click(screen.getByRole('button', { name: /^其他劳务费 ·/ }));
   expect(screen.getByRole('table', { name: '其他劳务费上限' })).toBeTruthy();
-});
-
-it('App 的问题规则入口切到设置、展开并滚动目标；侧栏不再有规则按钮，规则标签可返回总览', async () => {
-  const rules = config();
-  rules.thresholds.inventory = { value: 800, operator: '>' };
-  const b = batch();
-  const report = buildReport(checkBatch(b, rules));
-  report.findings = [
-    finding({
-      ruleId: 'R11',
-      severity: 'warning',
-      message: '合成同日入库',
-      action: '补入库',
-      files: [],
-      invoiceNumbers: [],
-      groupId: '根目录',
-    }),
-  ];
-  Object.assign(window, {
-    precheck: {
-      bootstrap: async () => ({
-        settings: { rules, bocUrl: DEFAULT_BOC_URL },
-        userData: '/synthetic-user',
-        recent: [],
-        restored: {
-          workspace: {
-            kind: 'batch',
-            dir: b.dir,
-            openedDir: b.dir,
-            selectedBatchDir: b.dir,
-            batches: [
-              {
-                batch: b,
-                report,
-                claim: defaultClaim('synthetic-view', '2026-01-01'),
-                waived: 0,
-                markedAt: null,
-                outputs: [],
-                manualTasks: [],
-              },
-            ],
-            rejected: null,
-          },
-          message: null,
-        },
-      }),
-      onEvent: () => () => {},
-    },
-  });
-  const original = HTMLElement.prototype.scrollIntoView;
-  let scrolled = '';
-  HTMLElement.prototype.scrollIntoView = function () {
-    scrolled = this.id;
-  };
-  try {
-    render(<App />);
-    const user = userEvent.setup();
-    await user.click(await screen.findByRole('button', { name: /合成同日入库/ }));
-    expect(screen.getByRole('region', { name: '规则说明' }).textContent).toContain('> 800 元');
-    await user.click(screen.getByRole('button', { name: '在设置中查看 / 修改 →' }));
-    const card = screen.getByTestId('rule-R11');
-    await waitFor(() =>
-      expect(
-        within(card)
-          .getByRole('button', { name: /^R11 ·/ })
-          .getAttribute('aria-expanded'),
-      ).toBe('true'),
-    );
-    await waitFor(() => expect(scrolled).toBe('settings-rule-R11'));
-    await user.click(screen.getByRole('tab', { name: '通用' }));
-    expect(screen.queryByRole('button', { name: '规则' })).toBeNull();
-    await user.click(screen.getByRole('tab', { name: '规则' }));
-    expect(screen.getByRole('tab', { name: '规则' }).getAttribute('aria-selected')).toBe('true');
-  } finally {
-    HTMLElement.prototype.scrollIntoView = original;
-  }
 });

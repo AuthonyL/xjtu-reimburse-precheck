@@ -48,7 +48,7 @@ it('规则目录生成标签和 F2 编辑器，关键字添加删除、恢复单
   }
 });
 
-it('结果首个 section 为待处理问题，显示 action 并可定位分组', async () => {
+it('报销单头部之后首个内容区为待处理问题，显示 action 并可定位分组', async () => {
   const b = batch();
   const report = buildReport(checkBatch(b, config()));
   report.findings = [
@@ -83,9 +83,11 @@ it('结果首个 section 为待处理问题，显示 action 并可定位分组',
         })}
       />,
     );
-    expect(result.container.querySelector('section')?.getAttribute('aria-label')).toBe(
-      '待处理问题',
-    );
+    expect(
+      result.container
+        .querySelector('section:not([aria-label^="流转记录"])')
+        ?.getAttribute('aria-label'),
+    ).toBe('待处理问题');
     expect(screen.queryByText('合成处理办法')).toBeNull();
     await userEvent.setup().click(screen.getByRole('button', { name: /合成处理办法|合成问题/ }));
     expect(screen.getByText('合成处理办法')).toBeTruthy();

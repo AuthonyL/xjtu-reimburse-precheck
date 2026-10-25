@@ -6,6 +6,7 @@ import { RejectedPage } from './RejectedPage.js';
 import { Settings } from './Settings.js';
 import { InboxPage } from './inbox/InboxPage.js';
 import { InvoicesPage } from './invoices/InvoicesPage.js';
+import { LedgerPage } from './ledger/LedgerPage.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRouteStore } from './store/route.js';
 
@@ -16,6 +17,8 @@ export function Router() {
   const highlight = useRouteStore((state) => state.highlight);
   const current = workspace?.batches.find((view) => view.batch.dir === route.dir);
   switch (route.page) {
+    case 'ledger':
+      return workspace ? <LedgerPage /> : <Home />;
     case 'inbox':
       return workspace ? <InboxPage /> : <Home />;
     case 'invoices':

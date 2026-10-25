@@ -5,7 +5,16 @@ import { useWorkspaceStore } from './workspace.js';
 import { useStatusStore } from './status.js';
 
 export interface Route {
-  page: 'home' | 'overview' | 'claim' | 'labor' | 'rejected' | 'rules' | 'inbox' | 'invoices';
+  page:
+    | 'home'
+    | 'overview'
+    | 'claim'
+    | 'labor'
+    | 'rejected'
+    | 'rules'
+    | 'inbox'
+    | 'invoices'
+    | 'ledger';
   dir?: string;
   group?: string;
   ruleId?: string;
