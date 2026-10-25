@@ -1,12 +1,14 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { useEffect, useState } from 'react';
-import type { LaborView, WorkspaceView } from '../../shared/api.js';
+import type { LaborView } from '../../shared/api.js';
 import type { RuleConfig } from '../../core/rules/config.js';
 import { LABOR_TYPES, type LaborEntry, type LaborManualEntry } from '../../core/labor/types.js';
 import { generateLaborText } from '../../core/labor/template-text.js';
 import { applyLaborManual } from '../../core/labor/parse.js';
 import { LABOR_UNITS } from '../../core/labor/validation.js';
 import { laborAnchor } from '../../shared/navigation.js';
-import { FileLink, money, type Run } from './ui.js';
+import { FileLink, money } from './ui.js';
 import { CorrectionProvider, CorrectionAction, ReplacementRecords } from './SingleFileCheck.js';
 import { RuleHelpProvider } from './RuleHelp.js';
 import { Collapsible } from './Collapsible.js';
@@ -17,18 +19,16 @@ function LaborCard({
   ordinal,
   view,
   config,
-  run,
-  update,
   highlight,
 }: {
   entry: LaborEntry;
   ordinal: number;
   view: LaborView;
   config: RuleConfig;
-  run: Run;
-  update: (w: WorkspaceView) => void;
   highlight?: string;
 }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   const [draft, setDraft] = useState<LaborManualEntry>(structuredClone(entry.manual));
   const [datesText, setDatesText] = useState(entry.fields.dates.map((d) => d.date).join('\n'));
   const stored = JSON.stringify(entry.manual);
@@ -90,7 +90,7 @@ function LaborCard({
           错误 {errors} · 警告 {warnings}
         </span>
       </div>
-      <FileLink file={entry.path} run={run} />
+      <FileLink file={entry.path} />
       {!!entry.otherVersions?.length && (
         <p className="inferred-reason">
           {view.report.versionGroups.find((g) => g.files.includes(entry.relativePath))?.note}
@@ -99,7 +99,6 @@ function LaborCard({
             <FileLink
               key={file}
               file={view.report.entries.find((e) => e.relativePath === file)!.path}
-              run={run}
             />
           ))}
         </p>
@@ -108,7 +107,6 @@ function LaborCard({
         <h3>问题与处理</h3>
         <FindingList
           scope={view.report.dir}
-          run={run}
           findings={entry.findings.map((finding) => ({ finding, file: entry.relativePath }))}
         />
         {!errors && !warnings && <p className="found">✓ 当前检查未发现错误或警告</p>}
@@ -126,7 +124,9 @@ function LaborCard({
             e.preventDefault();
             void run(
               async () =>
-                update(await window.precheck.saveLabor(view.report.dir, entry.relativePath, draft)),
+                await apply(() =>
+                  window.precheck.saveLabor(view.report.dir, entry.relativePath, draft),
+                ),
               '本笔劳务已保存并重新检查',
             );
           }}
@@ -263,7 +263,7 @@ function LaborCard({
           <div key={r.type}>
             {r.status === 'found' ? '✓ 已找到' : '✗ 缺失'} {r.label}
             {r.files.map((f) => (
-              <FileLink key={f.path} file={f.path} run={run} />
+              <FileLink key={f.path} file={f.path} />
             ))}
           </div>
         ))}
@@ -278,7 +278,7 @@ function LaborCard({
         <div className="labor-attachments">
           {view.report.attachments.map((a) => (
             <div key={a.path}>
-              <FileLink file={a.path} run={run} />
+              <FileLink file={a.path} />
               <span className="muted small">{a.label}</span>
             </div>
           ))}
@@ -308,7 +308,9 @@ function LaborCard({
           onClick={() =>
             void run(
               async () =>
-                update(await window.precheck.saveLabor(view.report.dir, entry.relativePath, draft)),
+                await apply(() =>
+                  window.precheck.saveLabor(view.report.dir, entry.relativePath, draft),
+                ),
               '发放表金额已保存并重新检查',
             )
           }
@@ -342,8 +344,8 @@ function LaborCard({
             onClick={() =>
               void run(
                 async () =>
-                  update(
-                    await window.precheck.exportLabor(view.report.dir, entry.relativePath, draft),
+                  await apply(() =>
+                    window.precheck.exportLabor(view.report.dir, entry.relativePath, draft),
                   ),
                 'Word 已导出到劳务目录的 _预检/',
               )
@@ -359,19 +361,17 @@ function LaborCard({
 export function LaborPage({
   view,
   config,
-  run,
-  update,
   highlight,
 }: {
   view: LaborView;
   config: RuleConfig;
-  run: Run;
-  update: (w: WorkspaceView) => void;
   highlight?: string;
 }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   return (
     <RuleHelpProvider rules={config}>
-      <CorrectionProvider dir={view.report.dir} run={run} update={update}>
+      <CorrectionProvider dir={view.report.dir}>
         <main className="labor-page">
           <div className="page-heading">
             <div>
@@ -383,7 +383,7 @@ export function LaborPage({
               <CorrectionAction global />
               <button
                 onClick={() =>
-                  void run(async () => update(await window.precheck.recheck(view.report.dir)))
+                  void run(() => apply(() => window.precheck.recheck(view.report.dir)))
                 }
               >
                 重新检查
@@ -401,7 +401,6 @@ export function LaborPage({
           {!!view.report.diagnostics.length && (
             <FindingList
               scope={view.report.dir}
-              run={run}
               findings={view.report.diagnostics.map((finding) => ({
                 finding,
                 reason: '文件或手填数据未能解析。',
@@ -424,8 +423,6 @@ export function LaborPage({
               entry={e}
               view={view}
               config={config}
-              run={run}
-              update={update}
               highlight={highlight}
             />
           ))}
@@ -434,7 +431,7 @@ export function LaborPage({
               <h2>附件</h2>
               {view.report.attachments.map((a) => (
                 <div key={a.path}>
-                  <FileLink file={a.path} run={run} />
+                  <FileLink file={a.path} />
                   {a.label}
                 </div>
               ))}
@@ -447,17 +444,12 @@ export function LaborPage({
             summary={`${view.outputs.length} 个 · 替换记录 ${view.replacements?.records.length ?? 0} 条`}
           >
             {view.outputs.map((file) => (
-              <FileLink key={file} file={file} run={run} />
+              <FileLink key={file} file={file} />
             ))}
             <button onClick={() => void run(() => window.precheck.openOutput(view.report.dir))}>
               打开输出文件夹
             </button>
-            <ReplacementRecords
-              history={view.replacements}
-              dir={view.report.dir}
-              run={run}
-              update={update}
-            />
+            <ReplacementRecords history={view.replacements} dir={view.report.dir} />
           </Collapsible>
         </main>
       </CorrectionProvider>

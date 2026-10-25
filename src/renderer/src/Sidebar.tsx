@@ -1,5 +1,8 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRouteStore } from './store/route.js';
+import { useStatusStore } from './store/status.js';
+import { useLayoutStore } from './store/layout.js';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
-import type { WorkspaceView } from '../../shared/api.js';
 import {
   buildWorkspaceTree,
   expandExclusive,
@@ -11,35 +14,22 @@ import {
 } from '../../shared/navigation.js';
 import { nameOf } from './ui.js';
 
-export function Sidebar({
-  workspace,
-  selected,
-  selectedGroup,
-  selectionRevision,
-  settingsOpen,
-  busy,
-  width,
-  select,
-  open,
-  refresh,
-  settings,
-  resize,
-  resized,
-}: {
-  workspace: WorkspaceView;
-  selected: string | null;
-  selectedGroup?: string;
-  selectionRevision?: number;
-  settingsOpen: boolean;
-  busy: boolean;
-  width: number;
-  select: (dir: string, group?: string) => void;
-  open: () => void;
-  refresh: () => void;
-  settings: () => void;
-  resize: (width: number) => void;
-  resized: (width: number) => void;
-}) {
+export function Sidebar() {
+  const workspace = useWorkspaceStore((state) => state.view)!;
+  const route = useRouteStore((state) => state.route);
+  const selected = route.dir ?? null;
+  const selectedGroup = route.group;
+  const selectionRevision = useRouteStore((state) => state.selectionRevision);
+  const settingsOpen = route.page === 'rules';
+  const busy = useStatusStore((state) => state.busy);
+  const width = useLayoutStore((state) => state.sidebarWidth);
+  const select = useRouteStore((state) => state.select);
+  const open = useWorkspaceStore((state) => state.choose);
+  const refresh = useWorkspaceStore((state) => state.refresh);
+  const settings = () => useRouteStore.getState().navigate({ page: 'rules' });
+  const resize = (sidebarWidth: number) => useLayoutStore.setState({ sidebarWidth });
+  const saveLayout = useLayoutStore((state) => state.saveLayout);
+  const resized = (sidebarWidth: number) => void saveLayout({ sidebarWidth });
   const nodes = buildWorkspaceTree(workspace);
   const [expanded, setExpanded] = useState(() => expansionForSelection(nodes, selected));
   const [focused, setFocused] = useState(selected ?? nodes[0]?.id);

@@ -1,17 +1,13 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRouteStore } from './store/route.js';
 import { compareBatches } from '../../core/batch-order.js';
 import type { WorkspaceView } from '../../shared/api.js';
 import { Counts, money, nameOf } from './ui.js';
 import { ClaimBadge } from './ClaimStatus.js';
 
-export function Overview({
-  view,
-  select,
-  refresh,
-}: {
-  view: WorkspaceView;
-  select: (dir: string) => void;
-  refresh: () => void;
-}) {
+export function Overview({ view }: { view: WorkspaceView }) {
+  const select = useRouteStore((state) => state.select);
+  const refresh = useWorkspaceStore((state) => state.refresh);
   return (
     <main>
       <div className="page-heading">

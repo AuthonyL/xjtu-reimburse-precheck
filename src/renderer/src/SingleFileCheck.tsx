@@ -1,3 +1,5 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import {
   createContext,
   useContext,
@@ -13,9 +15,7 @@ import type {
   CorrectionTarget,
   ReplacementHistory,
 } from '../../core/correction/types.js';
-import type { WorkspaceView } from '../../shared/api.js';
 import { problemKey } from '../../core/correction/problems.js';
-import type { Run } from './ui.js';
 import {
   CorrectionModal,
   CorrectionProblems,
@@ -41,8 +41,6 @@ interface DialogState {
 }
 interface ProviderProps {
   dir: string;
-  run: Run;
-  update: (view: WorkspaceView) => void;
   disabled?: boolean;
   children: ReactNode;
 }
@@ -51,12 +49,14 @@ export function CorrectionProvider(props: ProviderProps) {
   return notices ? (
     <CorrectionSession {...props} />
   ) : (
-    <CorrectionNoticeProvider run={props.run} update={props.update}>
+    <CorrectionNoticeProvider>
       <CorrectionSession {...props} />
     </CorrectionNoticeProvider>
   );
 }
-function CorrectionSession({ dir, run, update, disabled = false, children }: ProviderProps) {
+function CorrectionSession({ dir, disabled = false, children }: ProviderProps) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   const [dialog, setDialog] = useState<DialogState | null>(null);
   const token = useRef<string | null>(null);
   const working = useRef(false);
@@ -98,9 +98,9 @@ function CorrectionSession({ dir, run, update, disabled = false, children }: Pro
     if (preview.status === 'checked') token.current = preview.token;
     if (preview.status === 'checked' && preview.passed) {
       try {
-        const view = await window.precheck.confirmCorrection(preview.token);
+        const view = await apply(() => window.precheck.confirmCorrection(preview.token));
+        if (!view) return;
         token.current = null;
-        update(view);
         setDialog(null);
         notify({ dir, source, preview, record: receiptRecord(view, dir) });
       } catch (error) {
@@ -317,14 +317,12 @@ export function CorrectionDrop({
 export function ReplacementRecords({
   history,
   dir,
-  run,
-  update,
 }: {
   history?: ReplacementHistory;
   dir: string;
-  run: Run;
-  update: (view: WorkspaceView) => void;
 }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   const records = history?.records ?? [];
   const undone = new Set(records.flatMap((r) => (r.undoOf ? [r.undoOf] : [])));
   const active = records.some((r) => r.kind === 'apply' && !undone.has(r.id));
@@ -337,7 +335,7 @@ export function ReplacementRecords({
             type="button"
             onClick={() =>
               void run(
-                async () => update(await window.precheck.undoCorrection(dir)),
+                () => apply(() => window.precheck.undoCorrection(dir)),
                 '已撤销最近一次放入，文件已还原',
               )
             }

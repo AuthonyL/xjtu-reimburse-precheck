@@ -1,8 +1,11 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRouteStore } from './store/route.js';
+import { useRun } from './store/status.js';
 import { RuleHelpProvider } from './RuleHelp.js';
 import { Collapsible } from './Collapsible.js';
 import { useDisclosures } from './disclosures.js';
 import type { BatchView, WorkspaceView, AppSettings } from '../../shared/api.js';
-import { Counts, FileLink, materialNames, money, type Run } from './ui.js';
+import { Counts, FileLink, materialNames, money } from './ui.js';
 import { ManualForm } from './ManualForm.js';
 import { Findings } from './Findings.js';
 import { INVOICE_TYPE_LABELS } from '../../core/rules/catalog.js';
@@ -12,48 +15,43 @@ import { ClaimStatus } from './ClaimStatus.js';
 
 export function Results({
   view,
-  run,
-  update,
-  back,
   settings,
   highlight,
-  locate,
 }: {
   view: BatchView;
-  run: Run;
-  update: (view: WorkspaceView) => void;
-  back: () => void;
   settings?: AppSettings;
   highlight?: string;
-  locate?: (group: string) => void;
 }) {
+  const run = useRun();
+  const back = () => useRouteStore.getState().select('');
   const { batch, report } = view;
   const [expandedGroups, setExpandedGroups] = useDisclosures(batch.dir, 'groups');
   const groupNames = [...report.groups.map((g) => g.group.name), '根目录'];
-  const apply = (fn: () => Promise<WorkspaceView>, notice?: string) =>
-    void run(async () => update(await fn()), notice);
+  const apply = useWorkspaceStore((state) => state.apply);
+  const mutate = (fn: () => Promise<WorkspaceView>, notice?: string) =>
+    void run(() => apply(fn), notice);
   const invoiceRows = report.groups.flatMap((g) => g.invoices.map((i) => ({ g, i })));
   const pending = view.manualTasks.filter((t) => t.pending).length;
   return (
     <RuleHelpProvider rules={settings?.rules}>
-      <CorrectionProvider dir={batch.dir} run={run} update={update} disabled={!!view.readOnly}>
+      <CorrectionProvider dir={batch.dir} disabled={!!view.readOnly}>
         <main className="results">
           <div className="results-toolbar">
             <button className="text-button" onClick={back}>
               ← 批次总览
             </button>
             <strong>{batch.id}</strong>
-            <ClaimStatus key={batch.dir} view={view} run={run} update={update} />
+            <ClaimStatus key={batch.dir} view={view} />
             {!view.readOnly && (
               <div className="actions">
                 <CorrectionAction global />
-                <button onClick={() => apply(() => window.precheck.recheck(batch.dir))}>
+                <button onClick={() => mutate(() => window.precheck.recheck(batch.dir))}>
                   重新检查
                 </button>
                 <button
                   className="primary"
                   onClick={() =>
-                    apply(
+                    mutate(
                       () => window.precheck.exportBatch(batch.dir),
                       '导出完成，可在下方打开文件',
                     )
@@ -110,24 +108,7 @@ export function Results({
             )}
             <p className="path small">{batch.dir}</p>
           </div>
-          <Findings
-            scope={batch.dir}
-            report={report}
-            run={run}
-            locate={locate}
-            waivers={view.claim.waivers}
-            waive={
-              view.readOnly
-                ? undefined
-                : async (id, reason) =>
-                    update(await window.precheck.waiveFinding(batch.dir, id, reason))
-            }
-            unwaive={
-              view.readOnly
-                ? undefined
-                : async (id) => update(await window.precheck.unwaiveFinding(batch.dir, id))
-            }
-          />
+          <Findings scope={batch.dir} report={report} waivers={view.claim.waivers} />
           <section aria-label="分组与材料">
             <div className="section-heading">
               <h2>分组与材料</h2>
@@ -251,15 +232,15 @@ export function Results({
                               )}
                               {r.note && <p className="muted small">{r.note}</p>}
                               {r.foundFiles.map((f) => (
-                                <FileLink key={f.path} file={f.path} run={run} />
+                                <FileLink key={f.path} file={f.path} />
                               ))}
                               {r.candidateFiles.map((f) => (
                                 <div className="candidate" key={f.path}>
-                                  <FileLink file={f.path} run={run} />
+                                  <FileLink file={f.path} />
                                   {!view.readOnly && (
                                     <button
                                       onClick={() =>
-                                        apply(
+                                        mutate(
                                           () =>
                                             window.precheck.confirmAttachment(
                                               batch.dir,
@@ -334,7 +315,7 @@ export function Results({
                               batch.manual.entries.some((e) => e.sourceFile === s.relativePath),
                           )
                           .map((s) => (
-                            <FileLink key={s.path} file={s.path} run={run} />
+                            <FileLink key={s.path} file={s.path} />
                           ))}
                       </td>
                     </tr>
@@ -364,8 +345,6 @@ export function Results({
                       entry: { exchangeRateType: settings?.rules.exchangeRateType, ...task.entry },
                     }}
                     dir={batch.dir}
-                    run={run}
-                    update={update}
                   />
                 ))
               ) : (
@@ -383,20 +362,13 @@ export function Results({
             {view.outputs.length ? (
               <div className="panel">
                 {view.outputs.map((file) => (
-                  <FileLink file={file} key={file} run={run} />
+                  <FileLink file={file} key={file} />
                 ))}
               </div>
             ) : (
               <p className="muted">导出后保存在本批次的 _预检 文件夹。</p>
             )}
-            {!view.readOnly && (
-              <ReplacementRecords
-                history={view.replacements}
-                dir={batch.dir}
-                run={run}
-                update={update}
-              />
-            )}
+            {!view.readOnly && <ReplacementRecords history={view.replacements} dir={batch.dir} />}
           </Collapsible>
         </main>
       </CorrectionProvider>

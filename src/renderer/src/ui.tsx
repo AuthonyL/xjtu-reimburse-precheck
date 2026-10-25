@@ -1,3 +1,4 @@
+import { useRun } from './store/status.js';
 import type { AttachmentType, Report } from '../../core/types.js';
 import { countSeverities } from '../../core/report.js';
 
@@ -6,8 +7,8 @@ export const materialNames = { ...ATTACHMENT_LABELS, payment: '支付记录' };
 export const money = (value: number) =>
   value.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 export const nameOf = (file: string) => file.split(/[\\/]/).pop() ?? file;
-export type Run = (action: () => Promise<unknown>, success?: string) => Promise<void>;
-export function FileLink({ file, run }: { file: string; run: Run }) {
+export function FileLink({ file }: { file: string }) {
+  const run = useRun();
   return (
     <span className="file-link">
       <button

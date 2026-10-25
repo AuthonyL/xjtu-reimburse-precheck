@@ -1,3 +1,4 @@
+import { useRuleFocus } from './store/route.js';
 import { useEffect, useRef, useState, useId } from 'react';
 import type { RuleConfig } from '../../core/rules/config.js';
 import {
@@ -12,10 +13,6 @@ import {
 import { Collapsible } from './Collapsible.js';
 import { useDisclosures } from './disclosures.js';
 import { ConfigFieldEditor, getConfigValue } from './ConfigField.js';
-export interface RuleFocus {
-  id: string;
-  revision: number;
-}
 const sourceGroups = ['readme', 'finance', 'labor', 'practice', 'system'] as const;
 const groupOf = (rule: RuleDefinition) => (rule.id.startsWith('L') ? 'labor' : rule.source.kind);
 const anchor = (id: string) => 'settings-rule-' + encodeURIComponent(id);
@@ -111,17 +108,16 @@ export function RulesOverview({
   scope,
   edit,
   restore,
-  focusRule,
 }: {
   rules: RuleConfig;
   scope: string;
   edit: (path: string, value: unknown) => void;
   restore: (rule: RuleDefinition) => void;
-  focusRule?: RuleFocus | null;
 }) {
+  const focusRule = useRuleFocus();
   const [search, setSearch] = useState('');
   const [expanded, setExpanded] = useDisclosures(scope, 'sections');
-  const lastFocus = useRef<RuleFocus | null>(null);
+  const lastFocus = useRef<ReturnType<typeof useRuleFocus>>(null);
   const target = RULE_CATALOG.find((r) => r.id === focusRule?.id);
   useEffect(() => {
     if (!target || !focusRule) return;

@@ -9,9 +9,6 @@ import type { Finding } from '../src/core/types.js';
 import type { WorkspaceView } from '../src/shared/api.js';
 import { batch, config, finding as makeFinding } from './helpers.js';
 import { checkBatch, buildReport } from '../src/core/index.js';
-const run = async (action: () => Promise<unknown>) => {
-  await action();
-};
 const finding = (message: string, severity: Finding['severity'] = 'warning'): Finding =>
   makeFinding({
     ruleId: 'R2',
@@ -93,13 +90,12 @@ function setup(result: CorrectionPreview) {
       undoCorrection: undo,
     },
   });
-  const update = vi.fn();
   render(
-    <CorrectionProvider dir="/batch" run={run} update={update}>
+    <CorrectionProvider dir="/batch">
       <CorrectionAction global />
     </CorrectionProvider>,
   );
-  return { choose, commit, undo, update };
+  return { choose, commit, undo };
 }
 async function select() {
   await act(async () => {

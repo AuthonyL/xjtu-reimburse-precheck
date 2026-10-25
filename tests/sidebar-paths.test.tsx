@@ -1,7 +1,8 @@
 import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
-import { useState } from 'react';
+import { useRouteStore } from '../src/renderer/src/store/route.js';
+import { seedWorkspace } from './store-helpers.js';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { Sidebar } from '../src/renderer/src/Sidebar.js';
 import { checkBatch } from '../src/core/rules/engine.js';
@@ -62,24 +63,13 @@ it.each([
       },
     ],
   };
-  const noop = () => {};
+  seedWorkspace(workspace);
+  Object.assign(window, { precheck: { selectBatch: async () => {} } });
   function Explorer() {
-    const [selected, select] = useState<string | null>(null);
+    const selected = useRouteStore((state) => state.route.dir ?? null);
     return (
       <>
-        <Sidebar
-          workspace={workspace}
-          selected={selected}
-          select={select}
-          busy={false}
-          settingsOpen={false}
-          width={280}
-          open={noop}
-          refresh={noop}
-          settings={noop}
-          resize={noop}
-          resized={noop}
-        />
+        <Sidebar />
         <output aria-label="所选路径">{selected}</output>
       </>
     );

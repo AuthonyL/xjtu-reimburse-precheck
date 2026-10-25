@@ -1,12 +1,13 @@
+import { useRouteStore } from './store/route.js';
 import { useEffect, useId, useState } from 'react';
 import type { Finding, Severity } from '../../core/types.js';
 import { ruleDefinition } from '../../core/rules/catalog.js';
-import { FileLink, nameOf, type Run } from './ui.js';
+import { FileLink, nameOf } from './ui.js';
 import { useFindingFeedback } from './Feedback.js';
 import { RuleHelp, ruleTitle } from './RuleHelp.js';
 import { CorrectionAction, CorrectionDrop } from './SingleFileCheck.js';
 import { findingDisclosureKey, useDisclosures } from './disclosures.js';
-import { FindingWaiver, type WaiverActions } from './ClaimStatus.js';
+import { FindingWaiver } from './ClaimStatus.js';
 
 export interface FindingContext {
   finding: Finding;
@@ -33,18 +34,15 @@ export function FindingItem({
   canCorrect = true,
   expanded,
   toggle,
-  run,
-  locate,
   waiverReason,
-  waive,
-  unwaive,
 }: FindingContext & {
   scope?: string;
   expanded: boolean;
   toggle: () => void;
-  run: Run;
-  locate?: (group: string) => void;
-} & WaiverActions) {
+}) {
+  const select = useRouteStore((state) => state.select);
+  const selected = useRouteStore((state) => state.route.dir);
+  const locate = selected === scope ? (group: string) => select(scope, group) : undefined;
   const detailsId = useId();
   const feedback = useFindingFeedback(finding, scope);
   const waived = finding.resolution === 'waived';
@@ -110,7 +108,7 @@ export function FindingItem({
           <RuleHelp finding={finding} />
           <div className="actions">
             {finding.files.map((path) => (
-              <FileLink key={path} file={path} run={run} />
+              <FileLink key={path} file={path} />
             ))}
           </div>
           <div className="actions">
@@ -133,12 +131,10 @@ export function FindingItem({
             )}
           </div>
           <FindingWaiver
+            scope={scope}
             findingId={finding.id}
             waived={waived}
             reason={waiverReason}
-            waive={waive}
-            unwaive={unwaive}
-            run={run}
           />
         </div>
       )}
@@ -146,19 +142,7 @@ export function FindingItem({
   );
 }
 
-export function FindingList({
-  scope,
-  findings,
-  run,
-  locate,
-  waive,
-  unwaive,
-}: {
-  scope: string;
-  findings: FindingContext[];
-  run: Run;
-  locate?: (group: string) => void;
-} & WaiverActions) {
+export function FindingList({ scope, findings }: { scope: string; findings: FindingContext[] }) {
   const [expanded, setExpanded] = useDisclosures(scope, 'findings');
   const [filter, setFilter] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState(false);
@@ -187,10 +171,6 @@ export function FindingList({
         {...row}
         expanded={!!expanded[key]}
         toggle={() => setExpanded([key], !expanded[key])}
-        run={run}
-        locate={locate}
-        waive={waive}
-        unwaive={unwaive}
       />
     );
   };

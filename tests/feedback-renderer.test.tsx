@@ -1,3 +1,6 @@
+import { seedSettings } from './store-helpers.js';
+import { onTestFinished } from 'vitest';
+import { useWorkspaceStore } from '../src/renderer/src/store/workspace.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { cleanup, render, screen, within, waitFor } from '@testing-library/react';
@@ -9,9 +12,6 @@ import type { FeedbackRecord, FeedbackInput } from '../src/shared/feedback.js';
 import { config, finding } from './helpers.js';
 import { DEFAULT_BOC_URL } from '../src/main/store.js';
 afterEach(cleanup);
-const run = async (action: () => Promise<unknown>) => {
-  await action();
-};
 it('反馈表单必填、保存后摘要显示已反馈，设置可见并删除，预览默认不带原文件', async () => {
   let records: FeedbackRecord[] = [];
   let originals: boolean | undefined;
@@ -59,10 +59,9 @@ it('反馈表单必填、保存后摘要显示已反馈，设置可见并删除�
     },
   });
   render(
-    <FeedbackProvider revision="test" run={run}>
+    <FeedbackProvider>
       <FindingList
         scope="/synthetic"
-        run={run}
         findings={[
           {
             finding: finding({
@@ -76,7 +75,7 @@ it('反馈表单必填、保存后摘要显示已反馈，设置可见并删除�
           },
         ]}
       />
-      <FeedbackPanel run={run} />
+      <FeedbackPanel />
     </FeedbackProvider>,
   );
   const user = userEvent.setup();
@@ -122,6 +121,12 @@ it('规则版本显示哈希、自定义和导入来源，升级逐项选择', a
   );
   let chosen: unknown;
   let changed = 0;
+  const unsubscribe = useWorkspaceStore.subscribe((state, previous) => {
+    if (state.boot?.settings !== previous.boot?.settings) changed++;
+  });
+  onTestFinished(unsubscribe);
+  seedSettings({ rules: config(), bocUrl: DEFAULT_BOC_URL });
+  changed = 0;
   Object.assign(window, {
     precheck: {
       resolveRuleUpgrade: async (choices: unknown) => {
@@ -130,16 +135,7 @@ it('规则版本显示哈希、自定义和导入来源，升级逐项选择', a
       },
     },
   });
-  render(
-    <RuleVersion
-      version={version}
-      settings={{ rules: config(), bocUrl: DEFAULT_BOC_URL }}
-      run={run}
-      rulesChanged={async () => {
-        changed++;
-      }}
-    />,
-  );
+  render(<RuleVersion version={version} settings={{ rules: config(), bocUrl: DEFAULT_BOC_URL }} />);
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: /有新的默认规则/ }));
   expect((screen.getByRole('button', { name: '保存选择' }) as HTMLButtonElement).disabled).toBe(
@@ -154,6 +150,7 @@ it('设置内接受升级后，草稿和后续保存同步为新规则，不恢�
   const { Settings } = await import('../src/renderer/src/Settings.js');
   const old = config();
   old.thresholds.inventory.value = 900;
+  seedSettings({ rules: old, bocUrl: DEFAULT_BOC_URL });
   const next = config();
   next.thresholds.inventory.value = 700;
   let saved = 0;
@@ -173,8 +170,6 @@ it('设置内接受升级后，草稿和后续保存同步为新规则，不恢�
     <Settings
       initial={{ rules: old, bocUrl: DEFAULT_BOC_URL }}
       userData="/synthetic"
-      run={run}
-      changed={async () => {}}
       version={{
         defaultsHash: 'b'.repeat(64),
         configHash: 'a',

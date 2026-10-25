@@ -1,8 +1,9 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { useId, useState } from 'react';
 import type { ClaimState } from '../../core/domain/claim.js';
 import { availableTransitions, CLAIM_STATE_LABELS } from '../../core/domain/transitions.js';
-import type { BatchView, WorkspaceView } from '../../shared/api.js';
-import type { Run } from './ui.js';
+import type { BatchView } from '../../shared/api.js';
 
 export function ClaimBadge({ state }: { state: ClaimState }) {
   return <span className="pill info">{CLAIM_STATE_LABELS[state]}</span>;
@@ -61,20 +62,14 @@ function ReasonForm({
   );
 }
 
-export function ClaimStatus({
-  view,
-  run,
-  update,
-}: {
-  view: BatchView;
-  run: Run;
-  update: (workspace: WorkspaceView) => void;
-}) {
+export function ClaimStatus({ view }: { view: BatchView }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   const [target, setTarget] = useState<ClaimState | null>(null);
   const targets = availableTransitions(view.claim.state);
   const transition = (to: ClaimState, note?: string) =>
     run(async () => {
-      update(await window.precheck.transitionClaim(view.batch.dir, to, note));
+      await apply(() => window.precheck.transitionClaim(view.batch.dir, to, note));
       setTarget(null);
     }, '报销状态已更新为' + CLAIM_STATE_LABELS[to]);
   return (
@@ -110,24 +105,34 @@ export function ClaimStatus({
   );
 }
 
-export interface WaiverActions {
-  waive?: (findingId: string, reason: string) => Promise<void>;
-  unwaive?: (findingId: string) => Promise<void>;
-}
-
 export function FindingWaiver({
+  scope,
   findingId,
   waived,
   reason,
-  waive,
-  unwaive,
-  run,
-}: WaiverActions & {
+}: {
+  scope: string;
   findingId: string;
   waived: boolean;
   reason?: string;
-  run: Run;
 }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
+  const view = useWorkspaceStore((state) =>
+    state.view?.batches.find((batch) => batch.batch.dir === scope),
+  );
+  const waive =
+    view && !view.readOnly
+      ? async (id: string, reason: string) => {
+          await apply(() => window.precheck.waiveFinding(scope, id, reason));
+        }
+      : undefined;
+  const unwaive =
+    view && !view.readOnly
+      ? async (id: string) => {
+          await apply(() => window.precheck.unwaiveFinding(scope, id));
+        }
+      : undefined;
   const [editing, setEditing] = useState(false);
   if (waived)
     return (

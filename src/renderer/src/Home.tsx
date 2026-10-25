@@ -1,15 +1,14 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { useState } from 'react';
 import { nameOf } from './ui.js';
 
-export function Home({
-  recent,
-  choose,
-  open,
-}: {
-  recent: string[];
-  choose: () => void;
-  open: (dir: string) => void;
-}) {
+export function Home() {
+  const recent = useWorkspaceStore((state) => state.boot?.recent) ?? [];
+  const choose = useWorkspaceStore((state) => state.choose);
+  const opened = useWorkspaceStore((state) => state.opened);
+  const run = useRun();
+  const open = (dir: string) => void run(async () => opened(await window.precheck.openFolder(dir)));
   const [folder, setFolder] = useState('');
   return (
     <main className="home">

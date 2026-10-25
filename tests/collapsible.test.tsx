@@ -1,3 +1,4 @@
+import { seedBatch } from './store-helpers.js';
 import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { useState } from 'react';
@@ -10,9 +11,6 @@ import { Results } from '../src/renderer/src/Results.js';
 import { buildReport, checkBatch } from '../src/core/index.js';
 import { batch, config, invoice } from './helpers.js';
 afterEach(cleanup);
-const run = async (action: () => Promise<unknown>) => {
-  await action();
-};
 function Harness({ dir }: { dir: string }) {
   const [state, setState] = useState<DisclosureState>({});
   return (
@@ -44,7 +42,7 @@ it('批次所有组与详细段落默认收起，展开后发票序号按显示�
   const report = buildReport(checkBatch(b, config()));
   render(
     <Results
-      view={{
+      view={seedBatch({
         batch: b,
         report,
         claim: defaultClaim('synthetic-view', '2026-01-01'),
@@ -52,11 +50,8 @@ it('批次所有组与详细段落默认收起，展开后发票序号按显示�
         markedAt: null,
         outputs: ['/synthetic/_预检/汇总.md'],
         manualTasks: [],
-      }}
+      })}
       settings={{ rules: config(), bocUrl: 'https://example.invalid' }}
-      run={run}
-      update={() => {}}
-      back={() => {}}
     />,
   );
   expect(
@@ -88,7 +83,7 @@ it('批次重查时保留段落展开状态和新的概述数字', async () => {
   const report = buildReport(checkBatch(b, config()));
   const renderView = (outputs: string[]) => (
     <Results
-      view={{
+      view={seedBatch({
         batch: b,
         report,
         claim: defaultClaim('synthetic-view', '2026-01-01'),
@@ -96,10 +91,7 @@ it('批次重查时保留段落展开状态和新的概述数字', async () => {
         markedAt: null,
         outputs,
         manualTasks: [],
-      }}
-      run={run}
-      update={() => {}}
-      back={() => {}}
+      })}
     />
   );
   const result = render(renderView([]));

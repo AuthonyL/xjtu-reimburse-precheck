@@ -1,3 +1,4 @@
+import { seedBatch } from './store-helpers.js';
 // @vitest-environment jsdom
 import { expect, it } from 'vitest';
 import { render, screen, within, waitFor, cleanup } from '@testing-library/react';
@@ -29,7 +30,7 @@ it('问题列表默认显示错误和警告，提示按数量折叠并可展开'
   try {
     render(
       <Results
-        view={{
+        view={seedBatch({
           batch: b,
           report,
           claim: defaultClaim(b.id, '2026-10-25T00:00:00.000Z'),
@@ -37,12 +38,7 @@ it('问题列表默认显示错误和警告，提示按数量折叠并可展开'
           markedAt: null,
           outputs: [],
           manualTasks: [],
-        }}
-        run={async (action) => {
-          await action();
-        }}
-        update={() => {}}
-        back={() => {}}
+        })}
       />,
     );
     expect(screen.getByText('合成问题-error')).toBeTruthy();

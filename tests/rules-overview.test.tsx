@@ -1,3 +1,6 @@
+import { onTestFinished } from 'vitest';
+import { useRouteStore } from '../src/renderer/src/store/route.js';
+import { act } from '@testing-library/react';
 import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
@@ -14,9 +17,6 @@ import { config } from './helpers.js';
 import { DEFAULT_BOC_URL, validateSettings } from '../src/main/store.js';
 import type { AppSettings } from '../src/shared/api.js';
 afterEach(cleanup);
-const run = async (action: () => Promise<unknown>) => {
-  await action();
-};
 it('规则组默认展开、规则收起且所有编号可见，收起时可切换启用，R14只读', async () => {
   let saved: AppSettings | null = null;
   Object.assign(window, {
@@ -27,14 +27,7 @@ it('规则组默认展开、规则收起且所有编号可见，收起时可切�
       },
     },
   });
-  render(
-    <Settings
-      initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }}
-      userData="/synthetic"
-      run={run}
-      changed={async () => {}}
-    />,
-  );
+  render(<Settings initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }} userData="/synthetic" />);
   for (const rule of RULE_CATALOG)
     expect(
       within(screen.getByTestId('rule-' + rule.id))
@@ -67,18 +60,16 @@ it('规则组默认展开、规则收起且所有编号可见，收起时可切�
 }, 15000);
 it('从问题查看规则时显示原文、动态口径和编号含义，并可请求定位设置', async () => {
   let requested = '';
+  const unsubscribe = useRouteStore.subscribe((state) => {
+    requested = state.route.ruleId ?? '';
+  });
+  onTestFinished(unsubscribe);
   const c = config();
   c.thresholds.inventory = { value: 700, operator: '>' };
   render(
-    <RuleHelpProvider
-      rules={c}
-      openRule={(id) => {
-        requested = id;
-      }}
-    >
+    <RuleHelpProvider rules={c}>
       <FindingList
         scope="/synthetic"
-        run={run}
         findings={[
           {
             finding: finding({
@@ -112,13 +103,11 @@ it('规则定位请求展开来源和规则，清除搜索并允许编辑', asyn
   const props = {
     initial: { rules: config(), bocUrl: DEFAULT_BOC_URL },
     userData: '/synthetic',
-    run,
-    changed: async () => {},
   };
   const result = render(<Settings {...props} />);
   const user = userEvent.setup();
   await user.type(screen.getByRole('searchbox', { name: '搜索规则' }), 'R1');
-  result.rerender(<Settings {...props} focusRule={{ id: 'F2', revision: 1 }} />);
+  act(() => useRouteStore.getState().navigate({ page: 'rules', ruleId: 'F2' }));
   await waitFor(() =>
     expect((screen.getByRole('searchbox', { name: '搜索规则' }) as HTMLInputElement).value).toBe(
       '',
@@ -134,14 +123,7 @@ it('规则定位请求展开来源和规则，清除搜索并允许编辑', asyn
 
 it('规则按搜索结果全部展开收起，附件和分组编辑器默认收起', async () => {
   const user = userEvent.setup();
-  render(
-    <Settings
-      initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }}
-      userData="/synthetic"
-      run={run}
-      changed={async () => {}}
-    />,
-  );
+  render(<Settings initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }} userData="/synthetic" />);
   await user.type(screen.getByRole('searchbox', { name: '搜索规则' }), 'F2');
   await user.click(screen.getByRole('button', { name: '全部展开' }));
   expect(screen.getByRole('textbox', { name: '横向限制关键字' })).toBeTruthy();

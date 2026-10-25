@@ -1,3 +1,5 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { createContext, useContext, useEffect, useId, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { relativeProblemFile } from '../../core/correction/problems.js';
@@ -9,7 +11,6 @@ import {
   type FeedbackState,
   type FeedbackPreview,
 } from '../../shared/feedback.js';
-import type { Run } from './ui.js';
 const relativeDirectory = (root: string | undefined | null, directory: string) =>
   !root || root === directory ? '.' : relativeProblemFile(root, directory);
 const Context = createContext<{
@@ -17,15 +18,8 @@ const Context = createContext<{
   reload: () => Promise<void>;
   mark?: (finding: Finding, directory: string) => void;
 }>({ state: { records: [], workspaceKey: null }, reload: async () => {} });
-export function FeedbackProvider({
-  children,
-  revision,
-  run,
-}: {
-  children: ReactNode;
-  revision: unknown;
-  run: Run;
-}) {
+export function FeedbackProvider({ children }: { children: ReactNode }) {
+  const revision = useWorkspaceStore((state) => state.view);
   const [state, setState] = useState<FeedbackState>({ records: [], workspaceKey: null });
   const [target, setTarget] = useState<{ finding: Finding; directory: string } | null>(null);
   const [type, setType] = useState<FeedbackType>('falsePositive');
@@ -210,7 +204,8 @@ export function FeedbackDialog({
     document.body,
   );
 }
-export function FeedbackPanel({ run }: { run: Run }) {
+export function FeedbackPanel() {
+  const run = useRun();
   const { state, reload } = useContext(Context);
   const [preview, setPreview] = useState<FeedbackPreview | null>(null);
   const [path, setPath] = useState('');

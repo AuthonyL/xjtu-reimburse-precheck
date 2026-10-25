@@ -1,3 +1,6 @@
+import { seedBatch } from './store-helpers.js';
+import { onTestFinished } from 'vitest';
+import { useRouteStore } from '../src/renderer/src/store/route.js';
 import { defaultClaim } from '../src/core/domain/claim.js';
 // @vitest-environment jsdom
 import { expect, it } from 'vitest';
@@ -24,14 +27,7 @@ it('规则目录生成标签和 F2 编辑器，关键字添加删除、恢复单
   const user = userEvent.setup();
   try {
     render(
-      <Settings
-        initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }}
-        userData="/synthetic"
-        run={async (action) => {
-          await action();
-        }}
-        changed={async () => {}}
-      />,
+      <Settings initial={{ rules: config(), bocUrl: DEFAULT_BOC_URL }} userData="/synthetic" />,
     );
     for (const label of ['规则', '附件识别', '分组', '支出内容', '通用', '高级（JSON）'])
       expect(screen.getByRole('tab', { name: label })).toBeTruthy();
@@ -67,10 +63,16 @@ it('结果首个 section 为待处理问题，显示 action 并可定位分组',
     }),
   ];
   let located = '';
+  useRouteStore.setState({ route: { page: 'claim', dir: b.dir } });
+  Object.assign(window, { precheck: { selectBatch: async () => {} } });
+  const unsubscribe = useRouteStore.subscribe((state) => {
+    located = state.route.group ?? '';
+  });
+  onTestFinished(unsubscribe);
   try {
     const result = render(
       <Results
-        view={{
+        view={seedBatch({
           batch: b,
           report,
           manualTasks: [],
@@ -78,15 +80,7 @@ it('结果首个 section 为待处理问题，显示 action 并可定位分组',
           waived: 0,
           markedAt: null,
           outputs: [],
-        }}
-        run={async (action) => {
-          await action();
-        }}
-        update={() => {}}
-        back={() => {}}
-        locate={(group) => {
-          located = group;
-        }}
+        })}
       />,
     );
     expect(result.container.querySelector('section')?.getAttribute('aria-label')).toBe(
@@ -127,15 +121,7 @@ it('拒票页显示推断样式、允许编辑已记录原因并通过受限 API
     },
   });
   try {
-    render(
-      <RejectedPage
-        view={view}
-        run={async (action) => {
-          await action();
-        }}
-        update={() => {}}
-      />,
-    );
+    render(<RejectedPage view={view} />);
     expect(screen.getByText(/可能：F2/).className).toContain('inferred');
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: '记录原因' }));

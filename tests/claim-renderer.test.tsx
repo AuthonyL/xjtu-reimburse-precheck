@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
-import { useState } from 'react';
+import { useWorkspaceStore } from '../src/renderer/src/store/workspace.js';
+import { seedWorkspace } from './store-helpers.js';
 import { afterEach, expect, it } from 'vitest';
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
@@ -18,9 +19,6 @@ import { DesktopStore } from '../src/main/store.js';
 
 afterEach(cleanup);
 const at = '2026-10-25T00:00:00.000Z';
-const run = async (action: () => Promise<unknown>) => {
-  await action();
-};
 const view = (state: ClaimState = 'draft'): BatchView => {
   const b = batch();
   const report = buildReport(checkBatch(b, config()));
@@ -43,8 +41,8 @@ const workspace = (b: BatchView): WorkspaceView => ({
   batches: [b],
   rejected: null,
 });
-function Harness({ initial }: { initial: BatchView }) {
-  const [current, setCurrent] = useState(initial);
+function Harness() {
+  const current = useWorkspaceStore((state) => state.view!.batches[0]!);
   Object.assign(window, {
     precheck: {
       transitionClaim: async (dir: string, to: ClaimState, note?: string) => {
@@ -79,20 +77,14 @@ function Harness({ initial }: { initial: BatchView }) {
       },
     },
   });
-  return (
-    <Results
-      view={current}
-      run={run}
-      update={(next) => setCurrent(next.batches[0]!)}
-      back={() => {}}
-    />
-  );
+  return <Results view={current} />;
 }
 
 it('草稿只显示合法状态动作，学校报销单提示在草稿和待提交时可见', async () => {
   const initial = view();
   initial.batch.submitted = true;
-  render(<Harness initial={initial} />);
+  seedWorkspace(workspace(initial));
+  render(<Harness />);
   const user = userEvent.setup();
   expect(screen.getByText('草稿').classList.contains('pill')).toBe(true);
   expect(screen.getByText('已找到学校报销单，可标记为已提交')).toBeTruthy();
@@ -108,7 +100,8 @@ it('草稿只显示合法状态动作，学校报销单提示在草稿和待提�
 });
 
 it.each(['已退回', '已拒绝'])('%s 状态必须填写非空备注，提交后显示新状态', async (label) => {
-  render(<Harness initial={view('submitted')} />);
+  seedWorkspace(workspace(view('submitted')));
+  render(<Harness />);
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: '标记为' + label }));
   const note = screen.getByRole('textbox', { name: '状态备注' });
@@ -124,7 +117,8 @@ it.each(['已退回', '已拒绝'])('%s 状态必须填写非空备注，提交�
 });
 
 it('豁免理由必填，已豁免问题折叠为提示样式并可撤销', async () => {
-  render(<Harness initial={view()} />);
+  seedWorkspace(workspace(view()));
+  render(<Harness />);
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: /合成待补材料/ }));
   await user.click(screen.getByRole('button', { name: '豁免…' }));
@@ -154,7 +148,8 @@ it('豁免理由必填，已豁免问题折叠为提示样式并可撤销', asyn
 it('只读批次显示状态，但不提供状态和豁免动作', async () => {
   const initial = view('submitted');
   initial.readOnly = true;
-  render(<Harness initial={initial} />);
+  seedWorkspace(workspace(initial));
+  render(<Harness />);
   expect(screen.getByText('已提交')).toBeTruthy();
   expect(screen.queryByRole('button', { name: /^标记为/ })).toBeNull();
   await userEvent.setup().click(screen.getByRole('button', { name: /合成待补材料/ }));
@@ -162,7 +157,7 @@ it('只读批次显示状态，但不提供状态和豁免动作', async () => {
 });
 
 it('总览批次卡片显示中文状态徽标', () => {
-  render(<Overview view={workspace(view('reimbursed'))} select={() => {}} refresh={() => {}} />);
+  render(<Overview view={workspace(view('reimbursed'))} />);
   const card = screen.getByRole('button', { name: /20260102/ });
   expect(within(card).getByText('已报销').classList.contains('pill')).toBe(true);
 });
@@ -183,9 +178,10 @@ it('真实服务保存豁免理由并在撤销后恢复待处理问题', async (
       },
     });
     function ServiceResults() {
-      const [current, setCurrent] = useState(initial);
-      return <Results view={current.batches[0]!} run={run} update={setCurrent} back={() => {}} />;
+      const current = useWorkspaceStore((state) => state.view!);
+      return <Results view={current.batches[0]!} />;
     }
+    seedWorkspace(initial);
     render(<ServiceResults />);
     const user = userEvent.setup();
     const summary = screen

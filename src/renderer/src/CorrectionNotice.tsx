@@ -1,3 +1,5 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useStatusStore, useRun } from './store/status.js';
 import {
   createContext,
   useContext,
@@ -14,7 +16,7 @@ import type {
   ReplacementRecord,
 } from '../../core/correction/types.js';
 import type { Finding } from '../../core/types.js';
-import { nameOf, type Run } from './ui.js';
+import { nameOf } from './ui.js';
 export type CheckedCorrection = Extract<CorrectionPreview, { status: 'checked' }>;
 export interface CorrectionReceipt {
   dir: string;
@@ -141,17 +143,10 @@ function actualOperations(receipt: CorrectionReceipt): FileOperation[] {
     })),
   ];
 }
-export function CorrectionNoticeProvider({
-  children,
-  run,
-  update,
-  busy = false,
-}: {
-  children: ReactNode;
-  run: Run;
-  update: (view: WorkspaceView) => void;
-  busy?: boolean;
-}) {
+export function CorrectionNoticeProvider({ children }: { children: ReactNode }) {
+  const run = useRun();
+  const busy = useStatusStore((state) => state.busy);
+  const apply = useWorkspaceStore((state) => state.apply);
   const [notice, setNotice] = useState<CorrectionReceipt | null>(null);
   const [details, setDetails] = useState<CorrectionReceipt | null>(null);
   const [undoing, setUndoing] = useState(false);
@@ -185,7 +180,7 @@ export function CorrectionNoticeProvider({
                 if (undoing) return;
                 setUndoing(true);
                 void run(async () => {
-                  update(await window.precheck.undoCorrection(notice.dir, notice.record?.id));
+                  await apply(() => window.precheck.undoCorrection(notice.dir, notice.record?.id));
                   setNotice(null);
                   setDetails(null);
                 }, '已撤销本次放入').finally(() => setUndoing(false));

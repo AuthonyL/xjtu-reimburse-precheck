@@ -1,3 +1,6 @@
+import { beforeEach } from 'vitest';
+import { resetStores } from './store-helpers.js';
+beforeEach(resetStores);
 import { configure } from '@testing-library/dom';
 
 // Hosted CI runners (especially Windows) are slower than local machines; give UI waits more room.

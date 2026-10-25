@@ -1,3 +1,6 @@
+import { onTestFinished } from 'vitest';
+import { seedWorkspace } from './store-helpers.js';
+import { useRouteStore } from '../src/renderer/src/store/route.js';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { render, screen, within, cleanup } from '@testing-library/react';
@@ -17,14 +20,7 @@ it('原件日期改变后重查，解析输入框与规范预览同步更新', a
   const config = loadConfig();
   const scan = laborScan();
   const renderPage = () => (
-    <LaborPage
-      view={{ report: checkLabor(scan, config), outputs: [] }}
-      config={config}
-      run={async (action) => {
-        await action();
-      }}
-      update={() => {}}
-    />
+    <LaborPage view={{ report: checkLabor(scan, config), outputs: [] }} config={config} />
   );
   const view = render(renderPage());
   await userEvent.setup().click(screen.getByRole('button', { name: /^抽取字段与手动补充/ }));
@@ -45,32 +41,22 @@ it('劳务树按情况说明路径定位，同姓名不混淆，显示状态和�
     parsed: { ...scan.statements[0]!.parsed, dates: [], mode: null },
   });
   let target = '';
+  const unsubscribe = useRouteStore.subscribe((state) => {
+    target = state.route.group ?? '';
+  });
+  onTestFinished(unsubscribe);
   const report = checkLabor(scan, loadConfig());
-  render(
-    <Sidebar
-      workspace={{
-        kind: 'root',
-        dir: '/synthetic',
-        openedDir: '/synthetic',
-        selectedBatchDir: null,
-        batches: [],
-        rejected: null,
-        labor: [{ report, outputs: [] }],
-      }}
-      selected={null}
-      settingsOpen={false}
-      busy={false}
-      width={280}
-      select={(_dir, group) => {
-        target = group ?? '';
-      }}
-      open={() => {}}
-      refresh={() => {}}
-      settings={() => {}}
-      resize={() => {}}
-      resized={() => {}}
-    />,
-  );
+  seedWorkspace({
+    kind: 'root',
+    dir: '/synthetic',
+    openedDir: '/synthetic',
+    selectedBatchDir: null,
+    batches: [],
+    rejected: null,
+    labor: [{ report, outputs: [] }],
+  });
+  Object.assign(window, { precheck: { selectBatch: async () => {} } });
+  render(<Sidebar />);
   const user = userEvent.setup();
   await user.click(screen.getByRole('treeitem', { name: /劳务费/ }));
   const items = screen.getAllByRole('treeitem', { name: /林示例/ });
@@ -88,11 +74,27 @@ it('问题在字段之前，手填与实时预览同步，保存及导出使用�
     precheck: {
       saveLabor: async (_dir: string, _file: string, entry: LaborManualEntry) => {
         saved = entry;
-        return {};
+        return {
+          kind: 'root',
+          dir: scan.dir,
+          openedDir: scan.dir,
+          selectedBatchDir: scan.dir,
+          batches: [],
+          rejected: null,
+          labor: [{ report: checkLabor(scan, config), outputs: [] }],
+        };
       },
       exportLabor: async (_dir: string, _file: string, entry: LaborManualEntry) => {
         saved = entry;
-        return {};
+        return {
+          kind: 'root',
+          dir: scan.dir,
+          openedDir: scan.dir,
+          selectedBatchDir: scan.dir,
+          batches: [],
+          rejected: null,
+          labor: [{ report: checkLabor(scan, config), outputs: [] }],
+        };
       },
       copyText: async (text: string) => {
         copied = text;
@@ -101,14 +103,7 @@ it('问题在字段之前，手填与实时预览同步，保存及导出使用�
   });
   const user = userEvent.setup();
   const result = render(
-    <LaborPage
-      view={{ report: checkLabor(scan, config), outputs: [] }}
-      config={config}
-      run={async (action) => {
-        await action();
-      }}
-      update={() => {}}
-    />,
+    <LaborPage view={{ report: checkLabor(scan, config), outputs: [] }} config={config} />,
   );
   expect(
     result.container
@@ -157,14 +152,7 @@ it('劳务标准标签可编辑数值和模板并通过真实配置校验', asyn
   });
   const user = userEvent.setup();
   render(
-    <Settings
-      initial={{ rules: loadConfig(), bocUrl: DEFAULT_BOC_URL }}
-      userData="/synthetic"
-      run={async (action) => {
-        await action();
-      }}
-      changed={async () => {}}
-    />,
+    <Settings initial={{ rules: loadConfig(), bocUrl: DEFAULT_BOC_URL }} userData="/synthetic" />,
   );
   await user.click(screen.getByRole('tab', { name: '劳务标准' }));
   await user.click(screen.getByRole('button', { name: /^咨询费 ·/ }));
@@ -189,10 +177,6 @@ it('劳务卡片仅问题列表默认可见，其他四段收起，列表序号�
     <LaborPage
       view={{ report: checkLabor(scan, loadConfig()), outputs: [] }}
       config={loadConfig()}
-      run={async (action) => {
-        await action();
-      }}
-      update={() => {}}
     />,
   );
   expect(screen.getAllByTestId('labor-ordinal').map((n) => n.textContent)).toEqual(['1.', '2.']);

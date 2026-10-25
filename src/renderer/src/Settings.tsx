@@ -1,3 +1,6 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRuleFocus } from './store/route.js';
+import { useRun } from './store/status.js';
 import { useEffect, useState } from 'react';
 import type { AppSettings } from '../../shared/api.js';
 import { loadConfig, type RuleConfig } from '../../core/rules/config.js';
@@ -12,12 +15,11 @@ import {
 } from '../../core/rules/catalog.js';
 import { ConfigFieldEditor, getConfigValue, setConfigValue } from './ConfigField.js';
 import { Collapsible } from './Collapsible.js';
-import { RulesOverview, type RuleFocus } from './RulesOverview.js';
+import { RulesOverview } from './RulesOverview.js';
 import { ConfigFieldDisclosure } from './ConfigField.js';
 import { FeedbackPanel } from './Feedback.js';
 import { RuleVersion } from './RuleVersion.js';
 import type { RuleVersionInfo } from '../../shared/feedback.js';
-import type { Run } from './ui.js';
 
 const tabs = [
   '规则',
@@ -32,21 +34,25 @@ const tabs = [
 export function Settings({
   initial,
   userData,
-  run,
-  changed,
-  focusRule,
   version,
 }: {
   initial: AppSettings;
   userData: string;
-  run: Run;
-  changed: (value: AppSettings) => Promise<void>;
-  focusRule?: RuleFocus | null;
   version?: RuleVersionInfo;
 }) {
+  const run = useRun();
+  const changed = useWorkspaceStore((state) => state.changeSettings);
+  const focusRule = useRuleFocus();
   const [draft, setDraft] = useState<AppSettings>(structuredClone(initial));
   const [json, setJson] = useState(JSON.stringify(initial.rules, null, 2));
   const [tab, setTab] = useState<(typeof tabs)[number]>('规则');
+  const savedSettings = useWorkspaceStore((state) => state.boot?.settings);
+  useEffect(() => {
+    if (savedSettings) {
+      setDraft(structuredClone(savedSettings));
+      setJson(JSON.stringify(savedSettings.rules, null, 2));
+    }
+  }, [savedSettings]);
   const scope = 'settings:' + userData;
   useEffect(() => {
     if (focusRule) setTab('规则');
@@ -106,7 +112,7 @@ export function Settings({
           <p>保存后重新检查全部批次。同名配置项在规则之间共享；关键字按回车添加，× 删除。</p>
         </div>
       </div>
-      <RuleVersion version={version} settings={initial} rulesChanged={accept} run={run} />
+      <RuleVersion version={version} settings={initial} />
       <div className="settings-tabs" role="tablist" aria-label="设置分类">
         {tabs.map((name) => (
           <button
@@ -129,15 +135,9 @@ export function Settings({
         }}
       >
         <div id="settings-content" role="tabpanel" aria-label={tab}>
-          {tab === '反馈' && <FeedbackPanel run={run} />}
+          {tab === '反馈' && <FeedbackPanel />}
           {tab === '规则' && (
-            <RulesOverview
-              rules={draft.rules}
-              scope={scope}
-              edit={edit}
-              restore={restoreRule}
-              focusRule={focusRule}
-            />
+            <RulesOverview rules={draft.rules} scope={scope} edit={edit} restore={restoreRule} />
           )}
           {tab === '附件识别' && (
             <div className="panel catalog-fields">{foldedFields(ATTACHMENT_CATALOG)}</div>

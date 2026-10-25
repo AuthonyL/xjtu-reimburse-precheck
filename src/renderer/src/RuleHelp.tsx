@@ -1,28 +1,15 @@
+import { useRouteStore } from './store/route.js';
 import { createContext, useContext, type ReactNode } from 'react';
 import type { Finding } from '../../core/types.js';
 import { loadConfig, type RuleConfig } from '../../core/rules/config.js';
 import { criteria, ruleDefinition, ruleMeaning } from '../../core/rules/catalog.js';
 const defaultRules = loadConfig();
-const Context = createContext<{ rules: RuleConfig; openRule?: (id: string) => void }>({
+const Context = createContext<{ rules: RuleConfig }>({
   rules: defaultRules,
 });
-export function RuleHelpProvider({
-  rules,
-  openRule,
-  children,
-}: {
-  rules?: RuleConfig;
-  openRule?: (id: string) => void;
-  children: ReactNode;
-}) {
+export function RuleHelpProvider({ rules, children }: { rules?: RuleConfig; children: ReactNode }) {
   const parent = useContext(Context);
-  return (
-    <Context.Provider
-      value={{ rules: rules ?? parent.rules, openRule: openRule ?? parent.openRule }}
-    >
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={{ rules: rules ?? parent.rules }}>{children}</Context.Provider>;
 }
 export function ruleTitle(ids: string): string {
   return ids
@@ -34,7 +21,9 @@ export function ruleTitle(ids: string): string {
     .join('\n');
 }
 export function RuleHelp({ finding }: { finding: Finding }) {
-  const { rules, openRule } = useContext(Context);
+  const { rules } = useContext(Context);
+  const navigate = useRouteStore((state) => state.navigate);
+  const openRule = (id: string) => navigate({ page: 'rules', ruleId: id });
   return (
     <div className="rule-help" role="region" aria-label="规则说明">
       <h4>规则说明</h4>

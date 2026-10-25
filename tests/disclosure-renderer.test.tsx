@@ -1,3 +1,8 @@
+import { seedBatch } from './store-helpers.js';
+import { onTestFinished } from 'vitest';
+import { seedWorkspace } from './store-helpers.js';
+import { routeForDir, useRouteStore } from '../src/renderer/src/store/route.js';
+import { act } from '@testing-library/react';
 // @vitest-environment jsdom
 import { useEffect, useState } from 'react';
 import { afterEach, expect, it } from 'vitest';
@@ -20,9 +25,6 @@ import { batch, config, finding as makeFinding } from './helpers.js';
 import { defaultClaim } from '../src/core/domain/claim.js';
 
 afterEach(cleanup);
-const run = async (action: () => Promise<unknown>) => {
-  await action();
-};
 const finding = (ruleId: string, code: string): Finding =>
   makeFinding({
     ruleId,
@@ -64,7 +66,7 @@ function Harness({ findings, dir = '/synthetic' }: { findings: Finding[]; dir?: 
   }, [findings, dir]);
   return (
     <DisclosureProvider state={state} setState={setState}>
-      <FindingList scope={dir} findings={findings.map((f) => ({ finding: f }))} run={run} />
+      <FindingList scope={dir} findings={findings.map((f) => ({ finding: f }))} />
     </DisclosureProvider>
   );
 }
@@ -142,7 +144,7 @@ it('分组全部默认收起，概述统计三态，全部展开收起可用', a
           ],
   }));
   const user = userEvent.setup();
-  render(<Results view={b} run={run} update={() => {}} back={() => {}} />);
+  render(<Results view={seedBatch(b)} />);
   const header = (name: string) =>
     within(screen.getByTestId('group-' + name)).getByRole('button', { name: new RegExp(name) });
   expect(header('missing').getAttribute('aria-expanded')).toBe('false');
@@ -224,24 +226,23 @@ it('侧栏所有展开入口互斥，折叠不改变选择，恢复深层劳务�
     labor: [{ report: checkLabor(scan, config()), outputs: [] }],
   };
   let selected = '';
-  const sidebar = (selection: string | null) => (
-    <Sidebar
-      workspace={workspace}
-      selected={selection}
-      settingsOpen={false}
-      busy={false}
-      width={280}
-      select={(dir) => {
-        selected = dir;
-      }}
-      open={() => {}}
-      refresh={() => {}}
-      settings={() => {}}
-      resize={() => {}}
-      resized={() => {}}
-    />
-  );
+  const unsubscribe = useRouteStore.subscribe((state) => {
+    selected = state.route.dir ?? '';
+  });
+  onTestFinished(unsubscribe);
+  Object.assign(window, { precheck: { selectBatch: async () => {} } });
+  seedWorkspace(workspace);
+  const sidebar = (selection: string | null) => {
+    act(() =>
+      useRouteStore.setState(({ revision }) => ({
+        route: routeForDir(workspace, selection),
+        revision: revision + 1,
+      })),
+    );
+    return <Sidebar />;
+  };
   const result = render(sidebar(scan.dir));
+  selected = '';
   const user = userEvent.setup();
   const aNode = screen.getByRole('treeitem', { name: /^A，/ });
   const bNode = screen.getByRole('treeitem', { name: /^B，/ });
@@ -287,21 +288,17 @@ it('从树外切换批次并收起原分支后，键盘仍可通过 Tab 进入�
     batches: [a, b],
     rejected: null,
   };
-  const sidebar = (selected: string | null) => (
-    <Sidebar
-      workspace={workspace}
-      selected={selected}
-      settingsOpen={false}
-      busy={false}
-      width={280}
-      select={() => {}}
-      open={() => {}}
-      refresh={() => {}}
-      settings={() => {}}
-      resize={() => {}}
-      resized={() => {}}
-    />
-  );
+  seedWorkspace(workspace);
+  Object.assign(window, { precheck: { selectBatch: async () => {} } });
+  const sidebar = (selected: string | null) => {
+    act(() =>
+      useRouteStore.setState(({ revision }) => ({
+        route: routeForDir(workspace, selected),
+        revision: revision + 1,
+      })),
+    );
+    return <Sidebar />;
+  };
   const result = render(sidebar('/root/A'));
   await userEvent.setup().click(screen.getByRole('treeitem', { name: /齐全根目录/ }));
   result.rerender(sidebar('/root/B'));

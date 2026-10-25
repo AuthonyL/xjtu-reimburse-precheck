@@ -1,19 +1,12 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { useId, useState } from 'react';
 import type { ManualEntry } from '../../core/types.js';
-import type { ManualTask, WorkspaceView } from '../../shared/api.js';
-import type { Run } from './ui.js';
+import type { ManualTask } from '../../shared/api.js';
 
-export function ManualForm({
-  task,
-  dir,
-  run,
-  update,
-}: {
-  task: ManualTask;
-  dir: string;
-  run: Run;
-  update: (view: WorkspaceView) => void;
-}) {
+export function ManualForm({ task, dir }: { task: ManualTask; dir: string }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   const id = useId();
   const [amount, setAmount] = useState(task.entry.amount?.toString() ?? '');
   const [currency, setCurrency] = useState(task.entry.currency ?? 'USD');
@@ -41,7 +34,7 @@ export function ManualForm({
       onSubmit={(e) => {
         e.preventDefault();
         void run(
-          async () => update(await window.precheck.saveManual(dir, entry())),
+          () => apply(() => window.precheck.saveManual(dir, entry())),
           '手填记录已保存并重新检查',
         );
       }}

@@ -1,16 +1,12 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { useState } from 'react';
-import type { BatchView, WorkspaceView } from '../../shared/api.js';
-import { FileLink, money, type Run } from './ui.js';
+import type { BatchView } from '../../shared/api.js';
+import { FileLink, money } from './ui.js';
 
-export function RejectedPage({
-  view,
-  run,
-  update,
-}: {
-  view: BatchView;
-  run: Run;
-  update: (workspace: WorkspaceView) => void;
-}) {
+export function RejectedPage({ view }: { view: BatchView }) {
+  const run = useRun();
+  const apply = useWorkspaceStore((state) => state.apply);
   const [editing, setEditing] = useState<string | null>(null);
   const [reason, setReason] = useState('');
   return (
@@ -42,7 +38,7 @@ export function RejectedPage({
                 <tr key={invoice.number} data-testid="rejected-row">
                   <td>
                     {invoice.sources.map((file) => (
-                      <FileLink key={file.path} file={file.path} run={run} />
+                      <FileLink key={file.path} file={file.path} />
                     ))}
                   </td>
                   <td>{invoice.lines.map((line) => line.name).join('；') || '未读取到明细'}</td>
@@ -70,8 +66,8 @@ export function RejectedPage({
                         onSubmit={(e) => {
                           e.preventDefault();
                           void run(async () => {
-                            update(
-                              await window.precheck.saveRejectedReason(invoice.number, reason),
+                            await apply(() =>
+                              window.precheck.saveRejectedReason(invoice.number, reason),
                             );
                             setEditing(null);
                           }, '拒票原因已保存，相关批次提示已更新');
@@ -125,7 +121,7 @@ export function RejectedPage({
           <h2>未识别文件</h2>
           <div className="panel">
             {view.batch.unidentified.map((file) => (
-              <FileLink key={file.path} file={file.path} run={run} />
+              <FileLink key={file.path} file={file.path} />
             ))}
           </div>
         </section>

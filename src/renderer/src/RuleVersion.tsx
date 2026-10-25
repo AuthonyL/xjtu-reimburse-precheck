@@ -1,8 +1,9 @@
+import { useWorkspaceStore } from './store/workspace.js';
+import { useRun } from './store/status.js';
 import { useEffect, useState } from 'react';
 import type { RuleVersionInfo, UpgradeChoices } from '../../shared/feedback.js';
 import type { AppSettings } from '../../shared/api.js';
 import { FeedbackDialog } from './Feedback.js';
-import type { Run } from './ui.js';
 export function ruleVersionLabel(version: RuleVersionInfo): string {
   return (
     `规则：默认 v${version.defaultsHash.slice(0, 8)}` +
@@ -14,15 +15,13 @@ export function ruleVersionLabel(version: RuleVersionInfo): string {
 }
 export function RuleVersion({
   version,
-  rulesChanged,
   settings,
-  run,
 }: {
   version?: RuleVersionInfo;
-  rulesChanged: (settings: AppSettings) => Promise<void>;
   settings: AppSettings;
-  run: Run;
 }) {
+  const run = useRun();
+  const rulesChanged = useWorkspaceStore((state) => state.changeSettings);
   const [open, setOpen] = useState(false);
   const [choices, setChoices] = useState<UpgradeChoices>({});
   useEffect(() => setChoices({}), [version?.upgrade?.toHash]);
