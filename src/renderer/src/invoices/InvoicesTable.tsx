@@ -21,7 +21,11 @@ export function InvoicesTable({
 }) {
   const select = useRouteStore((state) => state.select);
   const sortable = (column: InvoiceSort['column'], label: string) => (
-    <th scope="col" aria-sort={sort.column === column ? sort.direction : 'none'}>
+    <th
+      scope="col"
+      aria-sort={sort.column === column ? sort.direction : 'none'}
+      className={column === 'amount' ? styles.amount : undefined}
+    >
       <TextButton aria-label={label} onClick={() => onSort(column)}>
         {label}
         {sort.column === column ? (sort.direction === 'ascending' ? ' ↑' : ' ↓') : ' ↕'}

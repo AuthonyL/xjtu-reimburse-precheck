@@ -16,6 +16,7 @@ function setup() {
 const rows = (table: HTMLElement) => within(table).getAllByRole('row').slice(1);
 it('扁平化正式票与单列参考票，展示报告支出内容及原币，合计排除参考票与外币', () => {
   const table = setup();
+  expect(screen.getByRole('heading', { level: 1, name: '发票列表' })).toBeTruthy();
   expect(rows(table)).toHaveLength(3);
   expect(rows(table)[0]!.textContent).toContain('办公费');
   expect(within(table).getByText('USD 20.00')).toBeTruthy();

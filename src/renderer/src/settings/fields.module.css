@@ -9,7 +9,7 @@
   align-items: center;
   gap: 7px;
   padding: 2px 8px;
-  border-radius: 5px;
+  border-radius: var(--radius);
   background: var(--accent-bg);
   overflow-wrap: anywhere;
 }
@@ -17,7 +17,7 @@
   padding: 0 4px;
   background: transparent;
   border: 0;
-  font-size: 17px;
+  font-size: var(--font-body);
 }
 .checkboxLabel {
   display: flex;
@@ -30,8 +30,8 @@
 }
 .choiceField {
   margin: 0;
-  border: 1px solid var(--line);
-  border-radius: 7px;
+  border: 0;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 10px;
@@ -54,9 +54,6 @@
 }
 .standardsEditor td {
   padding: 6px;
-}
-
-.catalogFields {
 }
 
 .catalogFields {

@@ -27,7 +27,9 @@ export function InboxItemRow({ item }: { item: InboxItem }) {
       <div className={styles.file}>
         <FileLink file={item.path} />
         <span>{item.group}</span>
-        <Pill tone={item.kind === 'parseFailed' ? 'warning' : ''}>{kindLabels[item.kind]}</Pill>
+        <Pill tone={item.kind === 'parseFailed' ? 'warning' : 'neutral'}>
+          {kindLabels[item.kind]}
+        </Pill>
       </div>
       <div className={styles.actions}>
         {suggestions.slice(0, 3).map((type) => (

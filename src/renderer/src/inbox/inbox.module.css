@@ -12,16 +12,11 @@
   color: var(--muted);
 }
 .list {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 9px;
+  background: transparent;
 }
 .item {
-  padding: 18px;
+  padding: 16px 0;
   border-bottom: 1px solid var(--line);
-}
-.item:last-child {
-  border-bottom: 0;
 }
 .file {
   display: flex;
@@ -44,15 +39,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 .actions select {
   width: auto;
   max-width: 100%;
 }
 .empty {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  padding: 28px;
+  padding: 20px 0;
+  color: var(--muted);
 }

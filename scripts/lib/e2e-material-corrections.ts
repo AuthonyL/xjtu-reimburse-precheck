@@ -1,7 +1,7 @@
 import { expect, type ElectronApplication, type Page } from 'playwright/test';
 import { join } from 'node:path';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
-import { openSection, correctionControls } from './e2e-controls.js';
+import { openSection, correctionControls, moreAction } from './e2e-controls.js';
 import type { E2eWorkspace } from './e2e-workspace.js';
 
 export async function checkMaterialCorrections(
@@ -38,7 +38,7 @@ export async function checkMaterialCorrections(
   const freshImage = join(batch, 'AI/fedcba9876543210.png');
   await writeFile(freshImage, await readFile(internalImage));
   await tree.locator('[data-batch-id="20260102"]').click();
-  await page.getByRole('button', { name: '重新检查', exact: true }).click();
+  await moreAction(page, '重新检查');
   const aiGroup = page.getByTestId('group-AI');
   if (
     (await aiGroup.locator('[class*="_groupSummary_"]').getAttribute('aria-expanded')) === 'false'

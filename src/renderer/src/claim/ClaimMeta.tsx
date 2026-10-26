@@ -4,6 +4,7 @@ import type { ClaimMeta as Meta } from '../../../shared/api.js';
 import { FUND_LABELS } from '../../../core/export/ledger.js';
 import { useStatusStore } from '../store/status.js';
 import { useWorkspaceStore } from '../store/workspace.js';
+import { TextButton } from '../ui.js';
 import styles from './meta.module.css';
 
 const metaOf = (claim: Claim): Meta => ({
@@ -11,7 +12,16 @@ const metaOf = (claim: Claim): Meta => ({
   project: claim.project || '',
   fund: claim.fund,
 });
-export function ClaimMeta({ claim, dir }: { claim: Claim; dir: string }) {
+export function ClaimMeta({
+  claim,
+  dir,
+  readOnly,
+}: {
+  claim: Claim;
+  dir: string;
+  readOnly?: boolean;
+}) {
+  const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(() => metaOf(claim));
   const [saved, setSaved] = useState<Meta | null>(null);
   const [saving, setSaving] = useState(false);
@@ -24,7 +34,11 @@ export function ClaimMeta({ claim, dir }: { claim: Claim; dir: string }) {
     setDraft(next);
   }, [claim.claimant, claim.project, claim.fund]);
   const save = () => {
-    if (pending.current || JSON.stringify(draft) === JSON.stringify(persisted.current)) return;
+    if (pending.current) return;
+    if (JSON.stringify(draft) === JSON.stringify(persisted.current)) {
+      setEditing(false);
+      return;
+    }
     pending.current = true;
     setSaving(true);
     setSaved(null);
@@ -40,6 +54,7 @@ export function ClaimMeta({ claim, dir }: { claim: Claim; dir: string }) {
         });
         persisted.current = draft;
         setSaved(draft);
+        setEditing(false);
       } catch (error) {
         useStatusStore.setState({ error: error instanceof Error ? error.message : String(error) });
       }
@@ -48,6 +63,19 @@ export function ClaimMeta({ claim, dir }: { claim: Claim; dir: string }) {
       setSaving(false);
     });
   };
+  if (!editing || readOnly)
+    return (
+      <div className={styles.metaSummary}>
+        <span>
+          经办人：{claim.claimant || '—'} · 项目：{claim.project || '—'} · 经费：
+          {claim.fund ? FUND_LABELS[claim.fund] : '未填'}
+        </span>
+        {!readOnly && <TextButton onClick={() => setEditing(true)}>编辑</TextButton>}
+        <span role="status" className={styles.saved}>
+          {saved ? '已保存' : ''}
+        </span>
+      </div>
+    );
   return (
     <form
       className={styles.meta}

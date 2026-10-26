@@ -1,6 +1,6 @@
 import styles from './settings/settings.module.css';
 import uiStyles from './styles/ui.module.css';
-import homeStyles from './styles/home.module.css';
+import { PageHeader } from './ui.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRuleFocus } from './store/route.js';
 import { useRun } from './store/status.js';
@@ -85,13 +85,10 @@ export function Settings({
       asChild
     >
       <main className={styles.settings}>
-        <div className={uiStyles.pageHeading}>
-          <div>
-            <div className={homeStyles.eyebrow}>本机配置</div>
-            <h1>设置</h1>
-            <p>保存后重新检查全部批次。同名配置项在规则之间共享；关键字按回车添加，× 删除。</p>
-          </div>
-        </div>
+        <PageHeader
+          title="设置"
+          subtitle="保存后重新检查全部批次。同名配置项在规则之间共享；关键字按回车添加，× 删除。"
+        />
         <RuleVersion version={version} settings={initial} />
         <Tabs.List className={styles.settingsTabs} aria-label="设置分类">
           {tabs.map((name) => (

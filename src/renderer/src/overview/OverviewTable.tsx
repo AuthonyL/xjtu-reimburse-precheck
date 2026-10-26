@@ -44,7 +44,16 @@ export function OverviewTable({ batches }: { batches: BatchView[] }) {
                 '学校报销单',
                 '最近流转',
               ].map((title) => (
-                <th key={title}>{title}</th>
+                <th
+                  key={title}
+                  className={
+                    ['张数', 'CNY 合计', '错误 / 警告 / 已豁免'].includes(title)
+                      ? styles.amount
+                      : undefined
+                  }
+                >
+                  {title}
+                </th>
               ))}
             </tr>
           </thead>

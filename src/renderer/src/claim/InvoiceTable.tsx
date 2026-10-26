@@ -41,14 +41,19 @@ export function InvoiceTable({
                 '所在组',
                 '来源文件',
               ].map((h) => (
-                <th key={h}>{h}</th>
+                <th
+                  key={h}
+                  className={['序号', '价税合计'].includes(h) ? styles.numeric : undefined}
+                >
+                  {h}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {invoiceRows.map(({ g, i }, index) => (
               <tr key={g.group.id + i.invoice.number}>
-                <td>{index + 1}</td>
+                <td className={styles.numeric}>{index + 1}</td>
                 <td className={styles.number}>{i.invoice.number}</td>
                 <td>{INVOICE_TYPE_LABELS[i.invoice.invoiceType]}</td>
                 <td>{i.invoice.date || '待填'}</td>

@@ -1,47 +1,45 @@
 .home {
   max-width: 1000px;
-  padding-top: 90px;
+  padding-top: 32px;
 }
 .home h1 {
   max-width: 650px;
-  font-size: 40px;
+  font-size: var(--font-h1);
 }
 .home > p {
   color: var(--muted);
-  margin: 22px 0;
+  margin: 16px 0;
 }
 .eyebrow {
-  color: var(--accent);
-  font-size: 12px;
-  letter-spacing: 1px;
-  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: var(--font-small);
+  margin-bottom: 12px;
 }
 .pathForm {
   max-width: 740px;
-  margin-top: 30px;
+  margin-top: 24px;
 }
 .pathForm .pathInput {
-  margin-top: 7px;
+  margin-top: 6px;
 }
 .recent {
-  margin-top: 54px;
+  margin-top: 32px;
 }
 .recentItem {
   display: flex;
   width: 100%;
   align-items: center;
   text-align: left;
-  margin-bottom: 8px;
-  padding: 16px;
-  gap: 22px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 12px 0;
+  gap: 20px;
 }
 .recentItem span:nth-child(2) {
   color: var(--muted);
   flex: 1;
   overflow-wrap: anywhere;
-}
-@media (max-width: 1050px) {
-  .home h1 {
-    font-size: 32px;
-  }
+  font-size: var(--font-small);
 }

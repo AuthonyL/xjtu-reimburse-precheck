@@ -9,6 +9,7 @@ export function ClaimHistory({ claim, dir }: { claim: Claim; dir: string }) {
     <Collapsible
       scope={dir}
       disclosureKey="claim-history"
+      className={styles.historyDisclosure}
       title={`流转记录（${claim.transitions.length}）`}
     >
       {claim.transitions.length ? (

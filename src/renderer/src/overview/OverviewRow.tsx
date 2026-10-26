@@ -53,11 +53,11 @@ export function OverviewRow({
             <ClaimBadge state={claim.state} />
           </td>
           <td>{date}</td>
-          <td>{report.invoiceCount}</td>
+          <td className={styles.amount}>{report.invoiceCount}</td>
           <td className={styles.amount}>
             <Money value={report.totalCny} />
           </td>
-          <td>
+          <td className={styles.amount}>
             <span className="error">{counts.error}</span> /{' '}
             <span className="warning">{counts.warning}</span> / {row.waived}
           </td>

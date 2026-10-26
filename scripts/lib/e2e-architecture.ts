@@ -3,7 +3,10 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 export async function checkArchitecturePages(app: ElectronApplication, page: Page, root: string) {
-  await page.locator('[class*="_workspaceName_"]').click();
+  await page
+    .getByRole('navigation', { name: '工作区页面' })
+    .getByRole('button', { name: '批次总览', exact: true })
+    .click();
   const overview = page.getByRole('table', { name: '报销批次', exact: true });
   await expect(overview.locator('tbody')).toHaveCount(2);
   await page.getByRole('checkbox', { name: '全选批次', exact: true }).check();
@@ -18,17 +21,20 @@ export async function checkArchitecturePages(app: ElectronApplication, page: Pag
   await page.getByRole('button', { name: '展开支出合计 20260103', exact: true }).click();
   await expect(page.getByText('各支出内容合计', { exact: true })).toBeVisible();
   await overview.getByRole('button', { name: '20260102', exact: true }).click();
+  await page.getByRole('button', { name: '编辑', exact: true }).click();
   await page.getByRole('textbox', { name: '经办人', exact: true }).fill('合成经办人');
   await page.getByRole('textbox', { name: '项目 / 经费卡', exact: true }).fill('合成项目');
   await page.getByRole('combobox', { name: '经费类型', exact: true }).selectOption('horizontal');
   await page.getByRole('button', { name: '保存', exact: true }).click();
   await expect(page.getByText('已保存', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: '编辑', exact: true }).click();
   await page.getByRole('combobox', { name: '经费类型', exact: true }).selectOption('');
   await page.getByRole('button', { name: '保存', exact: true }).click();
   await expect(page.getByText('已保存', { exact: true })).toBeVisible();
   expect(
     JSON.parse(await readFile(join(root, '20260102/_预检/claim.json'), 'utf8')).fund,
   ).toBeUndefined();
+  await page.getByRole('button', { name: '编辑', exact: true }).click();
   await page.getByRole('textbox', { name: '经办人', exact: true }).fill('直接导出经办人');
   await page.getByRole('button', { name: '导出到批次文件夹', exact: true }).click();
   await expect(page.getByRole('status').filter({ hasText: '导出完成' })).toBeVisible();
@@ -61,7 +67,10 @@ export async function checkArchitecturePages(app: ElectronApplication, page: Pag
         .getByTestId('result-pane')
         .evaluate((pane) => pane.scrollWidth <= pane.clientWidth + 1),
     ).toBe(true);
-    await page.locator('[class*="_workspaceName_"]').click();
+    await page
+      .getByRole('navigation', { name: '工作区页面' })
+      .getByRole('button', { name: '批次总览', exact: true })
+      .click();
     await expect(overview).toBeVisible();
     expect(
       await page

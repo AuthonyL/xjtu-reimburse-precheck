@@ -18,13 +18,13 @@
   flex-wrap: wrap;
   gap: 8px 18px;
   margin: 0;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
+  padding: 8px 0 12px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
 }
 .states legend {
   color: var(--muted);
-  font-size: 13px;
+  font-size: var(--font-small);
 }
 .states label {
   display: inline-flex;
@@ -41,8 +41,6 @@
   max-width: 100%;
   overflow-x: auto;
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 9px;
 }
 .tableScroll table {
   min-width: 920px;

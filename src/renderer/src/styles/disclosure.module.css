@@ -11,8 +11,10 @@
   gap: 10px;
   width: 100%;
   min-width: 0;
-  border-color: transparent;
-  padding: 8px 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 8px 0;
   text-align: left;
   white-space: nowrap;
 }
@@ -37,7 +39,7 @@
 .findingRuleName,
 .findingLocation,
 .findingInvoiceCount {
-  font-size: 12px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .findingLocation {
@@ -46,7 +48,7 @@
   text-overflow: ellipsis;
 }
 .findingDetails {
-  padding: 8px 4px 4px;
+  padding: 8px 0 4px;
 }
 .findingLevel:global(.error) {
   color: var(--error);
@@ -55,7 +57,7 @@
   color: var(--warning);
 }
 .findingLevel:global(.info) {
-  color: var(--accent);
+  color: var(--muted);
 }
 .issueHeading,
 .ruleFilters,
@@ -67,6 +69,8 @@
 }
 .issueHeading {
   margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
 }
 .issueHeading h2,
 .issueHeading h3 {
@@ -75,7 +79,12 @@
 .ruleFilters button,
 .disclosureActions button {
   padding: 3px 7px;
-  font-size: 12px;
+  font-size: var(--font-small);
+}
+.ruleFilters select {
+  width: auto;
+  min-width: 160px;
+  font-size: var(--font-small);
 }
 .ruleFilters button[aria-pressed='true'] {
   border-color: var(--accent);
@@ -87,7 +96,7 @@
 }
 .groupName {
   font-weight: 650;
-  font-size: 16px;
+  font-size: var(--font-h2);
 }
 .groupSummary .groupTags {
   flex-wrap: nowrap;
@@ -102,7 +111,7 @@
   margin-left: auto;
 }
 .groupMaterialCounts {
-  font-size: 12px;
+  font-size: var(--font-small);
 }
 @container (max-width: 700px) {
   .findingLocation,
@@ -117,7 +126,7 @@
   }
   .groupSummary :global(.pill) {
     padding: 1px 4px;
-    font-size: 11px;
+    font-size: var(--font-small);
   }
   .groupTotal {
     max-width: 140px;
@@ -125,9 +134,9 @@
 }
 
 .collapsibleHeading {
+  padding-bottom: 0;
   margin-bottom: 12px;
-  /* Collapsed sections render as cards; match the group card title size. */
-  font-size: 16px;
+  font-size: var(--font-h2);
 }
 .collapsibleToggle {
   display: flex;
@@ -135,7 +144,10 @@
   gap: 6px;
   width: 100%;
   min-width: 0;
-  padding: 18px;
+  padding: 10px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   text-align: left;
   font-weight: 650;
 }
@@ -143,7 +155,7 @@
   flex: 1;
   min-width: 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: var(--font-small);
   font-weight: 400;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -159,6 +171,6 @@
 .collapsibleContent[hidden] {
   display: none;
 }
-
 .collapsible {
+  min-width: 0;
 }

@@ -1,69 +1,16 @@
-import localStyles from './claim.module.css';
-import styles from '../styles/forms.module.css';
 import uiStyles from '../styles/ui.module.css';
 import { Pill, TextButton } from '../ui.js';
 import { useWorkspaceStore } from '../store/workspace.js';
 import { useRun } from '../store/status.js';
-import { useId, useState } from 'react';
+import { useRef, useState } from 'react';
+import { DropdownMenu } from 'radix-ui';
+import { ClaimReasonForm } from './ClaimReasonForm.js';
 import type { ClaimState } from '../../../core/domain/claim.js';
 import { availableTransitions, CLAIM_STATE_LABELS } from '../../../core/domain/transitions.js';
 import type { Claim } from '../../../core/domain/claim.js';
 
 export function ClaimBadge({ state }: { state: ClaimState }) {
-  return <Pill tone="info">{CLAIM_STATE_LABELS[state]}</Pill>;
-}
-
-function ReasonForm({
-  label,
-  title,
-  save,
-  cancel,
-  submit,
-}: {
-  label: string;
-  title: string;
-  save: string;
-  cancel: () => void;
-  submit: (reason: string) => Promise<void>;
-}) {
-  const id = useId();
-  const [reason, setReason] = useState('');
-  const [saving, setSaving] = useState(false);
-  return (
-    <form
-      className={styles.manualForm}
-      aria-label={title}
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (!reason.trim() || saving) return;
-        setSaving(true);
-        void submit(reason.trim()).finally(() => setSaving(false));
-      }}
-    >
-      <strong>{title}</strong>
-      <label htmlFor={id}>
-        {label}（必填）
-        <textarea
-          id={id}
-          aria-label={label}
-          required
-          autoFocus
-          rows={3}
-          maxLength={4000}
-          value={reason}
-          onChange={(event) => setReason(event.target.value)}
-        />
-      </label>
-      <div className={uiStyles.actions + ' ' + localStyles.toolbarActions}>
-        <button type="submit" className={uiStyles.primary} disabled={!reason.trim() || saving}>
-          {save}
-        </button>
-        <button type="button" disabled={saving} onClick={cancel}>
-          取消
-        </button>
-      </div>
-    </form>
-  );
+  return <Pill tone={state}>{CLAIM_STATE_LABELS[state]}</Pill>;
 }
 
 export function ClaimStatus({
@@ -78,6 +25,7 @@ export function ClaimStatus({
   const run = useRun();
   const apply = useWorkspaceStore((state) => state.apply);
   const [target, setTarget] = useState<ClaimState | null>(null);
+  const reasonField = useRef<HTMLTextAreaElement>(null);
   const targets = availableTransitions(claim.state);
   const transition = (to: ClaimState, note?: string) =>
     run(async () => {
@@ -86,23 +34,52 @@ export function ClaimStatus({
     }, '报销状态已更新为' + CLAIM_STATE_LABELS[to]);
   return (
     <>
-      <ClaimBadge state={claim.state} />
-      {!readOnly && (
-        <div className={uiStyles.actions + ' ' + localStyles.toolbarActions}>
-          {targets.map((to) => (
-            <button
-              key={to}
-              type="button"
-              onClick={() => {
-                if (to === 'returned' || to === 'rejected') setTarget(to);
-                else void transition(to);
-              }}
-            >
-              标记为{CLAIM_STATE_LABELS[to]}
-            </button>
-          ))}
+      {readOnly ? (
+        <ClaimBadge state={claim.state} />
+      ) : (
+        <div>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <button
+                type="button"
+                className={uiStyles.statusTrigger}
+                aria-label={'状态：' + CLAIM_STATE_LABELS[claim.state]}
+                disabled={!targets.length}
+              >
+                状态：
+                <ClaimBadge state={claim.state} /> <span aria-hidden="true">▾</span>
+              </button>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content
+                className={uiStyles.menu}
+                align="start"
+                sideOffset={4}
+                onCloseAutoFocus={(event) => {
+                  if (target) {
+                    event.preventDefault();
+                    reasonField.current?.focus();
+                  }
+                }}
+              >
+                {targets.map((to) => (
+                  <DropdownMenu.Item
+                    key={to}
+                    className={uiStyles.menuItem}
+                    onSelect={() => {
+                      if (to === 'returned' || to === 'rejected') setTarget(to);
+                      else void transition(to);
+                    }}
+                  >
+                    标记为{CLAIM_STATE_LABELS[to]}
+                  </DropdownMenu.Item>
+                ))}
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
           {target && targets.includes(target) && (
-            <ReasonForm
+            <ClaimReasonForm
+              textareaRef={reasonField}
               key={target}
               title={'标记为' + CLAIM_STATE_LABELS[target]}
               label="状态备注"
@@ -163,7 +140,7 @@ export function FindingWaiver({
     );
   if (!waive) return null;
   return editing ? (
-    <ReasonForm
+    <ClaimReasonForm
       title="豁免此问题"
       label="豁免理由"
       save="保存豁免"

@@ -1,18 +1,19 @@
 .manualForm {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 22px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  padding: 16px 0;
   margin-bottom: 16px;
 }
 .manualForm .formHeading {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .formGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .manualForm .formHelp {
   margin-top: 12px;

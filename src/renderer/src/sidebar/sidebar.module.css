@@ -5,61 +5,88 @@
   display: flex;
   flex-direction: column;
   background: var(--surface);
+  border-right: 1px solid var(--line);
 }
 .sidebarHeading {
-  padding: 18px 12px 12px;
+  padding: 14px 12px;
   border-bottom: 1px solid var(--line);
 }
 .workspaceName {
   display: inline;
   font-weight: 650;
-  font-size: 16px;
-  margin-bottom: 14px;
+  font-size: var(--font-body);
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.batchSection {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+.batchHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 12px 4px;
+}
+.batchHeading h2 {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--font-h2);
+  font-weight: 500;
+}
 .sidebar .sidebarActions {
-  gap: 5px;
+  gap: 6px;
+  margin-left: auto;
 }
 .sidebar .sidebarActions button {
-  padding: 5px 8px;
-  font-size: 12px;
+  padding: 2px 5px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--font-small);
 }
 .sidebarLoading {
-  font-size: 12px;
-  margin: 10px 0 0;
-  color: var(--accent);
+  font-size: var(--font-small);
+  margin: 8px 0 0;
+  color: var(--muted);
 }
 .explorerTree {
   flex: 1;
   overflow: auto;
-  padding: 10px 5px;
+  padding: 4px 8px 12px;
 }
-.treeNode {
+.treeNode,
+.sidebarFooter button {
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 36px;
+  height: 32px;
   border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 5px 6px;
-  gap: 5px;
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  gap: 6px;
   text-align: left;
-  font-size: 13px;
+  font-size: var(--font-body);
+  background: transparent;
 }
 .treeNode[aria-selected='true'],
 .treeNode[aria-current='page'],
 .sidebarFooter button[aria-pressed='true'] {
   background: var(--accent-bg);
-  border-color: var(--accent);
+  color: var(--accent);
 }
-.treeNode:focus-visible {
+.treeNode:focus-visible,
+.sidebarFooter button:focus-visible {
   outline-offset: -2px;
 }
 .treeChevron {
-  width: 18px;
+  width: 16px;
   flex: none;
   text-align: center;
 }
@@ -73,19 +100,21 @@
 .treeBadge,
 .treeTag {
   flex: none;
-  font-size: 11px;
+  font-size: var(--font-small);
   line-height: 1.5;
-  padding: 0 3px;
-  border-radius: 3px;
-  background: var(--bg);
+  padding: 0 4px;
+  border-radius: var(--radius);
+  background: var(--badge-neutral-bg);
+  color: var(--badge-neutral-text);
 }
 .treeBadge:global(.error) {
-  background: var(--error-bg);
+  color: var(--badge-error-text);
+  background: var(--badge-error-bg);
 }
 .treeBadge:global(.warning) {
-  background: var(--warning-bg);
+  color: var(--badge-warning-text);
+  background: var(--badge-warning-bg);
 }
-.treeTag,
 .referenceNode .treeNode {
   color: var(--muted);
 }
@@ -93,17 +122,18 @@
   padding-left: 32px;
 }
 .sidebarFooter {
-  padding: 12px;
+  display: flex;
+  gap: 6px;
+  padding: 10px 8px;
   border-top: 1px solid var(--line);
 }
 .sidebarFooter button {
-  width: 100%;
-  text-align: left;
+  flex: 1;
 }
 .sidebarSeparator {
-  width: 6px;
+  width: 4px;
   flex: none;
-  background: var(--line);
+  background: transparent;
   cursor: col-resize;
   touch-action: none;
 }
@@ -111,18 +141,10 @@
 .sidebarSeparator:focus-visible {
   background: var(--accent);
 }
-.sidebarFooter {
-  display: flex;
-  gap: 6px;
-}
-.sidebarFooter button {
-  width: auto;
-  flex: 1;
-}
-
-.batchNode {
-}
 .workspaceNav {
-  padding: 10px 5px;
+  padding: 10px 8px;
   border-bottom: 1px solid var(--line);
+}
+.batchNode {
+  font-weight: 500;
 }

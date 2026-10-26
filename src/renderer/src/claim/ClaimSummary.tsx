@@ -1,9 +1,9 @@
 import styles from './claim.module.css';
 import uiStyles from '../styles/ui.module.css';
-import { Money } from '../ui.js';
+import { Money, money } from '../ui.js';
+import { countSeverities } from '../../../core/report.js';
 import type { Report } from '../../../core/types.js';
 import type { ClaimState } from '../../../core/domain/claim.js';
-import { Counts, money } from '../ui.js';
 
 export function ClaimSummary({
   report,
@@ -18,16 +18,24 @@ export function ClaimSummary({
   state: ClaimState;
   dir: string;
 }) {
+  const counts = countSeverities(report.findings);
+  const metrics = [
+    ['CNY 合计', '¥ ' + money(report.totalCny)],
+    ['张数', report.invoiceCount],
+    ['待手填', pending],
+    ['错误', counts.error],
+    ['警告', counts.warning],
+    ['已豁免', report.findings.filter((finding) => finding.resolution === 'waived').length],
+  ] as const;
   return (
-    <div className={styles.summaryStrip + ' ' + uiStyles.panel} data-testid="batch-summary">
+    <div className={styles.summaryStrip} data-testid="batch-summary">
       <div className={styles.summaryLine}>
-        <strong>
-          人民币合计 ¥ <Money value={report.totalCny} />
-        </strong>
-        <span>
-          {report.invoiceCount} 张发票 · 待手填 {pending} 项
-        </span>
-        <Counts report={report} className={styles.summaryCounts} />
+        {metrics.map(([label, value]) => (
+          <div className={styles.summaryMetric} key={label} data-metric={label}>
+            <strong>{value}</strong>
+            <span className={styles.summaryLabel}>{label}</span>
+          </div>
+        ))}
       </div>
       <div className={styles.summaryLine}>
         {report.totals.map((t) => (

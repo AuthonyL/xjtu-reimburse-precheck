@@ -1,6 +1,6 @@
 import { useWorkspaceStore } from '../store/workspace.js';
 import { useStatusStore } from '../store/status.js';
-import { nameOf } from '../ui.js';
+import { nameOf, PageHeader } from '../ui.js';
 import { useInbox } from './useInbox.js';
 import { InboxItemRow } from './InboxItemRow.js';
 import type { InboxItem } from '../../../core/types.js';
@@ -18,15 +18,15 @@ export function InboxPage() {
   }
   return (
     <main className={styles.page}>
-      <header className={styles.heading}>
-        <div>
-          <h1>收件箱</h1>
-          <p>{loading ? '正在读取…' : error ? '读取失败' : `待处理 ${items.length} 个文件`}</p>
-        </div>
-        <button disabled={busy || loading} onClick={refresh}>
-          全部重新检查
-        </button>
-      </header>
+      <PageHeader
+        title="收件箱"
+        subtitle={loading ? '正在读取…' : error ? '读取失败' : `待处理 ${items.length} 个文件`}
+        actions={
+          <button disabled={busy || loading} onClick={refresh}>
+            全部重新检查
+          </button>
+        }
+      />
       {error ? (
         <p role="alert">{error}</p>
       ) : loading ? (

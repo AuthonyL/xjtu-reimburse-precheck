@@ -1,3 +1,4 @@
+import { changeClaimState } from './e2e-controls.js';
 import { expect, type ElectronApplication, type Page } from 'playwright/test';
 import { rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -46,9 +47,9 @@ export async function checkWorkspacePages(
   await expect(page.getByTestId('group-PCB').getByTestId('requirement-payment')).toContainText(
     '已找到',
   );
-  await page.getByRole('button', { name: '标记为待提交', exact: true }).click();
-  await page.getByRole('button', { name: '标记为已提交', exact: true }).click();
-  await nav.getByRole('button', { name: '发票 4 张', exact: true }).click();
+  await changeClaimState(page, '待提交');
+  await changeClaimState(page, '已提交');
+  await nav.getByRole('button', { name: '发票列表 4 张', exact: true }).click();
   const table = page.getByRole('table', { name: '工作区发票', exact: true });
   await page.getByRole('searchbox', { name: '搜索发票' }).fill('合成');
   await expect(table.locator('tbody tr')).toHaveCount(4);
@@ -65,7 +66,9 @@ export async function checkWorkspacePages(
     .toBe(true);
   await fits();
   await table.getByRole('button', { name: '20260103', exact: true }).first().click();
-  await expect(page.getByTestId('batch-summary')).toContainText('3 张');
+  await expect(page.getByTestId('batch-summary').locator('[data-metric="张数"] strong')).toHaveText(
+    '3',
+  );
   await expect(page.getByTestId('group-PCB')).toHaveClass(/group-highlight/);
   await page.emulateMedia({ colorScheme: 'light' });
   await checkArchitecturePages(app, page, sample.root);
@@ -79,5 +82,7 @@ export async function checkWorkspacePages(
     }) as typeof dialog.showOpenDialog;
   }, nextRoot);
   await page.getByRole('button', { name: '打开其他文件夹', exact: true }).click();
-  await expect(page.locator('[class*="_workspaceName_"]')).toHaveText('合成工作区');
+  await expect(
+    page.getByRole('button', { name: '在文件夹中显示当前工作区', exact: true }),
+  ).toContainText('合成工作区');
 }

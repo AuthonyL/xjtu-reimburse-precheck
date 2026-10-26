@@ -60,6 +60,7 @@ export function FindingItem({
     <Collapsible.Root asChild open={expanded} onOpenChange={toggle}>
       <CorrectionDrop
         className={'finding' + ' ' + severity}
+        role="listitem"
         finding={waived ? { ...finding, severity } : finding}
         file={file}
       >

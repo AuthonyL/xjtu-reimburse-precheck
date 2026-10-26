@@ -74,7 +74,7 @@ export async function checkLaborReview(
   await expect(correctionCard.locator('.finding.error [class*="_findingDetails_"]')).toHaveCount(2);
   await expect(correctionCard.getByText('怎么处理：', { exact: true })).toHaveCount(2);
   await page.screenshot({ path: join(resultDir, prefix + '-issues-two-open.png') });
-  const errorLevel = correctionCard.getByRole('region', { name: '错误', exact: true });
+  const errorLevel = correctionCard.getByRole('region', { name: '劳务问题', exact: true });
   await errorLevel.getByRole('button', { name: '只看规则 L1', exact: true }).click();
   await expect(correctionCard.locator('.finding')).toHaveCount(2);
   await expect(correctionCard.locator('.finding.warning')).toHaveCount(0);

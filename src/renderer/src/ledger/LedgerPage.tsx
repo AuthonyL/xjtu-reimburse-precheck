@@ -11,7 +11,7 @@ import {
 import { ledgerClaims } from '../../../shared/ledger.js';
 import { useWorkspaceStore } from '../store/workspace.js';
 import { useRun, useStatusStore } from '../store/status.js';
-import { Money } from '../ui.js';
+import { Money, PageHeader } from '../ui.js';
 import uiStyles from '../styles/ui.module.css';
 import { useRegistry } from './useRegistry.js';
 import { LedgerTable } from './LedgerTable.js';
@@ -48,12 +48,14 @@ function LedgerContent({ view }: { view: WorkspaceView }) {
     });
   return (
     <main>
-      <div className={uiStyles.pageHeading}>
-        <h1>台账</h1>
-        <button disabled={busy} onClick={exportLedger}>
-          导出台账 Markdown
-        </button>
-      </div>
+      <PageHeader
+        title="台账"
+        actions={
+          <button disabled={busy} onClick={exportLedger}>
+            导出台账 Markdown
+          </button>
+        }
+      />
       <div className={styles.summary} data-testid="ledger-summary">
         <p>
           {Object.entries(CLAIM_STATE_LABELS).map(([state, label]) => (

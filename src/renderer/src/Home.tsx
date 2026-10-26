@@ -3,7 +3,7 @@ import uiStyles from './styles/ui.module.css';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRun } from './store/status.js';
 import { useState } from 'react';
-import { nameOf } from './ui.js';
+import { nameOf, PageHeader } from './ui.js';
 
 export function Home() {
   const recent = useWorkspaceStore((state) => state.boot?.recent) ?? [];
@@ -14,9 +14,10 @@ export function Home() {
   const [folder, setFolder] = useState('');
   return (
     <main className={styles.home}>
-      <div className={styles.eyebrow}>批次检查 · 材料核对 · 清单导出</div>
-      <h1>把一批发票，整理成可核对的清单。</h1>
-      <p>选择日期批次或包含多个批次的根目录。也可以把文件夹拖到此窗口。</p>
+      <PageHeader
+        title="把一批发票，整理成可核对的清单。"
+        subtitle="选择日期批次或包含多个批次的根目录。也可以把文件夹拖到此窗口。"
+      />
       <button className={uiStyles.primary + ' ' + uiStyles.large} onClick={() => choose()}>
         选择文件夹
       </button>

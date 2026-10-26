@@ -31,6 +31,7 @@ function setup() {
 }
 it('按批次日期倒序展示表格，展开支出合计并可进入报销单和参考目录', () => {
   const { table } = setup();
+  expect(screen.getByRole('heading', { level: 1, name: '批次总览' })).toBeTruthy();
   const rows = within(table).getAllByRole('row');
   expect(rows[1]!.textContent).toContain('20260103');
   expect(rows[2]!.textContent).toContain('20260102');

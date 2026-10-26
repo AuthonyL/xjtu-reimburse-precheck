@@ -15,6 +15,14 @@ export function WorkspaceNav() {
     <nav className={styles.workspaceNav} aria-label="工作区页面">
       <button
         className={styles.treeNode}
+        aria-current={page === 'overview' ? 'page' : undefined}
+        disabled={busy}
+        onClick={() => navigate({ page: 'overview' })}
+      >
+        <span className={styles.treeLabel}>批次总览</span>
+      </button>
+      <button
+        className={styles.treeNode}
         aria-current={page === 'inbox' ? 'page' : undefined}
         aria-label={'收件箱' + (!loading && !error && items.length ? ' ' + items.length : '')}
         disabled={busy}
@@ -28,11 +36,11 @@ export function WorkspaceNav() {
       <button
         className={styles.treeNode}
         aria-current={page === 'invoices' ? 'page' : undefined}
-        aria-label={`发票 ${count} 张`}
+        aria-label={`发票列表 ${count} 张`}
         disabled={busy}
         onClick={() => navigate({ page: 'invoices' })}
       >
-        <span className={styles.treeLabel}>发票</span>
+        <span className={styles.treeLabel}>发票列表</span>
         <span className={styles.treeBadge}>{count} 张</span>
       </button>
       <button

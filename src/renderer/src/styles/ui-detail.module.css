@@ -1,0 +1,43 @@
+.ruleTag {
+  display: inline-block;
+  font-size: var(--font-small);
+  color: var(--muted);
+  margin: 0 8px;
+}
+.fileLink {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-right: 14px;
+  padding: 4px 0;
+}
+.tableScroll {
+  overflow-x: auto;
+  padding: 0;
+}
+.number {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  max-width: 200px;
+}
+.numeric {
+  text-align: right;
+  white-space: nowrap;
+}
+td .fileLink {
+  min-width: 130px;
+}
+.tooltip {
+  z-index: 130;
+  max-width: min(680px, calc(100vw - 40px));
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: var(--font-small);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}

@@ -1,3 +1,4 @@
+import { Collapsible } from '../Collapsible.js';
 import { RootRequirementGroup } from './RootRequirementGroup.js';
 import styles from '../styles/ui.module.css';
 import disclosureStyles from '../styles/disclosure.module.css';
@@ -24,9 +25,14 @@ export function RequirementChecklist({
   const navigate = useRouteStore((state) => state.navigate);
   const groupNames = [...groups.map((g) => g.group.name), '根目录'];
   return (
-    <section aria-label="分组与材料">
+    <Collapsible
+      scope={dir}
+      disclosureKey="requirements"
+      title="分组与材料"
+      defaultOpen
+      summary={`需要 ${counts.total} · ✓ 已找到 ${counts.found} · ? 待确认 ${counts.unconfirmed} · ✗ 缺失 ${counts.missing}`}
+    >
       <div className={styles.sectionHeading}>
-        <h2>分组与材料</h2>
         <div className={disclosureStyles.disclosureActions}>
           {!readOnly && (
             <TextButton onClick={() => navigate({ page: 'inbox' })}>到收件箱集中处理 →</TextButton>
@@ -34,10 +40,6 @@ export function RequirementChecklist({
           <TextButton onClick={() => setExpandedGroups(groupNames, true)}>全部展开</TextButton>
           <TextButton onClick={() => setExpandedGroups(groupNames, false)}>全部收起</TextButton>
         </div>
-        <span className={styles.muted}>
-          需要 {counts.total} · ✓ 已找到 {counts.found} · ? 待确认 {counts.unconfirmed} · ✗ 缺失{' '}
-          {counts.missing}
-        </span>
       </div>
       {!groups.some((g) => g.group.name === '根目录') && (
         <RootRequirementGroup
@@ -57,6 +59,6 @@ export function RequirementChecklist({
           onOpenChange={(open) => setExpandedGroups([group.group.name], open)}
         />
       ))}
-    </section>
+    </Collapsible>
   );
 }

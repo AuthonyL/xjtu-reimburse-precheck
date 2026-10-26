@@ -13,8 +13,57 @@ export const nameOf = (file: string) => file.split(/[\\/]/).pop() ?? file;
 export function TextButton({ className = '', ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button className={styles.textButton + (className ? ' ' + className : '')} {...props} />;
 }
-export function Pill({ children, tone = '' }: { children: ReactNode; tone?: string }) {
-  return <span className={'pill' + (tone ? ' ' + tone : '')}>{children}</span>;
+export type PillTone =
+  | 'neutral'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'success'
+  | 'draft'
+  | 'ready'
+  | 'submitted'
+  | 'returned'
+  | 'reimbursed'
+  | 'rejected'
+  | 'cancelled';
+export function Pill({ children, tone = 'neutral' }: { children: ReactNode; tone?: PillTone }) {
+  return (
+    <span className={styles.pill + ' pill'} data-tone={tone}>
+      {children}
+    </span>
+  );
+}
+export function PageHeader({
+  title,
+  subtitle,
+  actions,
+  leading,
+  badge,
+  children,
+  className = '',
+}: {
+  title: string;
+  subtitle?: ReactNode;
+  actions?: ReactNode;
+  leading?: ReactNode;
+  badge?: ReactNode;
+  children?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <header className={styles.pageHeading + (className ? ' ' + className : '')}>
+      <div className={styles.pageTitle}>
+        {leading && <div className={styles.pageLeading}>{leading}</div>}
+        <div className={styles.pageTitleRow}>
+          <h1>{title}</h1>
+          {badge}
+        </div>
+        {subtitle && <div className={styles.pageSubtitle}>{subtitle}</div>}
+        {children}
+      </div>
+      {actions && <div className={styles.pageActions}>{actions}</div>}
+    </header>
+  );
 }
 export function Money({ value }: { value: number }) {
   return <>{money(value)}</>;

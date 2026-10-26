@@ -19,7 +19,9 @@ export async function checkClaimReview(page: Page, workspace: E2eWorkspace, pref
   ).toBe('无法报销费用');
   await tree.locator('[data-batch-id="20260102"]').getByLabel('展开批次').click();
   await tree.locator('[data-batch-id="20260103"]').click();
-  await expect(page.getByTestId('batch-summary')).toContainText('1 张');
+  await expect(page.getByTestId('batch-summary').locator('[data-metric="张数"] strong')).toHaveText(
+    '1',
+  );
   await expect(
     page.locator('[class*="_results_"] [class*="_groupSummary_"][aria-expanded="true"]'),
   ).toHaveCount(0);
@@ -41,7 +43,9 @@ export async function checkClaimReview(page: Page, workspace: E2eWorkspace, pref
   await tree.getByRole('treeitem', { name: /PCB/ }).click();
   await expect(page.getByTestId('group-PCB')).toBeInViewport({ ratio: 0.3 });
   await expect(page.getByTestId('group-PCB')).toHaveClass(/group-highlight/);
-  await expect(page.getByTestId('batch-summary')).toContainText('3 张');
+  await expect(page.getByTestId('batch-summary').locator('[data-metric="张数"] strong')).toHaveText(
+    '3',
+  );
   await openSection(page.locator('[class*="_results_"]'), '发票明细');
   const invoiceTable = page.getByRole('table', { name: '发票明细', exact: true });
   expect(await invoiceTable.locator('tbody tr td:first-child').allTextContents()).toEqual([
@@ -122,12 +126,27 @@ export async function checkClaimReview(page: Page, workspace: E2eWorkspace, pref
   await expect(pcb).toBeInViewport({ ratio: 0.3 });
   await expect(pcb).toContainText('实验材料费');
   const batchIssues = page.getByTestId('actionable-findings');
-  const warningIssues = batchIssues.getByRole('region', { name: '警告', exact: true });
+  const warningIssues = batchIssues;
+  const severity = batchIssues.getByRole('group', { name: '问题级别' });
+  await expect(severity.getByRole('button', { name: /^错误 / })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await expect(severity.getByRole('button', { name: /^警告 / })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  const info = severity.getByRole('button', { name: /^提示 / });
+  await expect(info).toHaveAttribute('aria-pressed', 'false');
+  await info.click();
+  await expect(info).toHaveAttribute('aria-pressed', 'true');
+  await info.click();
+  await expect(batchIssues.getByRole('button', { name: '全部展开', exact: true })).toHaveCount(1);
   const r2Badge = warningIssues.getByRole('button', { name: '只看规则 R2', exact: true });
   const unfiltered = await warningIssues.locator('.finding').count();
   expect(unfiltered).toBeGreaterThan(1);
   await r2Badge.click();
-  // The rule filter applies to its own severity section only.
+  // Rule filters apply to the single list across all selected severity chips.
   const ruleIds = warningIssues.locator('.finding [class*="_findingRule_"] > span:first-child');
   await expect
     .poll(async () => {

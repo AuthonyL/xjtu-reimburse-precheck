@@ -9,6 +9,8 @@
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
 }
 .settingsTabs [aria-selected='true'] {
   border-color: var(--accent);
@@ -31,7 +33,7 @@
 }
 .advanced textarea {
   font-family: 'SFMono-Regular', Consolas, monospace;
-  font-size: 12px;
+  font-size: var(--font-small);
   margin-bottom: 14px;
 }
 @container (max-width: 850px) {

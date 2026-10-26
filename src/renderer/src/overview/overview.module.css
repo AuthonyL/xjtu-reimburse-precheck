@@ -1,8 +1,6 @@
 .tableScroll {
   max-width: 100%;
   overflow-x: auto;
-  border: 1px solid var(--line);
-  border-radius: 9px;
   background: var(--surface);
 }
 .tableScroll table {
@@ -35,21 +33,26 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 12px;
+  padding: 10px 0;
   margin-bottom: 12px;
-  background: var(--accent-bg);
-  border-radius: 8px;
+  border-bottom: 1px solid var(--line);
 }
 .bulk span,
 .note {
-  font-size: 12px;
+  font-size: var(--font-small);
   color: var(--muted);
 }
 .note {
   margin-top: 12px;
 }
-.details {
+.tableScroll .details {
+  padding: 12px 20px;
   background: var(--bg);
+}
+.details > strong {
+  display: block;
+  font-size: var(--font-small);
+  margin-bottom: 6px;
 }
 .total {
   display: flex;
@@ -59,12 +62,21 @@
 }
 .references {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
 }
 .references button {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
   text-align: left;
-  padding: 18px;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+.references button > span {
+  color: var(--muted);
+  font-size: var(--font-small);
 }

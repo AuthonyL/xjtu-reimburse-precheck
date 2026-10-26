@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useWorkspaceStore } from '../store/workspace.js';
-import { Money } from '../ui.js';
+import { Money, PageHeader } from '../ui.js';
 import {
   duplicateBatches,
   emptyFilter,
@@ -39,11 +39,15 @@ export function InvoicesPage() {
     }));
   return (
     <main className={styles.page}>
-      <h1>发票</h1>
-      <p className={styles.summary} data-testid="invoices-summary">
-        {summary.count} 张 · CNY 合计 ¥ <Money value={summary.cny} />
-        {summary.foreign > 0 && <span> · 外币 {summary.foreign} 张未折算</span>}
-      </p>
+      <PageHeader
+        title="发票列表"
+        subtitle={
+          <span className={styles.summary} data-testid="invoices-summary">
+            {summary.count} 张 · CNY 合计 ¥ <Money value={summary.cny} />
+            {summary.foreign > 0 && <span> · 外币 {summary.foreign} 张未折算</span>}
+          </span>
+        }
+      />
       <InvoiceFilters filter={filter} onChange={setFilter} contents={contents} />
       <section aria-label="工作区发票">
         <InvoicesTable

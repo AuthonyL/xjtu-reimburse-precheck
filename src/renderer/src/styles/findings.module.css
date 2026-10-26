@@ -2,9 +2,8 @@
   margin-bottom: 16px;
 }
 .findingAction {
-  background: var(--accent-bg);
-  padding: 6px 10px;
-  border-radius: 5px;
+  color: var(--muted);
+  padding: 6px 0;
 }
 .infoFindings > .panelSurface {
   margin-top: 12px;
@@ -19,7 +18,7 @@
   overflow-wrap: anywhere;
 }
 .findings.panelSurface {
-  padding: 10px 14px;
+  padding: 0;
 }
 .findings :global(.finding) {
   padding: 4px 0;
@@ -29,10 +28,9 @@
 }
 .ruleHelp {
   margin: 12px 0;
-  padding: 10px 14px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  font-size: 13px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: var(--font-small);
 }
 .ruleHelp h4 {
   margin: 0 0 8px;
@@ -53,7 +51,8 @@
   overflow: auto;
 }
 .versionBanner {
-  background: var(--surface);
-  border-color: var(--warning);
+  color: var(--warning);
+  background: var(--warning-bg);
+  border-bottom: 1px solid var(--line);
   padding: 8px 16px;
 }

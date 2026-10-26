@@ -16,7 +16,7 @@ Pre-check results do not guarantee reimbursement approval.
 ![批次总览：状态、合计与批量操作](docs/images/overview.png)
 ![批次结果：问题概述与规则计数](docs/images/results.png)
 ![收件箱：集中分类和忽略待识别文件](docs/images/inbox.png)
-![发票：跨批次筛选与跳转](docs/images/invoices.png)
+![发票列表：跨批次筛选与跳转](docs/images/invoices.png)
 ![台账：报销单与发票登记簿](docs/images/ledger.png)
 ![问题详情与规则原文](docs/images/rule-explanation.png)
 ![劳务费检查](docs/images/labor.png)

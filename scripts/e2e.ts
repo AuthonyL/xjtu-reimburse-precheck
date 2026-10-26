@@ -56,6 +56,7 @@ try {
   await checkMaterialCorrections(application, page, workspace, prefix);
 
   await tree.locator('[data-batch-id="20260102"]').click();
+  await page.getByRole('button', { name: '编辑', exact: true }).click();
   await page.getByRole('textbox', { name: '经办人', exact: true }).fill('重启合成经办人');
   await page.getByRole('button', { name: '保存', exact: true }).click();
   await expect(page.getByText('已保存', { exact: true })).toBeVisible();
@@ -77,10 +78,15 @@ try {
     'true',
   );
   await expect(restored.getByTestId('batch-summary')).toContainText('1,453.00');
+  await expect(restored.getByText(/经办人：重启合成经办人/)).toBeVisible();
+  await restored.getByRole('button', { name: '编辑', exact: true }).click();
   await expect(restored.getByRole('textbox', { name: '经办人', exact: true })).toHaveValue(
     '重启合成经办人',
   );
-  await expect(restored.locator('[class*="_workspaceName_"]')).toHaveText('合成工作区');
+  await restored.getByRole('button', { name: '保存', exact: true }).click();
+  await expect(
+    restored.getByRole('button', { name: '在文件夹中显示当前工作区', exact: true }),
+  ).toContainText('合成工作区');
   const restoredScreenshot = packaged ? 'packaged-restored.png' : 'desktop-restored.png';
   await restored.screenshot({ path: join(resultDir, restoredScreenshot), fullPage: true });
   // The minimum window width must retain a usable, independently scrolling result pane.

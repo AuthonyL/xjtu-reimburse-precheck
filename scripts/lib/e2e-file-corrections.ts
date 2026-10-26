@@ -1,7 +1,7 @@
 import { expect, type ElectronApplication, type Page } from 'playwright/test';
 import { join } from 'node:path';
 import { readFile, readdir } from 'node:fs/promises';
-import { openSection, correctionControls } from './e2e-controls.js';
+import { openSection, correctionControls, moreAction } from './e2e-controls.js';
 import type { E2eWorkspace } from './e2e-workspace.js';
 import { directoryFingerprint } from '../../src/main/correction/files.js';
 
@@ -25,7 +25,7 @@ export async function checkFileCorrections(
     'false',
   );
   const beforePicker = await pickerCalls();
-  await page.getByRole('button', { name: '检查单个文件', exact: true }).click();
+  await moreAction(page, '检查单个文件');
   let dialog = page.getByRole('dialog');
   await expect(dialog.locator('[class*="_fileDropZone_"]')).toBeVisible();
   expect(await pickerCalls()).toBe(beforePicker);
@@ -41,7 +41,7 @@ export async function checkFileCorrections(
   await correctionToast.getByRole('button', { name: '查看详情', exact: true }).click();
   dialog = page.getByRole('dialog');
   await expect(dialog).toContainText('_预检/旧版/');
-  await expect(dialog.locator('.pill.info')).toHaveCount(0);
+  await expect(dialog.locator('.pill[data-tone="info"]')).toHaveCount(0);
   await dialog.getByRole('button', { name: '关闭', exact: true }).click();
   await expect(correctionCard.locator('.finding.error')).toHaveCount(0);
   await expect(correctionCard.getByRole('heading', { level: 2 })).toContainText('✓');
@@ -79,7 +79,7 @@ export async function checkFileCorrections(
   expect(await pickerCalls()).toBe(beforePicker + 1);
   await expect(dialog.getByRole('heading', { name: '未通过', exact: true })).toBeVisible();
   await expect(dialog).not.toContainText('没写线上还是线下');
-  await expect(dialog.locator('.pill.info')).toHaveCount(0);
+  await expect(dialog.locator('.pill[data-tone="info"]')).toHaveCount(0);
   await expect(dialog.getByRole('button', { name: '确认放入', exact: true })).toHaveCount(0);
   await page.screenshot({ path: join(resultDir, prefix + '-correction-failed.png') });
   await dialog.getByRole('button', { name: '关闭', exact: true }).click();

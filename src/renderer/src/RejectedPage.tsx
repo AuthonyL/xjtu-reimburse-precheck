@@ -1,8 +1,7 @@
 import styles from './styles/findings.module.css';
 import uiStyles from './styles/ui.module.css';
-import homeStyles from './styles/home.module.css';
 import formsStyles from './styles/forms.module.css';
-import { Money } from './ui.js';
+import { Money, PageHeader } from './ui.js';
 import { useWorkspaceStore } from './store/workspace.js';
 import { useRun } from './store/status.js';
 import { useState } from 'react';
@@ -16,13 +15,10 @@ export function RejectedPage({ view }: { view: BatchView }) {
   const [reason, setReason] = useState('');
   return (
     <main className={styles.rejectedPage}>
-      <div className={uiStyles.pageHeading}>
-        <div>
-          <div className={homeStyles.eyebrow}>拒票参考</div>
-          <h1>无法报销费用</h1>
-          <p className={uiStyles.path}>{view.batch.dir}</p>
-        </div>
-      </div>
+      <PageHeader
+        title="无法报销费用"
+        subtitle={<span className={uiStyles.path}>{view.batch.dir}</span>}
+      />
       <p className={uiStyles.muted}>
         可能原因由当前规则推断，不代表财务原结论。仅保存原因到
         _预检/reasons.json，其余内容保持只读。
@@ -32,7 +28,9 @@ export function RejectedPage({ view }: { view: BatchView }) {
           <thead>
             <tr>
               {['文件', '品名', '金额', '原因', '操作'].map((label) => (
-                <th key={label}>{label}</th>
+                <th key={label} className={label === '金额' ? uiStyles.numeric : undefined}>
+                  {label}
+                </th>
               ))}
             </tr>
           </thead>

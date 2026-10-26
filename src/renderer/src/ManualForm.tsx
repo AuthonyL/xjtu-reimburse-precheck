@@ -46,7 +46,7 @@ export function ManualForm({ task, dir }: { task: ManualTask; dir: string }) {
         <strong>
           {task.group} · {task.label}
         </strong>
-        <Pill tone={task.pending ? 'warning' : 'found'}>
+        <Pill tone={task.pending ? 'warning' : 'neutral'}>
           {task.pending ? '? 待手填' : '✓ 已记录，可修改'}
         </Pill>
       </div>

@@ -17,40 +17,56 @@
   container-type: inline-size;
 }
 .appHeader {
-  height: 64px;
+  min-height: 56px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--line);
-  padding: 0 20px;
+  padding: 8px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   background: var(--surface);
 }
 .headerTitle {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
   min-width: 0;
 }
-.headerWorkspace {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .brand {
+  flex-shrink: 0;
   padding: 0;
   border: 0;
-  background: none;
-  font-size: 19px;
-  font-weight: 700;
+  background: transparent;
+  font-size: var(--font-h2);
+  font-weight: 650;
   text-align: left;
 }
 .brand span {
   display: block;
-  font-size: 11px;
+  font-size: var(--font-small);
   font-weight: 400;
   color: var(--muted);
-  letter-spacing: 2px;
+}
+.headerWorkspace,
+.workspacePath {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.workspacePath {
+  max-width: min(34vw, 480px);
+  font-size: var(--font-small);
+}
+.headerStatus {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  max-width: 48%;
+  font-size: var(--font-small);
 }
 .workspace {
   margin: 0;
@@ -58,50 +74,53 @@
   border: 0;
   min-width: 0;
 }
-.message:global(.error) {
-  background: var(--error-bg);
-}
-.message:global(.success) {
-  color: var(--accent);
-  background: var(--accent-bg);
-}
 .message {
-  flex-shrink: 0;
-  max-height: 120px;
+  min-width: 0;
+  max-height: 64px;
   overflow: auto;
-  margin: 8px 20px;
-  padding: 12px 16px;
-  border-radius: 7px;
+  margin: 0;
+  padding: 0;
   overflow-wrap: anywhere;
   display: flex;
-  justify-content: space-between;
-  gap: 15px;
+  align-items: center;
+  gap: 8px;
 }
-.message.notice {
-  background: var(--accent-bg);
+.message:global(.error) {
+  color: var(--error);
 }
+.message:global(.success) {
+  color: var(--success);
+}
+.message.notice,
 .busy {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  padding: 8px;
-  text-align: center;
-  background: var(--accent-bg);
-  color: var(--accent);
+  color: var(--muted);
 }
 .dropOverlay {
   pointer-events: none;
   position: fixed;
   inset: 12px;
-  z-index: 10;
-  border: 3px dashed var(--accent);
-  border-radius: 16px;
+  z-index: 100;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
   background: var(--accent-bg);
+  color: var(--accent);
   opacity: 0.96;
   display: grid;
   place-items: center;
-  font-size: 30px;
+  font-size: var(--font-h1);
 }
-
 .dragging {
+  cursor: copy;
+}
+@media (max-width: 1050px) {
+  .appHeader {
+    gap: 12px;
+    padding-inline: 16px;
+  }
+  .headerStatus {
+    max-width: 42%;
+  }
+  .workspacePath {
+    max-width: 25vw;
+  }
 }

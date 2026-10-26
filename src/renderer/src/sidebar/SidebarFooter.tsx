@@ -12,7 +12,7 @@ export function SidebarFooter() {
         onClick={() => useRouteStore.getState().navigate({ page: 'rules' })}
         disabled={busy}
       >
-        ⚙ 设置
+        <span aria-hidden="true">⚙</span> 设置
       </button>
     </div>
   );

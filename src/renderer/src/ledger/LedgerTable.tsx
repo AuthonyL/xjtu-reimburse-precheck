@@ -1,6 +1,7 @@
 import { TextButton } from '../ui.js';
 import { useRouteStore } from '../store/route.js';
 import styles from './ledger.module.css';
+import uiStyles from '../styles/ui.module.css';
 
 export function LedgerTable({
   title,
@@ -14,13 +15,16 @@ export function LedgerTable({
   dirs?: string[];
 }) {
   const select = useRouteStore((state) => state.select);
+  const numeric = (column: string) => ['张数', 'CNY 合计', '金额', '豁免数'].includes(column);
   return (
     <div className={styles.tableScroll}>
       <table aria-label={title}>
         <thead>
           <tr>
             {columns.map((column) => (
-              <th key={column}>{column}</th>
+              <th key={column} className={numeric(column) ? uiStyles.numeric : undefined}>
+                {column}
+              </th>
             ))}
           </tr>
         </thead>
@@ -28,7 +32,10 @@ export function LedgerTable({
           {rows.map((row, index) => (
             <tr key={index}>
               {row.map((cell, column) => (
-                <td key={column}>
+                <td
+                  key={column}
+                  className={numeric(columns[column] ?? '') ? uiStyles.numeric : undefined}
+                >
                   {column === 0 && dirs?.[index] ? (
                     <TextButton onClick={() => select(dirs[index]!)}>{cell}</TextButton>
                   ) : (

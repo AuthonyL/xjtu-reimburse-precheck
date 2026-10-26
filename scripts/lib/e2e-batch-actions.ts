@@ -1,7 +1,7 @@
 import { expect, type Page } from 'playwright/test';
 import { join } from 'node:path';
 import { readFile, readdir } from 'node:fs/promises';
-import { openSection, openRule } from './e2e-controls.js';
+import { openSection, openRule, changeClaimState } from './e2e-controls.js';
 import type { E2eWorkspace } from './e2e-workspace.js';
 
 export async function checkBatchActions(page: Page, workspace: E2eWorkspace, prefix: string) {
@@ -21,21 +21,21 @@ export async function checkBatchActions(page: Page, workspace: E2eWorkspace, pre
   const outputs = await readdir(join(batch, '_预检'));
   for (const file of ['manual.json', '入库登记清单.xlsx', '高值材料明细.xlsx', '汇总.md'])
     expect(outputs).toContain(file);
-  await page.getByRole('button', { name: '标记为待提交', exact: true }).click();
-  await page.getByRole('button', { name: '标记为已提交', exact: true }).click();
+  await changeClaimState(page, '待提交');
+  await changeClaimState(page, '已提交');
   const claimState = async () =>
     JSON.parse(await readFile(join(batch, '_预检/claim.json'), 'utf8'));
   await expect.poll(async () => (await claimState()).state).toBe('submitted');
   await expect(page.locator('[class*="_resultsToolbar_"] .pill')).toHaveText('已提交');
-  await page.getByRole('button', { name: '标记为已退回', exact: true }).click();
+  await changeClaimState(page, '已退回');
   await page.getByRole('textbox', { name: '状态备注', exact: true }).fill('合成退回备注：需补材料');
   await page.getByRole('button', { name: '保存状态', exact: true }).click();
   await expect.poll(async () => (await claimState()).state).toBe('returned');
   expect((await claimState()).transitions.at(-1).note).toBe('合成退回备注：需补材料');
-  await page.getByRole('button', { name: '标记为草稿', exact: true }).click();
+  await changeClaimState(page, '草稿');
   await expect.poll(async () => (await claimState()).state).toBe('draft');
   const keyword = '合成规则测试器件';
-  await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
+  await page.getByRole('button', { name: '设置', exact: true }).click();
   await openRule(page.locator('[class*="_settings_"]'), 'F2');
   await page.getByTestId('rule-F2').getByLabel('横向限制关键字', { exact: true }).fill(keyword);
   await page.getByTestId('rule-F2').getByLabel('横向限制关键字', { exact: true }).press('Enter');
@@ -55,7 +55,7 @@ export async function checkBatchActions(page: Page, workspace: E2eWorkspace, pre
     .evaluateAll((nodes) => nodes.map((node) => node.getAttribute('aria-label')));
   expect(sectionLabels.indexOf('待处理问题')).toBeGreaterThanOrEqual(0);
   expect(sectionLabels.indexOf('待处理问题')).toBeLessThan(sectionLabels.indexOf('分组与材料'));
-  await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
+  await page.getByRole('button', { name: '设置', exact: true }).click();
   await openRule(page.locator('[class*="_settings_"]'), 'F2');
   await page
     .getByTestId('rule-F2')

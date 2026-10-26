@@ -54,3 +54,15 @@ export function correctionControls(application: ElectronApplication, page: Page)
   };
   return { chooseSource, pickerCalls, dropSource };
 }
+
+export const changeClaimState = async (page: Page, label: string) => {
+  await page.getByRole('button', { name: /^状态：/ }).click();
+  await page.getByRole('menuitem', { name: '标记为' + label, exact: true }).click();
+};
+export const moreAction = async (page: Page, label: string) => {
+  const more = page.getByRole('button', { name: '更多', exact: true });
+  if (await more.count()) {
+    await more.click();
+    await page.getByRole('menuitem', { name: label, exact: true }).click();
+  } else await page.getByRole('button', { name: label, exact: true }).click();
+};

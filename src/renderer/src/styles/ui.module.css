@@ -1,84 +1,51 @@
 .primary {
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   border-color: var(--accent);
 }
 .primary:hover:not(:disabled) {
   color: var(--accent);
+  background: var(--accent-bg);
 }
 .large {
-  padding: 11px 26px;
-  font-size: 16px;
+  padding: 8px 18px;
+  font-size: var(--font-body);
 }
-.inline {
+.inline,
+.actions,
+.counts,
+.tags {
   display: flex;
   gap: 8px;
+}
+.actions,
+.counts,
+.tags {
+  flex-wrap: wrap;
+  align-items: center;
 }
 .inline > button {
   flex-shrink: 0;
 }
-.pageHeading,
-.sectionHeading,
-.cardHeading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-.pageHeading {
-  margin-bottom: 26px;
-  flex-wrap: wrap;
-}
-.pageHeading .actions {
-  max-width: 670px;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-.path {
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 22px;
-}
-.counts,
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
 .counts {
   margin-bottom: 10px;
 }
+.panel {
+  min-width: 0;
+}
+.path,
 .muted,
 .subtle {
   color: var(--muted);
 }
+.path {
+  overflow-wrap: anywhere;
+}
 .small {
-  font-size: 12px;
+  font-size: var(--font-small);
 }
 .alignRight {
   text-align: right;
-}
-.ruleTag {
-  display: inline-block;
-  font-size: 12px;
-  color: var(--muted);
-  margin: 0 8px;
-}
-.fileLink {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-right: 14px;
 }
 .textButton {
   display: inline;
@@ -91,62 +58,118 @@
 }
 .textButton:hover:not(:disabled) {
   text-decoration: underline;
-  background: none;
+  background: transparent;
 }
 .textButton.subtle {
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--font-small);
+}
+.pill {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: var(--radius);
+  font-size: var(--font-small);
+  line-height: 1.7;
+  white-space: nowrap;
+  color: var(--badge-neutral-text);
+  background: var(--badge-neutral-bg);
+}
+.pill[data-tone='info'] {
+  color: var(--badge-info-text);
+  background: var(--badge-info-bg);
+}
+.pill[data-tone='error'] {
+  color: var(--badge-error-text);
+  background: var(--badge-error-bg);
+}
+.pill[data-tone='rejected'] {
+  color: var(--badge-rejected-text);
+  background: var(--badge-rejected-bg);
+}
+.pill[data-tone='warning'] {
+  color: var(--badge-warning-text);
+  background: var(--badge-warning-bg);
+}
+.pill[data-tone='draft'] {
+  color: var(--badge-draft-text);
+  background: var(--badge-draft-bg);
+}
+.pill[data-tone='ready'] {
+  color: var(--badge-ready-text);
+  background: var(--badge-ready-bg);
+}
+.pill[data-tone='submitted'] {
+  color: var(--badge-submitted-text);
+  background: var(--badge-submitted-bg);
+}
+.pill[data-tone='returned'] {
+  color: var(--badge-returned-text);
+  background: var(--badge-returned-bg);
+}
+.pill[data-tone='reimbursed'],
+.pill[data-tone='success'] {
+  color: var(--badge-reimbursed-text);
+  background: var(--badge-reimbursed-bg);
+}
+.pill[data-tone='cancelled'] {
+  color: var(--badge-cancelled-text);
+  background: var(--badge-cancelled-bg);
+  text-decoration: line-through;
+}
+.pageHeading {
+  composes: pageHeading from './page.module.css';
+}
+.pageTitle {
+  composes: pageTitle from './page.module.css';
+}
+.pageSubtitle {
+  composes: pageSubtitle from './page.module.css';
+}
+.pageActions {
+  composes: pageActions from './page.module.css';
+}
+.pageLeading {
+  composes: pageLeading from './page.module.css';
+}
+.pageTitleRow {
+  composes: pageTitleRow from './page.module.css';
+}
+.sectionHeading {
+  composes: sectionHeading from './page.module.css';
+}
+.cardHeading {
+  composes: sectionHeading from './page.module.css';
+}
+.menu {
+  composes: menu from './menu.module.css';
+}
+.menuItem {
+  composes: menuItem from './menu.module.css';
+}
+.statusTrigger {
+  composes: statusTrigger from './menu.module.css';
+}
+.ruleTag {
+  composes: ruleTag from './ui-detail.module.css';
+}
+.fileLink {
+  composes: fileLink from './ui-detail.module.css';
+}
+.tableScroll {
+  composes: tableScroll from './ui-detail.module.css';
+}
+.number {
+  composes: number from './ui-detail.module.css';
+}
+.numeric {
+  composes: numeric from './ui-detail.module.css';
+}
+.tooltip {
+  composes: tooltip from './ui-detail.module.css';
 }
 :global(.finding) .actions {
   margin-top: 10px;
 }
 :global(.finding) .ruleTag {
   margin-left: 0;
-}
-.tableScroll {
-  overflow-x: auto;
-  padding: 0;
-}
-td.number {
-  font-variant-numeric: tabular-nums;
-  overflow-wrap: anywhere;
-  max-width: 200px;
-}
-td.numeric {
-  text-align: right;
-  white-space: nowrap;
-}
-td .fileLink {
-  min-width: 130px;
-}
-:global(.finding) .actions {
-  flex-wrap: wrap;
-}
-@media (prefers-color-scheme: dark) {
-  .primary {
-    color: #112719;
-  }
-}
-@media (max-width: 1050px) {
-  .sectionHeading {
-    align-items: start;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 12px;
-  }
-}
-
-.tooltip {
-  z-index: 110;
-  max-width: min(680px, calc(100vw - 40px));
-  padding: 4px 8px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: 0 2px 8px #0002;
-  font-size: 12px;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  pointer-events: none;
 }

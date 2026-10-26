@@ -44,7 +44,7 @@ it('真实服务保存豁免理由并在撤销后恢复待处理问题', async (
     await user.click(screen.getByRole('button', { name: '豁免…' }));
     await user.type(screen.getByRole('textbox', { name: '豁免理由' }), '  已核实合成材料  ');
     await user.click(screen.getByRole('button', { name: '保存豁免' }));
-    await screen.findByRole('button', { name: '已豁免 1 条' });
+    await screen.findByRole('button', { name: '已豁免 1' });
     const stored = JSON.parse(await readFile(join(dir, '_预检/claim.json'), 'utf8'));
     expect(stored.waivers).toEqual([
       { findingId: issue.id, reason: '已核实合成材料', at: expect.any(String) },
@@ -52,7 +52,7 @@ it('真实服务保存豁免理由并在撤销后恢复待处理问题', async (
     expect(service.batch(dir).report.findings.find((f) => f.id === issue.id)?.resolution).toBe(
       'waived',
     );
-    await user.click(screen.getByRole('button', { name: '已豁免 1 条' }));
+    await user.click(screen.getByRole('button', { name: '已豁免 1' }));
     await user.click(screen.getByRole('button', { name: '撤销豁免' }));
     await screen.findByRole('button', { name: '豁免…' });
     expect(JSON.parse(await readFile(join(dir, '_预检/claim.json'), 'utf8')).waivers).toEqual([]);

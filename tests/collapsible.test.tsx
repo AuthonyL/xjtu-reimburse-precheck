@@ -65,6 +65,13 @@ it('批次所有组与详细段落默认收起，展开后发票序号按显示�
     ).toBe('false');
   expect(screen.getByRole('button', { name: /发票明细/ }).textContent).toContain('2 张');
   expect(screen.getByRole('button', { name: /^输出文件/ }).textContent).toContain('1 个');
+  for (const label of ['待处理问题', '分组与材料'])
+    expect(
+      screen.getByRole('button', { name: new RegExp('^' + label) }).getAttribute('aria-expanded'),
+    ).toBe('true');
+  expect(screen.getByRole('button', { name: '流转记录（0）' }).getAttribute('aria-expanded')).toBe(
+    'false',
+  );
   expect(screen.queryByRole('table')).toBeNull();
   await userEvent.setup().click(screen.getByRole('button', { name: /发票明细/ }));
   const table = screen.getByRole('table', { name: '发票明细' });

@@ -142,10 +142,25 @@ it('侧栏显示待处理徽标及发票张数，页面选中可达，清空后�
   render(<Sidebar />);
   const nav = screen.getByRole('navigation', { name: '工作区页面' });
   const button = await within(nav).findByRole('button', { name: '收件箱 1' });
-  expect(within(nav).getByRole('button', { name: '发票 3 张' })).toBeTruthy();
+  expect(within(nav).getByRole('button', { name: '发票列表 3 张' })).toBeTruthy();
+  expect(
+    within(nav)
+      .getAllByRole('button')
+      .map((node) => node.textContent),
+  ).toEqual(['批次总览', '收件箱1', '发票列表3 张', '台账']);
+  const batches = screen.getByRole('region', { name: '批次' });
+  expect(within(batches).getByRole('button', { name: '打开其他文件夹' })).toBeTruthy();
+  expect(within(batches).getByRole('button', { name: '全部重新检查' })).toBeTruthy();
+  expect(screen.getByRole('button', { name: '设置' })).toBeTruthy();
+  expect(screen.queryByRole('button', { name: 'synthetic' })).toBeNull();
   fireEvent.click(button);
   expect(button.getAttribute('aria-current')).toBe('page');
   expect(useRouteStore.getState().route.page).toBe('inbox');
+  fireEvent.click(within(nav).getByRole('button', { name: '批次总览' }));
+  expect(useRouteStore.getState().route.page).toBe('overview');
+  expect(within(nav).getByRole('button', { name: '批次总览' }).getAttribute('aria-current')).toBe(
+    'page',
+  );
   inbox.mockResolvedValue([]);
   act(() => useWorkspaceStore.getState().setView({ ...view }));
   expect(await within(nav).findByRole('button', { name: '收件箱' })).toBeTruthy();

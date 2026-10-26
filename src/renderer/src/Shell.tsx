@@ -6,7 +6,7 @@ import { FeedbackProvider } from './Feedback.js';
 import { RuleVersion } from './RuleVersion.js';
 import { CorrectionNoticeProvider } from './CorrectionNotice.js';
 import { Sidebar } from './Sidebar.js';
-import { nameOf, TextButton } from './ui.js';
+import { TextButton } from './ui.js';
 import type { ReactNode } from 'react';
 import { routeForDir } from './store/route.js';
 import { useShellState } from './useShellState.js';
@@ -71,40 +71,49 @@ export function Shell({ children }: { children: ReactNode }) {
                       ☰
                     </button>
                   )}
-                  <span className={styles.brand}>
-                    报销预检<span>课题组票据核对</span>
-                  </span>
+                  <span className={styles.brand}>报销预检</span>
                   {workspace && (
-                    <span className={styles.headerWorkspace + ' ' + uiStyles.muted}>
-                      {nameOf(workspace.dir)}
-                    </span>
+                    <TextButton
+                      className={
+                        styles.headerWorkspace + ' ' + styles.workspacePath + ' ' + uiStyles.path
+                      }
+                      aria-label="在文件夹中显示当前工作区"
+                      disabled={busy}
+                      onClick={() => void run(() => window.precheck.revealFile(workspace.dir))}
+                    >
+                      {workspace.dir}
+                    </TextButton>
                   )}
                 </div>
-                {!workspace && (
-                  <button
-                    disabled={busy || !boot}
-                    onClick={() =>
-                      navigate(settingsOpen ? routeForDir(workspace, selected) : { page: 'rules' })
-                    }
-                  >
-                    {settingsOpen ? '返回首页' : '⚙ 设置'}
-                  </button>
-                )}
+                <div className={styles.headerStatus}>
+                  {error && (
+                    <div role="alert" className={styles.message + ' error'}>
+                      {error}
+                      <TextButton onClick={() => setError('')}>关闭</TextButton>
+                    </div>
+                  )}
+                  {(busy || notice) && (
+                    <div role="status" className={styles.message + ' ' + styles.notice}>
+                      {busy ? '◌ 正在检查，请稍候…' : notice}
+                      {!busy && <TextButton onClick={() => setNotice('')}>关闭</TextButton>}
+                    </div>
+                  )}
+                  {!workspace && (
+                    <button
+                      disabled={busy || !boot}
+                      onClick={() =>
+                        navigate(
+                          settingsOpen ? routeForDir(workspace, selected) : { page: 'rules' },
+                        )
+                      }
+                    >
+                      {settingsOpen ? '返回首页' : '⚙ 设置'}
+                    </button>
+                  )}
+                </div>
               </header>
               {!settingsOpen && boot?.ruleVersion?.upgrade && (
                 <RuleVersion version={boot.ruleVersion} settings={boot.settings} />
-              )}
-              {error && (
-                <div role="alert" className={styles.message + ' ' + 'error'}>
-                  {error}
-                  <TextButton onClick={() => setError('')}>关闭</TextButton>
-                </div>
-              )}
-              {notice && (
-                <div role="status" className={styles.message + ' ' + styles.notice}>
-                  {notice}
-                  <TextButton onClick={() => setNotice('')}>关闭</TextButton>
-                </div>
               )}
               {!boot && error && (
                 <button
@@ -129,11 +138,6 @@ export function Shell({ children }: { children: ReactNode }) {
                   aria-busy={busy}
                   data-testid="result-pane"
                 >
-                  {busy && (
-                    <div className={styles.busy} role="status">
-                      ◌ 正在检查，请稍候…
-                    </div>
-                  )}
                   <fieldset className={styles.workspace} disabled={busy}>
                     {children}
                   </fieldset>

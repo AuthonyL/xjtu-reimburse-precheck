@@ -1,11 +1,11 @@
 .summary {
   display: grid;
   grid-template-columns: 1fr 1.15fr 1fr;
-  gap: 28px;
+  gap: 24px;
 }
 .grandTotal {
   display: block;
-  font-size: 32px;
+  font-size: var(--font-h1);
   line-height: 1.7;
   font-variant-numeric: tabular-nums;
   font-weight: 650;
@@ -22,25 +22,21 @@
 .batchGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-  gap: 18px;
+  gap: 16px;
 }
 .batchCard {
   display: block;
   text-align: left;
-  padding: 23px;
+  padding: 16px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
 }
 .batchCard h2 {
   margin-bottom: 12px;
 }
 @container (max-width: 850px) {
-  .summary {
-    grid-template-columns: 1fr 1fr;
-  }
-  .summary > :last-child {
-    grid-column: 1 / -1;
-  }
-}
-@media (max-width: 1050px) {
   .summary {
     grid-template-columns: 1fr 1fr;
   }

@@ -11,6 +11,7 @@ import type { ClaimMeta } from '../src/shared/api.js';
 afterEach(cleanup);
 it('失焦保存不锁住全局操作，避免吞掉随后点击的导航或导出', async () => {
   const update = setup();
+  fireEvent.click(screen.getByRole('button', { name: '编辑' }));
   fireEvent.change(screen.getByRole('textbox', { name: '经办人' }), {
     target: { value: '直接导出' },
   });
@@ -18,6 +19,8 @@ it('失焦保存不锁住全局操作，避免吞掉随后点击的导航或导�
   expect(useStatusStore.getState().busy).toBe(false);
   await screen.findByText('已保存');
   expect(update).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole('form', { name: '报销单信息' })).toBeNull();
+  expect(screen.getByText('经办人：直接导出 · 项目：— · 经费：未填')).toBeTruthy();
 });
 function setup(readOnly = false) {
   const view = pageWorkspace();
@@ -40,6 +43,9 @@ function setup(readOnly = false) {
 }
 it('失焦保存元数据，保存按钮不重复写入，清空经费类型可以持久化', async () => {
   const update = setup();
+  expect(screen.getByText('经办人：— · 项目：— · 经费：未填')).toBeTruthy();
+  expect(screen.queryByRole('textbox')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '编辑' }));
   fireEvent.change(screen.getByRole('textbox', { name: '经办人' }), {
     target: { value: '合成经办人' },
   });
@@ -56,8 +62,11 @@ it('失焦保存元数据，保存按钮不重复写入，清空经费类型可�
     project: '合成项目',
     fund: 'horizontal',
   });
+  fireEvent.click(screen.getByRole('button', { name: '编辑' }));
   fireEvent.click(screen.getByRole('button', { name: '保存' }));
   expect(update).toHaveBeenCalledTimes(1);
+  expect(screen.queryByRole('textbox')).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: '编辑' }));
   fireEvent.change(screen.getByRole('combobox', { name: '经费类型' }), { target: { value: '' } });
   fireEvent.click(screen.getByRole('button', { name: '保存' }));
   await waitFor(() => expect(update).toHaveBeenCalledTimes(2));
@@ -65,6 +74,7 @@ it('失焦保存元数据，保存按钮不重复写入，清空经费类型可�
 });
 it('保存失败保留编辑值，展示错误并可重试', async () => {
   const update = setup();
+  fireEvent.click(screen.getByRole('button', { name: '编辑' }));
   update.mockRejectedValueOnce(new Error('合成保存失败'));
   const input = screen.getByRole('textbox', { name: '经办人' }) as HTMLInputElement;
   fireEvent.change(input, { target: { value: '待重试' } });
@@ -74,10 +84,16 @@ it('保存失败保留编辑值，展示错误并可重试', async () => {
   expect(screen.queryByText('已保存')).toBeNull();
   fireEvent.click(screen.getByRole('button', { name: '保存' }));
   await screen.findByText('已保存');
+  expect(screen.getByText('经办人：待重试 · 项目：— · 经费：未填')).toBeTruthy();
 });
 it('折叠流转记录展示中文状态、时间和备注，只读目录不显示编辑字段', () => {
   setup(true);
+  expect(screen.getByText('经办人：— · 项目：— · 经费：未填')).toBeTruthy();
+  expect(screen.queryByRole('button', { name: '编辑' })).toBeNull();
   expect(screen.queryByRole('textbox', { name: '经办人' })).toBeNull();
+  expect(screen.getByRole('button', { name: '流转记录（1）' }).getAttribute('aria-expanded')).toBe(
+    'false',
+  );
   fireEvent.click(screen.getByRole('button', { name: '流转记录（1）' }));
   expect(screen.getByText('已提交 → 已退回')).toBeTruthy();
   expect(screen.getByText('补充合成材料')).toBeTruthy();

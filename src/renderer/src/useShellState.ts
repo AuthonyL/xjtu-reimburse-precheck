@@ -89,7 +89,11 @@ export function useShellState() {
     if (group && selected && !settingsOpen)
       setDisclosures((old) => ({
         ...old,
-        [selected]: { ...old[selected], groups: { ...old[selected]?.groups, [group]: true } },
+        [selected]: {
+          ...old[selected],
+          groups: { ...old[selected]?.groups, [group]: true },
+          sections: { ...old[selected]?.sections, requirements: true },
+        },
       }));
   }, [route.group, revision, selected, settingsOpen]);
   useEffect(() => {
@@ -102,9 +106,10 @@ export function useShellState() {
     // Wait for the expanded group to commit before scrolling; each request scrolls only once.
     if (!selected || !disclosures[selected]?.groups?.[group] || lastScrolled.current === revision)
       return;
-    (
-      document.getElementById(groupAnchor(group)) ?? document.getElementById(laborAnchor(group))
-    )?.scrollIntoView?.({ block: 'start' });
+    const target =
+      document.getElementById(groupAnchor(group)) ?? document.getElementById(laborAnchor(group));
+    if (!target || target.closest('[hidden]')) return;
+    target.scrollIntoView?.({ block: 'start' });
     lastScrolled.current = revision;
     useRouteStore.setState({ highlight: group });
     if (highlightTimer.current !== null) window.clearTimeout(highlightTimer.current);

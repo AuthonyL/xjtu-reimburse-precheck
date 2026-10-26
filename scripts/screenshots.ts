@@ -24,7 +24,9 @@ try {
   await page.getByRole('button', { name: '打开路径', exact: true }).click();
   const tree = page.getByRole('tree', { name: '工作区文件夹' });
   await tree.locator('[data-batch-id="20260103"]').click();
-  await expect(page.getByTestId('batch-summary')).toContainText('3 张');
+  await expect(page.getByTestId('batch-summary').locator('[data-metric="张数"] strong')).toHaveText(
+    '3',
+  );
   // 隐藏绝对路径行；保持其余 UI 和合成检查结果不变。
   await page.addStyleTag({
     content:
@@ -44,12 +46,13 @@ try {
     await page.screenshot({ path: join(output, name), fullPage: false });
   };
   const nav = page.getByRole('navigation', { name: '工作区页面' });
+  await page.getByRole('button', { name: '编辑', exact: true }).click();
   await page.getByRole('textbox', { name: '经办人', exact: true }).fill('示例经办人');
   await page.getByRole('textbox', { name: '项目 / 经费卡', exact: true }).fill('示例课题');
   await page.getByRole('combobox', { name: '经费类型', exact: true }).selectOption('vertical');
   await page.getByRole('button', { name: '保存', exact: true }).click();
   await expect(page.getByText('已保存', { exact: true })).toBeVisible();
-  await page.locator('[class*="_workspaceName_"]').click();
+  await nav.getByRole('button', { name: '批次总览', exact: true }).click();
   await page.getByRole('checkbox', { name: '全选批次', exact: true }).check();
   await page.getByRole('button', { name: '展开支出合计 20260103', exact: true }).click();
   await screenshot('overview.png');
@@ -75,7 +78,7 @@ try {
   await tree.locator('[data-batch-id="劳务费"]').click();
   await expect(page.getByTestId('labor-summary')).toBeVisible();
   await screenshot('labor.png');
-  await page.getByRole('button', { name: '⚙ 设置', exact: true }).click();
+  await page.getByRole('button', { name: '设置', exact: true }).click();
   await page.getByRole('tab', { name: '规则', exact: true }).click();
   await expect(page.getByTestId('rule-F2')).toBeVisible();
   await page.getByRole('searchbox', { name: '搜索规则' }).scrollIntoViewIfNeeded();
